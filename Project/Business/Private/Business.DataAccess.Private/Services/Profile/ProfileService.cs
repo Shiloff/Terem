@@ -1,9 +1,9 @@
 ﻿using System.Linq;
-using Business.DataAccess.Public.Entities;
 using Business.DataAccess.Public.Repository.Specific;
+using Business.DataAccess.Public.Services.Profile;
 using Business.DataAccess.Public.UnitOfWork.Factory;
 
-namespace Project.BusinessLogic.Services.ProfileService
+namespace Business.DataAccess.Private.Services.Profile
 {
     public class ProfileService : IProfileService
     {
@@ -14,7 +14,7 @@ namespace Project.BusinessLogic.Services.ProfileService
             _unitOfWorkFactory = unitOfWorkFactory;
         }
 
-        public Profile GetProfileWithDetails(long id)
+        public Public.Entities.Profile GetProfileWithDetails(long id)
         {
             using (var uow = _unitOfWorkFactory.Create())
             {
@@ -23,7 +23,7 @@ namespace Project.BusinessLogic.Services.ProfileService
         }
 
 
-        public Profile GetShortProfile(long id)
+        public Public.Entities.Profile GetShortProfile(long id)
         {
             using (var uow = _unitOfWorkFactory.Create())
             {
@@ -46,7 +46,7 @@ namespace Project.BusinessLogic.Services.ProfileService
             }
         }
 
-        public void UpdateProfile(Profile profile, ProfileUpdateMode mode, int[] selectedInteresesId = null)
+        public void UpdateProfile(Public.Entities.Profile profile, ProfileUpdateMode mode, int[] selectedInteresesId = null)
         {
             using (var uow = _unitOfWorkFactory.Create())
             {

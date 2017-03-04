@@ -145,6 +145,8 @@
     <Compile Include="Entities\RegionCountry.cs" />
     <Compile Include="Entities\RegionState.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Services\Profile\GetContactsResult.cs" />
+    <Compile Include="Services\Profile\IProfileService.cs" />
     <Compile Include="UnitOfWork\Factory\IUnitOfWorkFactory.cs" />
     <Compile Include="UnitOfWork\IUnitOfWork.cs" />
   </ItemGroup>

@@ -52,10 +52,6 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Project.BusinessLogic\Project.BuisnessLogic.csproj">
-      <Project>{3cf92259-45fb-4d4e-9616-f574e2240e98}</Project>
-      <Name>Project.BuisnessLogic</Name>
-    </ProjectReference>
     <ProjectReference Include="..\Project.Core\Project.Core.csproj">
       <Project>{d655c9d2-aaa8-44e6-9027-3bfa129cf00c}</Project>
       <Name>Project.Core</Name>

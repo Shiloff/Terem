@@ -78,6 +78,7 @@
     <Compile Include="Repository\Specific\EFProfileRepository.cs" />
     <Compile Include="Repository\Specific\Helpers\EFProfileContacts.cs" />
     <Compile Include="Repository\Specific\Helpers\EFProfileFinder.cs" />
+    <Compile Include="Services\Profile\ProfileService.cs" />
     <Compile Include="UnitOfWork\UnitOfWork.cs" />
     <Compile Include="UnitOfWork\UnitOfWorkFactory.cs" />
   </ItemGroup>
