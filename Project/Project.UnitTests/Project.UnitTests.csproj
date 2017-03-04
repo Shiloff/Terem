@@ -52,10 +52,6 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Project.Core\Project.Core.csproj">
-      <Project>{d655c9d2-aaa8-44e6-9027-3bfa129cf00c}</Project>
-      <Name>Project.Core</Name>
-    </ProjectReference>
     <ProjectReference Include="..\Project.Domain\Project.Domain.csproj">
       <Project>{a7945204-c7ea-4635-afe3-ace89e6cbf5a}</Project>
       <Name>Project.Domain</Name>
