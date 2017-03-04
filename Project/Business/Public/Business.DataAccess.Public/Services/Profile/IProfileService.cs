@@ -12,7 +12,9 @@ namespace Business.DataAccess.Public.Services.Profile
         void UpdateProfile(Entities.Profile profile, ProfileUpdateMode mode, int[] selectedInteresesId = null);
         List<ProfileAction> GetProfileActions(long id);
         ProfileAction GetProfileAction(long id);
-        ProfileAction AddProfileAction(ProfileAction addAction, long profileId);
+        ProfileAction AddProfileAction(ProfileAction addAction, long profileId = 0);
         void RemoveProfileAction(long id, long profileId);
+        void AddActionLike(long id, long profileId);
+        void RemoveActionLike(long id, long profileId);
     }
 }

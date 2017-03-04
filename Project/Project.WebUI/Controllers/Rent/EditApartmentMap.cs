@@ -11,23 +11,27 @@ namespace Project.WebUI.Controllers
 
         public ActionResult EditApartmentMap(long id = 0)
         {
-            EditApartmentViewResult result = new EditApartmentViewResult();
-            result.Apartment = ApartmentRepository.GetApartment(id);
-            result.ApartmentOptions = ApartmentRepository.GetApartmentOptions();
+            var result = new EditApartmentViewResult
+            {
+                Apartment = _apartmentRepository.GetApartment(id),
+                ApartmentOptions = _apartmentRepository.GetApartmentOptions()
+            };
             if (result.Apartment == null)
             {
-                result.Apartment = new Apartment();
-                result.Apartment.ApartmentOptions = new List<ApartmentOption>();
-                result.Apartment.ApartmentPhotos = new List<ApartmentPhoto>();
+                result.Apartment = new Apartment
+                {
+                    ApartmentOptions = new List<ApartmentOption>(),
+                    ApartmentPhotos = new List<ApartmentPhoto>()
+                };
             }
-            result.ApartmentTypes = ApartmentRepository.ApartmentTypes.ToList();
+            result.ApartmentTypes = _apartmentRepository.ApartmentTypes.ToList();
             return View(result);
         }
         [HttpPost]
         public void EditApartmentMap(EditApartmentMapData value)
         {
-            Apartment apartment= ApartmentRepository.GetApartment(value.ApartmentId);
-            ApartmentRepository.UpdateCoords(apartment, new ApartmentCoords { Latitude = value.Latitude, Longitude = value.Longitude });
+            var apartment= _apartmentRepository.GetApartment(value.ApartmentId);
+            _apartmentRepository.UpdateCoords(apartment, new ApartmentCoords { Latitude = value.Latitude, Longitude = value.Longitude });
 
         }
 	}

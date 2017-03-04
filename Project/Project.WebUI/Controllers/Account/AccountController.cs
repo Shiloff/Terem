@@ -5,6 +5,7 @@ using System.Web.Mvc;
 using Business.DataAccess.Public.Entities;
 using Business.DataAccess.Public.Entities.Identity;
 using Business.DataAccess.Public.Repository.Specific;
+using Business.DataAccess.Public.Services.Profile;
 using Microsoft.AspNet.Identity;
 using Microsoft.Owin.Security;
 using Project.WebUI.Filters;
@@ -19,12 +20,15 @@ namespace Project.WebUI.Controllers.Account
     {
         private readonly IProfileRepository _profileRepository;
         private readonly IApplicationManager _applicationManager;
+        private readonly IProfileService _profileService;
 
         public AccountController(IProfileRepository profileRepository,
-            IApplicationManager applicationManager)
+            IApplicationManager applicationManager, 
+            IProfileService profileService)
         {
             _profileRepository = profileRepository;
             _applicationManager = applicationManager;
+            _profileService = profileService;
             //UserManager = applicationManager;
         }
 
@@ -93,7 +97,7 @@ namespace Project.WebUI.Controllers.Account
                     var newProfile = new Business.DataAccess.Public.Entities.Profile { UserId = user.Id, New = true };
                     _profileRepository.NewProfile(newProfile);
                     user.ProfileId = newProfile.ProfileId;
-                    _profileRepository.AddProfileAction(new ProfileAction
+                    _profileService.AddProfileAction(new ProfileAction
                     {
                         ProfileId = newProfile.ProfileId,
                         Date = DateTime.Now,

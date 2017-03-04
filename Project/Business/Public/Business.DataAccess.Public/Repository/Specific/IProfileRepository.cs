@@ -26,13 +26,6 @@ namespace Business.DataAccess.Public.Repository.Specific
         List<Profile> FindProfiles(Profile profile, FindProfilesParams param);
         long GetFindProfilesCount(Profile profile, FindProfilesParams param);
         List<Profile> GetContacts(long profileId, int count = 0);
-        #region ProfileActions
-        int GetProfileActionsCount(long profileId);
-        void AddProfileAction(ProfileAction addAction);
-        void AddProfileActionLike(long profileActionId, long profileId);
-        void RemoveProfileActionLike(long profileActionId, long profileId);
-        
-        #endregion
 
         #region ProfileActionsComments
         List<ProfileActionComment> GetProfileActionsComments(long profileActionId);

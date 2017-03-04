@@ -88,7 +88,7 @@ namespace Business.DataAccess.Private.Services.Profile
                 throw new ArgumentException(nameof(addAction));
             }
 
-            if (profileId != addAction.ProfileWhoId)
+            if ((profileId != addAction.ProfileWhoId) && (profileId != 0))
             {
                 throw new AccessViolationException(nameof(addAction));
             }
@@ -111,6 +111,49 @@ namespace Business.DataAccess.Private.Services.Profile
                     throw new AccessViolationException(nameof(action));
                 }
                 uow.ProfileActions.Remove(action);
+                uow.Complete();
+            }
+        }
+
+        public void AddActionLike(long id, long profileId)
+        {
+            using (var uow = _unitOfWorkFactory.Create())
+            {
+                var like =
+                   uow.ProfileActionLikes.Find(m => m.ProfileId == profileId && m.ProfileActionId == id).FirstOrDefault();
+
+                if (like != null)
+                {
+                    return;
+                }
+
+                uow.ProfileActionLikes.Add(new ProfileActionLike()
+                {
+                    Date = DateTime.Now,
+                    ProfileId = profileId,
+                    ProfileActionId = id
+                });
+                uow.Complete();
+            }
+        }
+
+        public void RemoveActionLike(long id, long profileId)
+        {
+            using (var uow = _unitOfWorkFactory.Create())
+            {
+                var like =
+                    uow.ProfileActionLikes.Find(m => m.ProfileId == profileId && m.ProfileActionId == id).FirstOrDefault();
+
+                if (like == null)
+                {
+                    return;
+                }
+
+                if (profileId != like.ProfileId)
+                {
+                    throw new AccessViolationException(nameof(like));
+                }
+                uow.ProfileActionLikes.Remove(like);
                 uow.Complete();
             }
         }

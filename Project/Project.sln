@@ -16,8 +16,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{07DC58
 		.nuget\NuGet.targets = .nuget\NuGet.targets
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Project.Core", "Project.Core\Project.Core.csproj", "{D655C9D2-AAA8-44E6-9027-3BFA129CF00C}"
-EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Platform", "Platform", "{52BD30BD-20D9-473E-92BD-B78C7B17A789}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Business", "Business", "{BF03FC29-6A33-4C58-8A97-D1EBEADCDD4A}"
@@ -58,10 +56,6 @@ Global
 		{AD6DAD9D-C277-44BC-831E-2C8185F0070D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{AD6DAD9D-C277-44BC-831E-2C8185F0070D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{AD6DAD9D-C277-44BC-831E-2C8185F0070D}.Release|Any CPU.Build.0 = Release|Any CPU
-		{D655C9D2-AAA8-44E6-9027-3BFA129CF00C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{D655C9D2-AAA8-44E6-9027-3BFA129CF00C}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{D655C9D2-AAA8-44E6-9027-3BFA129CF00C}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{D655C9D2-AAA8-44E6-9027-3BFA129CF00C}.Release|Any CPU.Build.0 = Release|Any CPU
 		{79567B22-AA28-4133-A047-601E5F778261}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{79567B22-AA28-4133-A047-601E5F778261}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{79567B22-AA28-4133-A047-601E5F778261}.Release|Any CPU.ActiveCfg = Release|Any CPU

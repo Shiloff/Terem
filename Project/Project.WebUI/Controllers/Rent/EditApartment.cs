@@ -13,15 +13,15 @@ namespace Project.WebUI.Controllers
         public ActionResult EditApartment(long id = 0)
         {
             EditApartmentViewResult result = new EditApartmentViewResult();
-            result.Apartment = ApartmentRepository.GetApartment(id);
-            result.ApartmentOptions = ApartmentRepository.GetApartmentOptions();
+            result.Apartment = _apartmentRepository.GetApartment(id);
+            result.ApartmentOptions = _apartmentRepository.GetApartmentOptions();
             if (result.Apartment == null)
             {
                 result.Apartment = new Apartment();
                 result.Apartment.ApartmentOptions = new List<ApartmentOption>();
                 result.Apartment.ApartmentPhotos = new List<ApartmentPhoto>();
             }
-            result.ApartmentTypes = ApartmentRepository.ApartmentTypes.ToList();
+            result.ApartmentTypes = _apartmentRepository.ApartmentTypes.ToList();
             return View(result);
         }
        
@@ -42,12 +42,12 @@ namespace Project.WebUI.Controllers
                 {
                     newApartment.Apartment.UpdateDate = newApartment.Apartment.CreateDate;
                 }
-                ApartmentRepository.UpdateApartment(newApartment.Apartment);
+                _apartmentRepository.UpdateApartment(newApartment.Apartment);
                 newId = newApartment.Apartment.ApartmentId;
-                ApartmentRepository.ClearApartmentOptions(newApartment.Apartment);
+                _apartmentRepository.ClearApartmentOptions(newApartment.Apartment);
                 foreach (var option in newApartment.SelectedOptions.Where(m => m.Checked == true))
                 {
-                    ApartmentRepository.AddOption(newApartment.Apartment, new ApartmentOption { ApartmentOptionId = option.ApartmentOptionId });
+                    _apartmentRepository.AddOption(newApartment.Apartment, new ApartmentOption { ApartmentOptionId = option.ApartmentOptionId });
                 }
                 if ((curId == 0) && (newId != 0))
                     newApart = true;
@@ -60,8 +60,8 @@ namespace Project.WebUI.Controllers
                 TempData["toastrMessage"] = String.Format("Ошибка в данных квартиры");
                 TempData["toastrType"] = "error";
             }
-            newApartment.ApartmentTypes = ApartmentRepository.ApartmentTypes.ToList();
-            newApartment.ApartmentOptions = ApartmentRepository.GetApartmentOptions();
+            newApartment.ApartmentTypes = _apartmentRepository.ApartmentTypes.ToList();
+            newApartment.ApartmentOptions = _apartmentRepository.GetApartmentOptions();
             newApartment.Apartment.ApartmentOptions = new List<ApartmentOption>();
             foreach (var option in newApartment.SelectedOptions.Where(m => m.Checked == true))
             {
