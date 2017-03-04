@@ -347,10 +347,10 @@
     <Compile Include="Models\Messages\UnreadMessagesShortResult.cs" />
     <Compile Include="Models\Messages\IndexMessagesViewResult.cs" />
     <Compile Include="Models\PagingInfo.cs" />
-    <Compile Include="Models\Profile\IndexProfileActionsPartialResult.cs" />
+    <Compile Include="Models\Profile\ProfileActionsResult.cs" />
     <Compile Include="Models\Profile\EditProfileViewResult.cs" />
     <Compile Include="Models\Profile\IndexProfileViewResult.cs" />
-    <Compile Include="Models\Profile\LoadProfileActionResult.cs" />
+    <Compile Include="Models\Profile\AddActionResult.cs" />
     <Compile Include="Models\Profile\LoadProfileActionHeadResult.cs" />
     <Compile Include="Models\Profile\LoadCommentResult.cs" />
     <Compile Include="Models\Profile\LoadCommentsResult.cs" />

@@ -1,4 +1,6 @@
-﻿using Business.DataAccess.Public.Repository.Specific;
+﻿using System.Collections.Generic;
+using Business.DataAccess.Public.Entities;
+using Business.DataAccess.Public.Repository.Specific;
 
 namespace Business.DataAccess.Public.Services.Profile
 {
@@ -8,5 +10,6 @@ namespace Business.DataAccess.Public.Services.Profile
         Entities.Profile GetShortProfile(long id);
         GetContactsResult GetContacts(long profileId, int count = 0);
         void UpdateProfile(Entities.Profile profile, ProfileUpdateMode mode, int[] selectedInteresesId = null);
+        List<ProfileAction> GetProfileActions(long id);
     }
 }

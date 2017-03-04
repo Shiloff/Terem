@@ -13,7 +13,7 @@ namespace Business.DataAccess.Public.Entities
         public long ProfileId { get; set; }
         public bool? New { get; set; }
         public string UserId { get; set; }
-        [Display(Name = "Имя")]       
+        [Display(Name = "Имя")]
         public string FirstName { get; set; }
         [Display(Name = "Фамилия")]
         public string LastName { get; set; }
@@ -111,6 +111,7 @@ namespace Business.DataAccess.Public.Entities
             }
         }
         public string ImageAvatarBigType { get; set; }
+
         #region Likes
         [ForeignKey("ProfileId")]
         public ICollection<ProfileActionLike> ProfileActionsLikes { get; set; }

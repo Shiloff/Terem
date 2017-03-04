@@ -9,34 +9,32 @@ namespace Project.WebUI.Controllers.Profile
 {
     public partial class ProfileController : Controller
     {
-        private readonly int commentsCount = 2;
-
         public ActionResult Actions(long? id)
         {
-            var result = new IndexProfileActionsPartialResult
+            if (id == null)
             {
-                Actions = _profileRepository.GetProfileActions((long) id, 3, commentsCount),
-                Profile = _profileRepository.GetProfile(_applicationManager.CurrentUser.ProfileId),
-                ActionsCount = _profileRepository.GetProfileActionsCount((long) id),
-                CommentsCount = commentsCount
+                throw new ArgumentNullException(nameof(id));
+            }
+
+            var result = new ProfileActionsResult
+            {
+                Actions = _profileService.GetProfileActions((long) id),
+                Profile = _profileService.GetShortProfile((long)_applicationManager.CurrentUser.ProfileId),
             };
 
             return PartialView(result);
         }
 
-        #region Action
-
         [HttpPost]
         public ActionResult AddAction(ProfileAction value)
         {
-            var result = new LoadProfileActionResult();
+            var result = new AddActionResult();
 
             if ((value != null) && (_applicationManager.CurrentUser.ProfileId == value.ProfileWhoId))
             {
                 value.Date = DateTime.Now;
                 _profileRepository.AddProfileAction(value);
             }
-            result.CommentsCount = commentsCount;
             result.Profile = _profileRepository.GetProfile(_applicationManager.CurrentUser.ProfileId);
             result.ProfileAction = _profileRepository.GetProfileAction(value.ProfileActionId);
             result.ProfileActionComments = new List<ProfileActionComment>();
@@ -75,8 +73,6 @@ namespace Project.WebUI.Controllers.Profile
             result.ProfileAction = _profileRepository.GetProfileAction((long) value.ProfileActionId);
             return PartialView("LoadActionHead", result);
         }
-
-        #endregion
 
         #region Comment
 

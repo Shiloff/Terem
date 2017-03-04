@@ -114,46 +114,11 @@ namespace Business.DataAccess.Private.Repository.Specific
         {
             return context.ProfileActions.Where(m => m.ProfileId == profileId).AsQueryable();
         }
-        public int GetProfileActionsCount(long profileId, int countActions = 0, int countComments = 0)
+        public int GetProfileActionsCount(long profileId)
         {
             return GetProfileActionsQuery(profileId).Count();
         }
-        public List<ProfileAction> GetProfileActions(long profileId, int countActions = 0, int countComments = 0)
-        {
-            var query = GetProfileActionsQuery(profileId)
-                  .Include(m => m.ProfileWho)
-                  .Include(m => m.ProfileActionComments.Select(k => k.Profile))
-                  .Include(m => m.ProfileActionComments.Select(k => k.ProfileActionsCommentsLikes))
-                  .Include(m => m.Profile)
-                  .Include(m => m.Apartment.Type)
-                  .Include(m => m.Apartment.ApartmentPhotos.Select(k => k.Links))
-                  .Include(m => m.ProfileActionsLikes)
-                  .OrderByDescending(m => m.Date).AsQueryable();
-            if (countActions > 0)
-            {
-                query = query.Take(countActions);
-            }
-            
-
-            return query
-                .AsEnumerable()
-                .Select(m => new ProfileAction()
-                {
-                    Date = m.Date,
-                    Profile = m.Profile,
-                    ProfileWho = m.ProfileWho,
-                    Text = m.Text,
-                    ProfileActionId = m.ProfileActionId,
-                    ProfileId = m.ProfileId,
-                    ProfileWhoId = m.ProfileWhoId,
-                    ProfileActionTypeId = m.ProfileActionTypeId,
-                    ProfileActionComments = m.ProfileActionComments.OrderBy(k => k.Date).Skip(m.ProfileActionComments.Count - countComments).Take(countComments).ToList(),
-                    ProfileActionsLikes = m.ProfileActionsLikes,
-                    Apartment = m.Apartment,
-                    CommentsCount = m.ProfileActionComments.Count
-                })
-                .ToList();
-        }
+        
         public ProfileAction GetProfileAction(long profileActionId)
         {
             return context.ProfileActions.Where(m => m.ProfileActionId == profileActionId)

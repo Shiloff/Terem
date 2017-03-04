@@ -109,6 +109,7 @@
     <Compile Include="Directory\IInteresDirectory.cs" />
     <Compile Include="Directory\ISmokeDirectory.cs" />
     <Compile Include="Directory\ISexDirectory.cs" />
+    <Compile Include="Repository\IProfileActionRepository.cs" />
     <Compile Include="Repository\IDirectoryRepository.cs" />
     <Compile Include="Repository\IProfileRepository.cs" />
     <Compile Include="Repository\Specific\IApartmentRepository.cs" />
@@ -159,6 +160,9 @@
       <Project>{79567b22-aa28-4133-a047-601e5f778261}</Project>
       <Name>DataAccess.Public</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Models\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
