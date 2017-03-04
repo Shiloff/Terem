@@ -28,9 +28,7 @@ namespace Business.DataAccess.Public.Repository.Specific
         List<Profile> GetContacts(long profileId, int count = 0);
         #region ProfileActions
         int GetProfileActionsCount(long profileId);
-        ProfileAction GetProfileAction(long profileActionId);
         void AddProfileAction(ProfileAction addAction);
-        void RemoveProfileAction(long id);
         void AddProfileActionLike(long profileActionId, long profileId);
         void RemoveProfileActionLike(long profileActionId, long profileId);
         

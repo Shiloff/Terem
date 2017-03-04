@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using Business.DataAccess.Public.Entities;
 using Business.DataAccess.Public.Repository.Specific;
@@ -68,6 +69,49 @@ namespace Business.DataAccess.Private.Services.Profile
             using (var uow = _unitOfWorkFactory.Create())
             {
                 return uow.ProfileActions.GetProfileActionsWithComments(id).ToList();
+            }
+        }
+
+        public ProfileAction GetProfileAction(long id)
+        {
+            using (var uow = _unitOfWorkFactory.Create())
+            {
+                return uow.ProfileActions.GetProfileActionWithComments(id);
+            }
+        }
+
+        public ProfileAction AddProfileAction(ProfileAction addAction, long profileId)
+        {
+
+            if (string.IsNullOrWhiteSpace(addAction?.Text))
+            {
+                throw new ArgumentException(nameof(addAction));
+            }
+
+            if (profileId != addAction.ProfileWhoId)
+            {
+                throw new AccessViolationException(nameof(addAction));
+            }
+
+            using (var uow = _unitOfWorkFactory.Create())
+            {
+                uow.ProfileActions.Add(addAction);
+                uow.Complete();
+                return addAction;
+            }
+        }
+
+        public void RemoveProfileAction(long id, long profileId)
+        {
+            using (var uow = _unitOfWorkFactory.Create())
+            {
+                var action = uow.ProfileActions.Get(id);
+                if ((profileId != action.ProfileWhoId) && (profileId != action.ProfileId))
+                {
+                    throw new AccessViolationException(nameof(action));
+                }
+                uow.ProfileActions.Remove(action);
+                uow.Complete();
             }
         }
     }

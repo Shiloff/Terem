@@ -118,18 +118,7 @@ namespace Business.DataAccess.Private.Repository.Specific
         {
             return GetProfileActionsQuery(profileId).Count();
         }
-        
-        public ProfileAction GetProfileAction(long profileActionId)
-        {
-            return context.ProfileActions.Where(m => m.ProfileActionId == profileActionId)
-                .Include(m=>m.ProfileActionsLikes)
-                .Include(m => m.Profile)
-                .Include(m => m.ProfileWho)
-                .Include(m => m.Apartment.Type)
-                .Include(m => m.Apartment.ApartmentPhotos.Select(k => k.Links))
-                .Include(m => m.ProfileActionComments)
-                .FirstOrDefault();
-        }
+
         public void AddProfileAction(ProfileAction addAction)
         {
             Profile profile = context.Profiles.Where(m => m.ProfileId == addAction.ProfileId).FirstOrDefault();
@@ -140,22 +129,7 @@ namespace Business.DataAccess.Private.Repository.Specific
                 context.SaveChanges();
             }
         }
-        public void RemoveProfileAction(long removeAction)
-        {
 
-            ProfileAction RemoveAction = context
-                .ProfileActions
-                .Include(m => m.ProfileActionComments)
-                .Where(m => m.ProfileActionId == removeAction)
-                .FirstOrDefault();
-            foreach (var commentId in RemoveAction.ProfileActionComments.Select(m => m.ProfileActionCommentId))
-            {
-               // RemoveProfileActionComment(commentId);
-            }
-
-            context.ProfileActions.Remove(RemoveAction);
-            context.SaveChanges();
-        }
         public void AddProfileActionLike(long profileActionId, long profileId)
         {
             bool profileExist = IsProfileExists(profileId);

@@ -59,5 +59,11 @@ namespace Project.WebUI.Controllers.Profile
             TempData["toastrMessage"] = $"Профиль {_applicationManager.CurrentUser.UserName} изменен";
             TempData["toastrType"] = "success";
         }
+
+        private void AddCustomMessage(string message, string type)
+        {
+            TempData["toastrMessage"] = message;
+            TempData["toastrType"] = type;
+        }
     }
 }

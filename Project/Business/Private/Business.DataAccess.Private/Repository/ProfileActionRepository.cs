@@ -50,5 +50,17 @@ namespace Business.DataAccess.Private.Repository
                 })
                 .ToList();
         }
+
+        public ProfileAction GetProfileActionWithComments(long id)
+        {
+            return DbContext.ProfileActions.Where(m => m.ProfileActionId == id)
+                .Include(m => m.ProfileActionsLikes)
+                .Include(m => m.Profile)
+                .Include(m => m.ProfileWho)
+                .Include(m => m.Apartment.Type)
+                .Include(m => m.Apartment.ApartmentPhotos.Select(k => k.Links))
+                .Include(m => m.ProfileActionComments)
+                .FirstOrDefault();
+        }
     }
 }

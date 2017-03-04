@@ -94,6 +94,9 @@
                 $("#ActionsList").prepend(data);
                 HideLoading('#ajax_loader');
                 $("#NewActionText").val("");
+            })
+            .fail(function (response) {
+                HideLoading('#ajax_loader');
             });
         }
 

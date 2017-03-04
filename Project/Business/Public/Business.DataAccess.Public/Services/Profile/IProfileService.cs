@@ -11,5 +11,8 @@ namespace Business.DataAccess.Public.Services.Profile
         GetContactsResult GetContacts(long profileId, int count = 0);
         void UpdateProfile(Entities.Profile profile, ProfileUpdateMode mode, int[] selectedInteresesId = null);
         List<ProfileAction> GetProfileActions(long id);
+        ProfileAction GetProfileAction(long id);
+        ProfileAction AddProfileAction(ProfileAction addAction, long profileId);
+        void RemoveProfileAction(long id, long profileId);
     }
 }
