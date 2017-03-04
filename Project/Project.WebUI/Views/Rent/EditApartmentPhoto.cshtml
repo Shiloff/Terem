@@ -1,0 +1,151 @@
+﻿@model EditApartmentViewResult
+@{
+    ViewBag.Title = "EditApartment";
+    Layout = "~/Views/Shared/_LayoutInspinia.cshtml";
+}
+
+<div class="row wrapper border-bottom white-bg page-heading">
+    <div class="col-lg-10">
+        <h2>Редактирование квартиры</h2>
+        @Html.MvcSiteMap().SiteMapPath()
+    </div>
+</div>
+<div class="wrapper wrapper-content">
+    <div class="row">
+        <div class="col-md-12">
+            @Html.AntiForgeryToken()
+            @Html.ValidationSummary()
+
+            <div class="tabs-container">
+                <ul class="nav nav-tabs">
+                    <li class=""><a href="@Url.Action("EditApartment", "Rent", new { id = Model.Apartment.ApartmentId })">Основные</a></li>
+                    <li class="active"><a data-toggle="tab" href="#tab-2" aria-expanded="true">Фото</a></li>
+                    <li class=""><a href="@Url.Action("EditApartmentMap", "Rent", new { id = Model.Apartment.ApartmentId })">Карта</a></li>
+                </ul>
+                <div class="tab-content">
+                    <div id="tab-2" class="tab-pane active">
+                        <div class="panel-body">
+                            <div class="table-responsive">
+                                <table class="table table-bordered table-stripped">
+                                    <tr>
+                                        <th>
+                                            Превью
+                                        </th>
+                                        <th>
+                                            Ссылки
+                                        </th>
+                                        <th>
+                                            Сортировка
+                                        </th>
+                                        <th>
+                                            Действия
+                                        </th>
+                                    </tr>
+                                    @foreach (var photo in Model.Apartment.ApartmentPhotos)
+                                    {
+                                        <tr>
+                                            @Html.Partial("_photosEdit2", photo)
+                                            <td>
+                                                <button class="btn btn-white" onclick="removeImage(@photo.ApartmentPhotoId,this)"><i class="fa fa-trash"></i></button>
+                                                @{var heart = photo.ApartmentPhotoId == Model.Apartment.DefaultPhotoId ? "fa-heart" : "fa-heart-o";}
+                                                <button class="btn btn-white" onclick="setApartmentDefaultPhoto(@photo.ApartmentPhotoId,@photo.ApartmentId,this)"><i class="set-default-button fa @heart"></i></button>
+                                            </td>
+                                        </tr>
+                                    }
+                                </table>
+                                @using (Html.BeginForm("EditApartmentPhoto", "Rent", FormMethod.Post, new { @class = "form-horizontal", role = "form", enctype = "multipart/form-data" }))
+                                {
+                                    @Html.Hidden("ApartmentId", Model.Apartment.ApartmentId)
+                                    <div class="btn-group btn-block">
+                                        <label title="Upload image file" for="InputImages" class="btn btn-block btn-white">
+                                            <input type="file" accept="image/*" name="InputImages" id="InputImages" class="hide" multiple>
+                                            Добавить фото
+                                        </label>
+                                    </div>
+                                    <div class="pull-right" id="UploadImages" style="display:none;">
+                                        Выбрано
+                                        <span id="InputImagesCount"></span>
+                                        файлов
+                                        <input type="submit" value="Загрузить" />
+                                    </div>
+
+                                }
+                            </div>
+
+                            @*<div class="lightBoxGallery">
+                                                                @foreach (var photo in Model.Apartment.ApartmentPhotos)
+                                                                {
+                                                                    @Html.Partial("_photosEdit", photo)
+                                                                }
+                                                                <div id="blueimp-gallery" class="blueimp-gallery blueimp-gallery-controls" style="display: none;">
+                                                                    <div class="slides" style="width: 138240px;"></div>
+                                                                    <h3 class="title">Image from Unsplash</h3>
+                                                                    <a class="prev">‹</a>
+                                                                    <a class="next">›</a>
+                                                                    <a class="close">×</a>
+                                                                    <ol class="indicator"></ol>
+                                                                </div>
+                                                            </div>
+                                                            <div class="hr-line-dashed"></div>
+                                    <input type="file" accept="image/*" name="InputImages" id="InputImages" value="Upload images" multiple>
+                                    <div class="text-right">
+                                        <input te="submit" value="Редактировать" class="btn btn-info" />
+                                    </div>
+                                </div>*@
+                        </div>
+                    </div>
+                </div>
+
+
+            </div>
+        </div>
+    </div>
+
+
+
+    @section Styles{
+        @Styles.Render("~/Content/plugins/blueimp/css/")
+    }
+    @section Scripts{
+        @Scripts.Render("~/plugins/lightboxGallery")
+        <script>
+            function removeImage(ApartmentPhotoId,btn) {
+                var value = { ApartmentPhotoId: ApartmentPhotoId };
+                $(btn).addClass("disabled");
+                $.post("@Url.Action("RemovePhotoApartment")",
+                    value,
+                    function (result) {
+                        $(btn).val("Удалено");
+                        $(btn).parent().parent().remove();
+                    });
+            }
+
+            function setApartmentDefaultPhoto(ApartmentPhotoId, ApartmentId, btn) {
+                var value = { PhotoId: ApartmentPhotoId, ApartmentId: ApartmentId };
+                $(btn).addClass("disabled");
+                $.post("@Url.Action("SetApartmentDefaultPhoto")",
+                    value,
+                function (result) {
+                    $(btn).removeClass("disabled");
+                    $(".set-default-button").removeClass("fa-heart");
+                    $(".set-default-button").addClass("fa-heart-o");
+                    $(btn).find('i').removeClass("fa-heart-o");
+                    $(btn).find('i').addClass("fa-heart");
+                });
+            }
+            $(document).ready(function () {
+                var $InputImagesCount = $("#InputImagesCount");
+                var $inputImage = $("#InputImages");
+                $inputImage.change(function () {
+                    $InputImagesCount.html(this.files.length);
+                    $("#UploadImages").show();
+                });
+            });
+        </script>
+    }
+
+
+
+
+
+

@@ -1,0 +1,12 @@
+﻿@model IndexProfileActionsPartialResult
+@foreach (var action in Model.Actions)
+{
+    
+        @Html.Partial("LoadAction", new LoadProfileActionResult
+       {
+           Profile = Model.Profile,
+           ProfileAction = action,
+           ProfileActionComments = action.ProfileActionComments.ToList(),
+           CommentsCount = Model.CommentsCount
+       })
+}

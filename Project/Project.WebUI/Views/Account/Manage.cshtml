@@ -1,0 +1,46 @@
+﻿@using Project.WebUI.Models;
+@using Microsoft.AspNet.Identity;
+@{
+    ViewBag.Title = "Manage Account";
+    Layout = "~/Views/Shared/_LayoutInspinia.cshtml";
+}
+<div class="row wrapper border-bottom white-bg page-heading">
+    <div class="col-lg-10">
+        <h2>Настройки</h2>
+        @Html.MvcSiteMap().SiteMapPath()
+    </div>
+</div>
+<div class="wrapper wrapper-content">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="tabs-container">
+                <ul class="nav nav-tabs">
+                    <li class="active"><a href="#" aria-expanded="false">Пароль</a></li>
+                    <li class=""><a href="@Url.Action("ChangeEmail","Account")">Email</a></li>
+                    <li class=""><a href="@Url.Action("External","Account")">Соцсети</a></li>
+                    <li class=""><a href="@Url.Action("Premium","Account")">Премиум</a></li>
+                </ul>
+                <div class="tab-content">
+                    <div id="tab-1" class="tab-pane active">
+                        <div class="panel-body">
+                            @if (ViewBag.HasLocalPassword)
+                            {
+                                @Html.Partial("_ChangePasswordPartial")
+                            }
+                            else
+                            {
+                                @Html.Partial("_SetPasswordPartial")
+                            }
+                            @*<section id="externalLogins">
+                                    @Html.Partial("_ExternalLoginsListPartial", new { Action = "LinkLogin", ReturnUrl = ViewBag.ReturnUrl })
+                                </section>*@
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+    @section Scripts {
+        @Scripts.Render("~/bundles/jqueryval")
+    }

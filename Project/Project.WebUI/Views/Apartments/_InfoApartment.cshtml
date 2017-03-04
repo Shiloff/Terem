@@ -1,0 +1,51 @@
+﻿@model Business.DataAccess.Public.Entities.Apartment
+<div>
+    <h4 style="display:inline;">@Model.GetAdress</h4><a href="#mapAnchor" style="margin-left:15px;">Показать на карте</a>
+</div>
+<div class="hr-line-dashed"></div>
+<div>
+
+    <table>
+        <tr>
+            <td>Общая информация:</td>
+            <td></td>
+        </tr>
+        <tr>
+            <td>Этаж</td>
+            <td>@Model.Floor&nbsp;/&nbsp;@Model.FloorTotal</td>
+        </tr>
+        <tr>
+            <td>Общая площадь:</td>
+            <td>@Model.AreaTotal&nbsp;м<sup>2</sup></td>
+        </tr>
+        <tr>
+            <td>Жилая площадь:</td>
+            <td>@Model.AreaLiving&nbsp;м<sup>2</sup></td>
+        </tr>
+        <tr>
+            <td>Площадь кухни:</td>
+            <td>@Model.AreaKitchen&nbsp;м<sup>2</sup></td>
+        </tr>
+    </table>
+</div>
+<div class="hr-line-dashed"></div>
+<div class="apart-options">
+    <div>
+        Опции:
+    </div>
+    <ul>
+        @foreach (var option in Model.ApartmentOptions)
+        {
+            <li>@option.Name</li>
+        }
+    </ul>
+</div>
+<div style="clear:both;"></div>
+<div class="hr-line-dashed"></div>
+<div>
+    <div>
+        Описание:
+    </div>
+    @Model.Description
+</div>
+

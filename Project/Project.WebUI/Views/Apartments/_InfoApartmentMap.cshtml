@@ -1,0 +1,16 @@
+﻿@model Business.DataAccess.Public.Entities.Apartment
+@Html.HiddenFor(m => m.Latitude)
+@Html.HiddenFor(m => m.Longitude)
+<div class="col-lg-12">
+    <h4>Карта:</h4>
+    <a name="mapAnchor"></a>
+    @Html.Hidden("Latitude", Model.Latitude)
+    @Html.Hidden("Longitude", Model.Longitude)
+    <div id="map" class="col-lg-12" style="height: 450px"></div>
+    @*<div class="col-lg-3 b-r">
+    </div>*@
+</div>
+
+
+<script src="https://api-maps.yandex.ru/2.1/?lang=ru_RU" type="text/javascript"></script>
+<script src="~/Scripts/app/apartmentMap.js"></script>

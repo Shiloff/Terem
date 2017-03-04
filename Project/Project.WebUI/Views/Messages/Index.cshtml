@@ -1,0 +1,84 @@
+﻿@model IndexMessagesViewResult
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_LayoutInspinia.cshtml";
+}
+<style>
+
+</style>
+<div class="row wrapper border-bottom white-bg page-heading">
+    <div class="col-lg-10">
+        <h2>Сообщения</h2>
+        @Html.MvcSiteMap().SiteMapPath()
+    </div>
+</div>
+<div class="row">
+    <div class="col-lg-12">
+        <div class="ibox chat-view">
+            <div class="ibox-title">                
+               Чат
+            </div>
+            <div class="ibox-content">
+                <div class="row">
+                    <div class="col-md-9 ">
+                        <div class="chat-discussion">
+
+                        </div>
+                        <div class="">
+                            <div class="chat-message-form">
+                                <div class="input-group" id="message_entry">
+                                    <textarea class="form-control message-input" name="message" placeholder="Введите Ваше сообщение..." id="message-input"></textarea>
+                                    <span class="input-group-addon btn btn-primary" id="sendMessage">
+                                        Отправить
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-3">
+                        <div class="chat-users">
+                            <div class="users-list">
+                                @Html.Hidden("ChatOpen", Model.openedChat)
+                                @*@Html.Hidden("ProfileId",Model.Profile.ProfileId)*@
+                                @foreach (var Dialog in Model.Dialogs)
+                                {
+                                    <div onclick="GetChat('@Dialog.Profile.ProfileId')" style="cursor:pointer;">
+                                        <div class="chat-user" id="chat_user_@Dialog.Profile.ProfileId">
+                                            <div class="pull-right" style="padding-top: 7px; ">
+
+                                                <span class="badge badge-primary" id="chat_user_new_@Dialog.Profile.ProfileId">@(Dialog.NewMessages > 0 ? Dialog.NewMessages.ToString() : "")</span>
+                                                <div style="clear:both;"></div>
+
+                                            </div>
+                                            <img class="chat-avatar" src="@Dialog.Profile.GetImageAvatarLink" alt="">
+                                            <div class="chat-user-name" style="padding-top: 0px; padding-bottom: 0px;">
+                                                
+                                                    @Dialog.Profile.FirstName @Dialog.Profile.LastName<br/>
+                                                    <sup style="">@Dialog.LastUpdate</sup>
+                                            </div>
+                                        </div>
+                                    </div>
+                                }
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+                <div class="row">
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+@*<div class="ajax-loader" id="ajax_loader"></div>*@
+@*@section Scripts{    
+<script src="~/Scripts/jquery.signalR-2.2.0.js"></script>
+<script src="~/signalr/hubs"></script>
+    <script src="~/Scripts/app/chat.js"></script>
+
+
+
+}*@
+

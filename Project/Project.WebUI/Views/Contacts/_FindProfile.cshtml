@@ -1,0 +1,31 @@
+﻿@model Business.DataAccess.Public.Entities.Profile
+@*<div class="col-lg-4">*@
+    <div class="contact-box">
+
+        <div class="col-sm-4">
+            <div class="text-center">
+                <img alt="image" class="img-circle m-t-xs img-responsive" src="@Model.GetImageAvatarBigLink">
+                <div class="m-t-xs font-bold">@(Model.Activity != null ? Model.Activity.Name : "Не указано")</div>
+            </div>
+        </div>
+        <div class="col-sm-8">
+            <h3><strong>@Model.FirstName @Model.LastName</strong></h3>
+            <p><i class="fa fa-map-marker"></i> @Model.Town</p>
+            @foreach (var interes in Model.Intereses)
+            {
+                <span class="label label-info">@interes.Name</span>
+            }
+            <h5>
+                Обо мне
+            </h5>
+            <p>
+                <div class="col-md-12">
+                    @Html.Raw(Model.AboutMe)
+                </div>
+                <div class="clearfix"></div>
+                <a href="@Url.Action("Index", "Profile", new { id = Model.ProfileId })" class="btn btn-xs btn-outline btn-primary"><i class="fa fa-user"></i> Профиль</a>
+                <a href="@Url.Action("Index", "Messages", new { openedChat = Model.ProfileId })" class="btn btn-xs btn-outline btn-info"><i class="fa fa-comment"></i> Чат</a>
+        </div>
+        <div class="clearfix"></div>
+    </div>
+@*</div>*@

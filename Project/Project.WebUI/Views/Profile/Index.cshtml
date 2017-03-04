@@ -1,0 +1,219 @@
+﻿@model ProfileIndexResult
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_LayoutInspinia.cshtml";
+}
+
+@*<div class="row wrapper border-bottom white-bg page-heading">
+    <div class="col-lg-10">
+        <h2>Ваш профиль</h2>
+        @Html.MvcSiteMap().SiteMapPath()
+    </div>
+</div>*@
+
+<div class="wrapper wrapper-content">
+    <div class="row">
+        <div class="col-sm-4">
+            <div class="ibox float-e-margins">
+                <div class="ibox-title">
+                    <h5>Профиль</h5>
+                    @if (Model.MyProfile)
+                    {
+                        <div class="ibox-tools">
+                            <a href="@Url.Action("ProfileEdit", "Profile")">
+                                <input type="button" value="Настроить" class="btn btn-white btn-xs"/>
+                            </a>
+                        </div>
+                    }
+                </div>
+                @Html.Partial("_IndexProfile", Model.Profile)
+                <div class="ibox-content profile-content">
+                    @foreach (var contact in Model.Contacts)
+                    {
+                        @Html.Partial("_IndexContacts", contact)
+                    }
+                    <div class="clearfix"></div>
+                    <div class="hr-line-dashed"></div>
+                    <div class="user-button">
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <a class="btn btn-primary btn-sm btn-block btn-outline" href="@Url.Action("Index", "Messages", new {openedChat = Model.Profile.ProfileId})">
+                                    <i class="fa fa-group"></i> Всего контактов @Model.ContactsCount
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-sm-8">
+            <div class="ibox float-e-margins">
+
+                <div class="social-feed-box" id="NewActionBox">
+                    <div class="social-avatar">
+                        <a href="" class="pull-left">
+                            <img alt="image" src="@Model.Me.GetImageAvatarLink">
+                        </a>
+                        <div class="media-body">
+                            <textarea class="form-control" placeholder="Введите комментарий..." id="NewActionText"></textarea>
+
+                        </div>
+                        <div class="social-body">
+                            <div class="btn-group">
+                                <button class="btn btn-white btn-xs" onclick="AddAction(@Model.Profile.ProfileId, @Model.Me.ProfileId)"><i class="fa fa-thumbs-up"></i> Добавить</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div id="ActionsList">
+                    @Html.Action("Actions", new {id = Model.Profile.ProfileId})
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+@section Scripts{
+    <script src="/Scripts/app/actions.js"></script>
+    <script>
+        function AddAction(profileId, profileWhoId) {
+            $.ajaxSetup({
+                cache: false
+            });
+            var value = {
+                ProfileId: profileId,
+                ProfileWhoId: profileWhoId,
+                Text: $("#NewActionText").val()
+            };
+            ShowLoading('NewActionBox', '#ajax_loader', 0);
+            $.post("@Url.Action("AddAction", "Profile")", value, function(data) {
+                @*$("#ActionsList").load("@Url.Action("Actions", "Profile", new { id = Model.Profile.ProfileId })", function () {                                      
+                    HideLoading('#ajax_loader');
+                    $("#NewActionText").val("");
+                })*@
+                $("#ActionsList").prepend(data);
+                HideLoading('#ajax_loader');
+                $("#NewActionText").val("");
+            });
+        }
+
+        function RemoveAction(profileActionId, div) {
+            $.ajaxSetup({
+                cache: false
+            });
+            var value = {
+                ProfileActionId: profileActionId
+            };
+            $.post("@Url.Action("RemoveAction", "Profile")", value, function(res) {
+                $("#" + div).remove();
+                @*$("#ActionsList").load("@Url.Action("Actions", "Profile", new { id = Model.Profile.ProfileId })", function () {                    
+                })*@
+            });
+        }
+
+        function AddActionLike(profileActionId, div) {
+            $.ajaxSetup({
+                cache: false
+            });
+            var value = {
+                ProfileActionId: profileActionId
+            };
+            $.post("@Url.Action("AddActionLike", "Profile")", value, function(data) {
+                @*$("#ActionsList").load("@Url.Action("Actions", "Profile", new { id = Model.Profile.ProfileId })", function () {                    
+                })*@
+                $("#" + div).replaceWith(data);
+            });
+        }
+
+        function RemoveActionLike(profileActionId, div) {
+            $.ajaxSetup({
+                cache: false
+            });
+            var value = {
+                ProfileActionId: profileActionId
+            };
+            $.post("@Url.Action("RemoveActionLike", "Profile")", value, function(data) {
+                @*$("#ActionsList").load("@Url.Action("Actions", "Profile", new { id = Model.Profile.ProfileId })", function () {                    
+                })*@
+                $("#" + div).replaceWith(data);
+            });
+        }
+
+
+        function AddComment(profileActionId, profileId, ProfileActionTextArea, div) {
+            $.ajaxSetup({
+                cache: false
+            });
+            var value = {
+                ProfileActionId: profileActionId,
+                ProfileId: profileId,
+                Text: $("#" + ProfileActionTextArea).val()
+            };
+            $.post("@Url.Action("AddComment", "Profile")", value, function(data) {
+                $("#" + div).append(data);
+                $("#" + ProfileActionTextArea).val("");
+                @*$("#ActionsList").load("@Url.Action("Actions", "Profile", new { id = Model.Profile.ProfileId })", function () {                   
+                })*@
+            });
+        }
+
+        function RemoveComment(profileActionCommentId, div) {
+            $.ajaxSetup({
+                cache: false
+            });
+            var value = {
+                ProfileActionCommentId: profileActionCommentId
+            };
+            $.post("@Url.Action("RemoveComment", "Profile")", value, function(res) {
+                @*$("#ActionsList").load("@Url.Action("Actions", "Profile", new { id = Model.Profile.ProfileId })", function () {                   
+                })*@
+                $("#" + div).remove();
+            });
+        }
+
+        function AddActionCommentLike(profileActionCommentId, div) {
+            $.ajaxSetup({
+                cache: false
+            });
+            var value = {
+                ProfileActionCommentId: profileActionCommentId
+            };
+            $.post("@Url.Action("AddActionCommentLike", "Profile")", value, function(data) {
+                $("#" + div).replaceWith(data);
+                @*$("#ActionsList").load("@Url.Action("Actions", "Profile", new { id = Model.Profile.ProfileId })", function () {                    
+                })*@
+            });
+        }
+
+        function RemoveActionCommentLike(profileActionCommentId, div) {
+            $.ajaxSetup({
+                cache: false
+            });
+            var value = {
+                ProfileActionCommentId: profileActionCommentId
+            };
+            $.post("@Url.Action("RemoveActionCommentLike", "Profile")", value, function(data) {
+                $("#" + div).replaceWith(data);
+                @*$("#ActionsList").load("@Url.Action("Actions", "Profile", new { id = Model.Profile.ProfileId })", function () {                    
+                })*@
+            });
+        }
+
+        function LoadComments(ProfileActionId, div) {
+            $("#" + div).load("@Url.Action("LoadComments", "Profile")/?id=" + ProfileActionId, function() {
+            });
+
+            @*$.get("@Url.Action("LoadComments", "Profile")/?id=" + ProfileActionId,function(data){
+                $("#" + div).append(data);
+            });*@
+        }
+
+
+        function ShowNewCommentDialog(dialog, btn) {
+            var $btn = $(btn);
+            $btn.addClass("btn-info");
+            $btn.removeClass("btn-white");
+            $("#" + dialog).show();
+        }
+    </script>
+}

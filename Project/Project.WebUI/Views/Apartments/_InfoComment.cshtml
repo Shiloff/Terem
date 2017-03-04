@@ -1,0 +1,34 @@
+﻿@model InfoApartmentCommentResult
+<div id="Comment_@Model.Comment.ApartmentCommentId" style="border-top:1px; border-color:black;">
+    <div class="social-avatar">
+        <a href="@Url.Action("Index", "Profile", new { id = Model.Comment.Profile.ProfileId })" class="pull-left">
+            <img alt="image" src="@Model.Comment.Profile.GetImageAvatarLink">
+        </a>
+        <div class="media-body">
+            <a href="@Url.Action("Index", "Profile", new { id = Model.Comment.Profile.ProfileId })" style="display:inline-block">
+                @Model.Comment.Profile.FirstName @Model.Comment.Profile.LastName
+            </a>
+            <small class="text-muted" style="display:block;">@Model.Comment.Date</small>
+        </div>
+
+    </div>
+    <div class="social-body">
+        <p>
+            @Model.Comment.Text
+        </p>
+        <div class="btn-group">
+            @if (Model.Comment.ApartmentCommentsLikes.Where(m => m.ProfileId == Model.Me.ProfileId).FirstOrDefault() == null)
+            {
+                <button class="btn btn-white btn-xs" onclick="AddApartmentCommentLike(@Model.Comment.ApartmentCommentId, 'Comment_@Model.Comment.ApartmentCommentId') "><i class="fa fa-thumbs-up"></i> @Model.Comment.ApartmentCommentsLikes.Count Like!</button>
+            }
+            else
+            {
+                <button class="btn btn-success btn-xs" onclick="RemoveApartmentCommentLike(@Model.Comment.ApartmentCommentId, 'Comment_@Model.Comment.ApartmentCommentId')"><i class="fa fa-thumbs-up"></i> @Model.Comment.ApartmentCommentsLikes.Count Like!</button>
+            }
+        </div>
+        @if ((Model.Me.ProfileId == Model.Comment.ProfileId) || (Model.Me.ProfileId == Model.Apartment.ProfileId))
+        {
+            <button class="btn btn-danger btn-xs pull-right btn-outline" onclick="RemoveAction(@Model.Comment.ApartmentCommentId, 'Comment_@Model.Comment.ApartmentCommentId')"><i class="fa fa-trash"></i></button>
+        }
+    </div>
+</div>

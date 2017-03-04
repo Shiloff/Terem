@@ -1,0 +1,29 @@
+﻿@model Business.DataAccess.Public.Entities.Apartment
+<div class="col-lg-12">
+    <div class="contact-box">
+
+        <div class="col-sm-2 b-r">
+            <div class="text-center">
+                <img alt="image" class="m-t-xs img-responsive" src="@Model.GetDefaultPhotoLink">
+            </div>
+        </div>
+        <div class="hr-line-dashed hidden-sm hidden-md hidden-lg"></div>
+        <div class="col-sm-8 b-r">
+            <h3><strong> @Model.Type.Name</strong><small> &nbsp;(@Model.GetDateString)</small></h3>
+            <p><i class="fa fa-map-marker"></i>&nbsp;@Model.Town @Model.Adress</p>
+            <p>@Html.DisplayName("Плащадь:")&nbsp;@Model.AreaTotal м<sup>2</sup>&nbsp;/&nbsp;@Model.AreaLiving м<sup>2</sup>&nbsp;/&nbsp;@Model.AreaKitchen м<sup>2</sup></p>
+            <p>@Html.DisplayName("Описание:")&nbsp;@Model.Description</p>
+            <a href="@Url.Action("Info", "Apartments", new { id=Model.ApartmentId})" class="btn btn-xs btn-outline btn-primary"><i class="fa fa-info"></i> Подробнее</a>
+        </div>
+
+        <div class="hr-line-dashed hidden-sm hidden-md hidden-lg"></div>
+        <div class=" col-sm-2">
+            <img alt="image" class="m-t-xs img-responsive" src="@Model.Profile.GetImageAvatarLink">
+            @Model.Profile.FirstName
+            <div class="clearfix"></div>
+            <a href="@Url.Action("Index", "Profile", new { id = Model.Profile.ProfileId })" class="btn btn-xs btn-outline btn-primary"><i class="fa fa-user"></i> Профиль</a>
+            <a href="@Url.Action("Index", "Messages", new { openedChat = Model.Profile.ProfileId })" class="btn btn-xs btn-outline btn-info"><i class="fa fa-comment"></i> Чат</a>
+        </div>
+        <div class="clearfix"></div>
+    </div>
+</div>

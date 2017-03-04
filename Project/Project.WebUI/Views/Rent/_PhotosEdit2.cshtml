@@ -1,0 +1,26 @@
+﻿@model Business.DataAccess.Public.Entities.ApartmentPhoto
+           @{
+               var link = @Model.Links.Where(m => m.TypeId == 3).FirstOrDefault().Link;
+               var link2 = @Model.Links.Where(m => m.TypeId == 1).FirstOrDefault().Link;
+               var link3 = @Model.Links.Where(m => m.TypeId == 2).FirstOrDefault().Link;
+           }
+<td>
+    <img src="@link" />
+</td>
+<td>
+    <input type="text" class="form-control" disabled="" value="@link">
+    <input type="text" class="form-control" disabled="" value="@link2">
+    <input type="text" class="form-control" disabled="" value="@link3">
+</td>
+<td>
+    <input type="text" class="form-control" value="1">
+</td>
+
+
+    @*<a href="@Model.Links.Where(m=>m.TypeId==1).FirstOrDefault().Link" title="1" data-gallery>
+        <img src="@Model.Links.Where(m => m.TypeId == 3).FirstOrDefault().Link">
+    </a>
+    <input type="button" class="btn btn-danger" value="удалить" onclick="removeImage(@Model.ApartmentPhotoId,this)" />
+    <input type="button" class="btn btn-info" value="Стартовая" onclick="setApartmentDefaultPhoto(@Model.ApartmentPhotoId,@Model.ApartmentId,this)" />*@
+
+

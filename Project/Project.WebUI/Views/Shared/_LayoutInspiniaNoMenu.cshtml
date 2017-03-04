@@ -1,0 +1,31 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title - My ASP.NET Application</title>
+    @if (IsSectionDefined("Styles"))
+    {
+        @RenderSection("Styles", required: false)
+    }
+    @Styles.Render("~/Content/cssNew")
+    @Styles.Render("~/font-awesome/css")
+    @Styles.Render("~/plugins/iCheckStyles")
+</head>
+<body class="gray-bg">
+    @RenderBody()
+
+    @Scripts.Render("~/bundles/jqueryNew")
+    @Scripts.Render("~/bundles/bootstrapNew")
+    @Scripts.Render("~/plugins/iCheck")
+    @RenderSection("scripts", required: false)
+    <script>
+        $(document).ready(function () {
+            $('.i-checks').iCheck({
+                checkboxClass: 'icheckbox_square-green',
+                radioClass: 'iradio_square-green',
+            });
+        });
+    </script>
+</body>
+</html>

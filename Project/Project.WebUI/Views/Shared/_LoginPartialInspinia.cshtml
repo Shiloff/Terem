@@ -1,0 +1,52 @@
+﻿@using Microsoft.AspNet.Identity
+@using Microsoft.AspNet.Identity.Owin
+
+@{
+    var user = System.Web.HttpContext.Current.GetOwinContext().GetUserManager<ApplicationManager>().FindById(System.Web.HttpContext.Current.User.Identity.GetUserId());
+}
+@if (user!=null)
+{
+    @Html.Hidden("ProfileId", user.ProfileId)
+}
+@if (Request.IsAuthenticated)
+{  
+                   using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { id = "logoutForm", @class = "navbar-right" }))
+                            {  
+                                @Html.AntiForgeryToken()
+                            }    
+    <div class="dropdown profile-element">
+            <span>
+                <img alt="image" class="img-circle" src="@Url.Action("GetAvatarImage", "Profile", new { profileId = user.ProfileId })" />
+            </span>
+                        <a href="@Url.Action("Index","Profile")" data-toggle="dropdown" class="dropdown-toggle">
+                            <span class="clear">
+                                <span class="block m-t-xs">
+                                    <strong class="font-bold" style="color:white;">@user.UserName</strong>
+                                </span> <span class="text-muted text-xs block">
+                                    @(((System.Security.Claims.ClaimsIdentity)User.Identity).Claims.Where(c => c.Type == System.Security.Claims.ClaimTypes.Role).Select(c => c.Value).FirstOrDefault())
+                                    <b class="caret">
+                                    </b>
+                                </span>
+                            </span>
+                        </a>
+                       
+                        <ul class="dropdown-menu animated fadeInRight m-t-xs">
+                            <li>@Html.ActionLink("Настройки", "Manage", "Account", routeValues: null, htmlAttributes: new { title = "Manage" })</li>
+                            @*<li><a href="contacts.html">Contacts</a></li>
+                            <li><a href="contacts.html">Profile</a></li>
+                            <li><a href="mailbox.html">Mailbox</a></li>*@
+                            <li class="divider"></li>
+                            <li>
+                                <a href="javascript:document.getElementById('logoutForm').submit()">Log off</a>
+                            </li>
+                        </ul>
+                   
+                </div>
+    <div class="logo-element">
+        TM+
+    </div>
+}
+else
+{
+
+}

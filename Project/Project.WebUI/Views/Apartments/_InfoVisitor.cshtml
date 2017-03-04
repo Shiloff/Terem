@@ -1,0 +1,26 @@
+﻿@model Business.DataAccess.Public.Entities.ApartmentVisitors
+@*<img src="@Model.Profile.GetImageAvatarLink" />
+<span>@Model.Profile.FirstName @Model.Profile.LastName</span>
+
+<div class="hr-line-dashed"></div>
+*@
+    <div class="social-comment">
+    <a href="@Url.Action("Index", "Profile", new { id = Model.Profile.ProfileId })" class="pull-left">
+        <img alt="image" class="img-circle" src="@Model.Profile.GetImageAvatarLink">
+    </a>
+    <div class="media-body ">
+        @*<small class="pull-right">@Model.Count</small>*@
+        <a href="@Url.Action("Index", "Profile", new { id = Model.Profile.ProfileId })">
+            <strong>@Model.Profile.FirstName @Model.Profile.LastName</strong>
+        </a> <br>
+        <small class="text-muted">@Model.LastDate</small>
+        @*<div class="well">
+                Комментарий
+            </div>*@
+        <br />
+        <div class="btn-group actions">
+            <a href="@Url.Action("Index", "Profile", new { id = Model.Profile.ProfileId })" class="btn btn-xs btn-outline btn-primary"><i class="fa fa-user"></i> Профиль</a>
+            <a href="@Url.Action("Index", "Messages", new { openedChat = Model.Profile.ProfileId })" class="btn btn-xs btn-outline btn-info"><i class="fa fa-comment"></i> Чат</a>
+        </div>
+    </div>
+</div>    

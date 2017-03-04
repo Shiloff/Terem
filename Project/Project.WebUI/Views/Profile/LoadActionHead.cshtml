@@ -1,0 +1,52 @@
+﻿@model LoadProfileActionHeadResult
+           @if (Model.ProfileAction != null)
+{
+    <div id="ActionHead_@Model.ProfileAction.ProfileActionId">
+        <div class="social-avatar">
+            <a href="@Url.Action("Index", "Profile", new { id =Model.ProfileAction.ProfileWho.ProfileId })" class="pull-left">
+                <img alt="image" src="@Model.ProfileAction.ProfileWho.GetImageAvatarLink">
+            </a>
+            <div class="media-body">
+                <a href="@Url.Action("Index", "Profile", new { id = Model.ProfileAction.ProfileWho.ProfileId })" style="display:inline-block">
+                    @Model.ProfileAction.ProfileWho.FirstName @Model.ProfileAction.ProfileWho.LastName
+                </a>
+
+                <small class="text-muted" style="display:block;">@Model.ProfileAction.DateString</small>
+            </div>
+        </div>
+        <div class="social-body">
+            <p>
+                @Model.ProfileAction.Text
+            </p>
+            @if ((Model.ProfileAction.Apartment != null) && ((Model.ProfileAction.ProfileActionTypeId == 3) || (Model.ProfileAction.ProfileActionTypeId == 4)))
+            {
+                @Html.Partial("_ActionsApartment", Model.ProfileAction.Apartment)
+            }
+            <div class="btn-group">
+                @if (Model.ProfileAction.ProfileActionsLikes.Where(m => m.ProfileId == Model.Profile.ProfileId).FirstOrDefault() == null)
+                {
+                    <button class="btn btn-white btn-xs" onclick="AddActionLike(@Model.ProfileAction.ProfileActionId,'ActionHead_@Model.ProfileAction.ProfileActionId')"><i class="fa fa-thumbs-up"></i> @Model.ProfileAction.ProfileActionsLikes.Count Like!</button>
+                }
+                else
+                {
+                    <button class="btn btn-success btn-xs" onclick="RemoveActionLike(@Model.ProfileAction.ProfileActionId,'ActionHead_@Model.ProfileAction.ProfileActionId')"><i class="fa fa-thumbs-up"></i> @Model.ProfileAction.ProfileActionsLikes.Count Like!</button>
+                }
+
+                <button class="btn btn-white btn-xs" onclick="ShowNewCommentDialog('ProfileActionComment_@Model.ProfileAction.ProfileActionId',this)"><i class="fa fa-comments"></i> Комментарий</button>
+                @if ((Model.ProfileAction.Apartment != null) && ((Model.ProfileAction.ProfileActionTypeId == 3) || (Model.ProfileAction.ProfileActionTypeId == 4)))
+                {
+                    <a href="@Url.Action("Info", "Apartments", new { id = Model.ProfileAction.Apartment.ApartmentId })" class="btn btn-xs btn-outline btn-primary"><i class="fa fa-info"></i> Подробнее</a>
+                }
+            </div>
+            @if ((Model.Profile.ProfileId == Model.ProfileAction.ProfileId) || (Model.Profile.ProfileId == Model.ProfileAction.ProfileWhoId))
+            {
+                <button class="btn btn-danger btn-xs pull-right btn-outline" onclick="RemoveAction(@Model.ProfileAction.ProfileActionId,'Action_@Model.ProfileAction.ProfileActionId')"><i class="fa fa-trash"></i></button>
+            }
+        </div>
+
+    </div>
+}
+           else
+           {
+            <input type="button" class="btn btn-block btn-white btn-outline" value="Удалено">
+           }

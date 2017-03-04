@@ -1,0 +1,26 @@
+﻿@model UnreadMessagesShortResult
+@foreach (var profile in Model.Dialogs)
+{
+    if (profile.Profile != null) { 
+    <li>
+        <div class="dropdown-messages-box">
+            <a href="@Url.Action("Index", "Messages", new { openedChat = profile.Profile.ProfileId })" class="pull-left">
+                <img alt="image" class="img-circle" src="@profile.Profile.GetImageAvatarLink">
+            </a>
+            <div class="media-body">
+                <strong>@profile.Profile.FirstName @profile.Profile.LastName</strong> пишет:<br>
+                <strong>@profile.LastMessage</strong><br>
+                <span class="text-muted">@profile.LastUpdate</span>
+            </div>
+        </div>
+    </li>
+    <li class="divider"></li>
+    }
+}
+<li>
+    <div class="text-center link-block">
+        <a href="@Url.Action("Index","Messages")">
+            <i class="fa fa-envelope"></i> <strong>Прочитать все сообщения</strong>
+        </a>
+    </div>
+</li>

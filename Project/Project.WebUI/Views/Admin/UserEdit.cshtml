@@ -1,0 +1,64 @@
+﻿@using Project.WebUI.Models
+@model AdminUserEditViewResult
+@{
+    ViewBag.Title = "UserEdit";
+    Layout = "~/Views/Shared/_LayoutInspinia.cshtml";
+}
+
+<div class="row wrapper border-bottom white-bg page-heading">
+    <div class="col-lg-10">
+        <h2>Пользователь @Model.User.UserName</h2>
+        @Html.MvcSiteMap().SiteMapPath()
+    </div>
+</div>
+<div class="wrapper wrapper-content">
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="ibox float-e-margins">
+                <div class="ibox-title">
+                    <h5>Редактирование</h5>
+                </div>
+                <div class="ibox-content">
+                    @using (Html.BeginForm("UserEdit", "Admin",FormMethod.Post, new { @class="form-horizontal"}))
+                    {
+                        @Html.HiddenFor(m => m.returnUrl)
+                        @Html.HiddenFor(m => m.User.Id)
+                        <div class="form-group">
+                            @Html.LabelFor(m => m.User.UserName, new { @class = "col-xs-2 control-label" })
+                            <div class=" col-xs-10">@Html.EditorFor(m => m.User.UserName, new { @class = "from-control " })</div>
+                        </div>      
+                        <div class="hr-line-dashed"></div>
+                        <div class="form-group">
+                        @Html.Label("Роли", new { @class = "col-xs-2 control-label" })
+                            <div class=" col-xs-10">
+                                @for (int i = 0; i < Model.Roles.Count(); i++)
+                                {
+                                    
+                                    @Html.Hidden("SelectedRoles[" + i + "].Name", Model.Roles[i].Name);
+                                    bool Checked = Model.User.Roles.Select(m => m.RoleId).Contains(Model.Roles[i].Id) ? true : false;                   
+                                    <div class="checkbox i-checks">       
+                                        @Html.CheckBox("SelectedRoles[" + i + "].Checked", Checked)  
+                                        @Html.Label(Model.Roles[i].Name)                                        
+                                    </div>
+                                }
+                            </div> 
+                        </div>                          
+                        <div class="hr-line-dashed"></div>
+                        <div class="form-group">
+                            @Html.Label("Забанен", new { @class = "col-xs-2 control-label" })
+                            <div class=" col-xs-10">
+                                <div class="checkbox i-checks">
+                                    @Html.CheckBoxFor(m=>m.Banned, Model.Banned)
+                                    @Html.LabelFor(m => m.Banned)
+                                </div>
+                            </div>
+                         </div>           
+                        <div class="">
+                            <input type="submit" value="Сохранить" class="btn btn-success"><a href="@Model.returnUrl" class="btn btn-white">Назад</a>
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
