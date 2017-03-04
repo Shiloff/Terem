@@ -114,57 +114,11 @@ namespace Business.DataAccess.Private.Repository.Specific
         {
             return context.ProfileActions.Where(m => m.ProfileId == profileId).AsQueryable();
         }
-        public int GetProfileActionsCount(long profileId, int countActions = 0, int countComments = 0)
+        public int GetProfileActionsCount(long profileId)
         {
             return GetProfileActionsQuery(profileId).Count();
         }
-        public List<ProfileAction> GetProfileActions(long profileId, int countActions = 0, int countComments = 0)
-        {
-            var query = GetProfileActionsQuery(profileId)
-                  .Include(m => m.ProfileWho)
-                  .Include(m => m.ProfileActionComments.Select(k => k.Profile))
-                  .Include(m => m.ProfileActionComments.Select(k => k.ProfileActionsCommentsLikes))
-                  .Include(m => m.Profile)
-                  .Include(m => m.Apartment.Type)
-                  .Include(m => m.Apartment.ApartmentPhotos.Select(k => k.Links))
-                  .Include(m => m.ProfileActionsLikes)
-                  .OrderByDescending(m => m.Date).AsQueryable();
-            if (countActions > 0)
-            {
-                query = query.Take(countActions);
-            }
-            
 
-            return query
-                .AsEnumerable()
-                .Select(m => new ProfileAction()
-                {
-                    Date = m.Date,
-                    Profile = m.Profile,
-                    ProfileWho = m.ProfileWho,
-                    Text = m.Text,
-                    ProfileActionId = m.ProfileActionId,
-                    ProfileId = m.ProfileId,
-                    ProfileWhoId = m.ProfileWhoId,
-                    ProfileActionTypeId = m.ProfileActionTypeId,
-                    ProfileActionComments = m.ProfileActionComments.OrderBy(k => k.Date).Skip(m.ProfileActionComments.Count - countComments).Take(countComments).ToList(),
-                    ProfileActionsLikes = m.ProfileActionsLikes,
-                    Apartment = m.Apartment,
-                    CommentsCount = m.ProfileActionComments.Count
-                })
-                .ToList();
-        }
-        public ProfileAction GetProfileAction(long profileActionId)
-        {
-            return context.ProfileActions.Where(m => m.ProfileActionId == profileActionId)
-                .Include(m=>m.ProfileActionsLikes)
-                .Include(m => m.Profile)
-                .Include(m => m.ProfileWho)
-                .Include(m => m.Apartment.Type)
-                .Include(m => m.Apartment.ApartmentPhotos.Select(k => k.Links))
-                .Include(m => m.ProfileActionComments)
-                .FirstOrDefault();
-        }
         public void AddProfileAction(ProfileAction addAction)
         {
             Profile profile = context.Profiles.Where(m => m.ProfileId == addAction.ProfileId).FirstOrDefault();
@@ -175,22 +129,7 @@ namespace Business.DataAccess.Private.Repository.Specific
                 context.SaveChanges();
             }
         }
-        public void RemoveProfileAction(long removeAction)
-        {
 
-            ProfileAction RemoveAction = context
-                .ProfileActions
-                .Include(m => m.ProfileActionComments)
-                .Where(m => m.ProfileActionId == removeAction)
-                .FirstOrDefault();
-            foreach (var commentId in RemoveAction.ProfileActionComments.Select(m => m.ProfileActionCommentId))
-            {
-               // RemoveProfileActionComment(commentId);
-            }
-
-            context.ProfileActions.Remove(RemoveAction);
-            context.SaveChanges();
-        }
         public void AddProfileActionLike(long profileActionId, long profileId)
         {
             bool profileExist = IsProfileExists(profileId);

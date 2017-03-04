@@ -1,8 +1,8 @@
-﻿@model LoadProfileActionResult
+﻿@model AddActionResult
 <div id="Action_@Model.ProfileAction.ProfileActionId">
     <div class="social-feed-box">
         
-            @Html.Partial("LoadActionHead", new LoadProfileActionHeadResult
+       @Html.Partial("LoadActionHead", new LoadProfileActionHeadResult
        {
            Profile = Model.Profile,
            ProfileAction = Model.ProfileAction
@@ -10,16 +10,6 @@
 
         <div class="social-footer">
             <div id="Comments_@Model.ProfileAction.ProfileActionId">
-                @if (Model.CommentsCount < Model.ProfileAction.CommentsCount)
-                {
-                    <div class="social-comment">
-                        <div class="media-body">
-                            <input type="button" class="btn btn-block btn-white btn-xs pull-left" value="Показать еще @(Model.ProfileAction.CommentsCount - Model.CommentsCount) комментариев." onclick="LoadComments(@Model.ProfileAction.ProfileActionId,'Comments_@Model.ProfileAction.ProfileActionId')" />
-
-                        </div>
-                    </div>
-                }
-
                 @Html.Partial("LoadComments", new LoadCommentsResult
                        {
                            ProfileActionComments = Model.ProfileAction.ProfileActionComments.ToList(),
@@ -28,7 +18,7 @@
                        })
             </div>
             <div class="social-comment" style="display:none;" id="ProfileActionComment_@Model.ProfileAction.ProfileActionId">
-                <a href=" " class=" pull-left">
+                <a href=" " class="pull-left">
                     <img alt="image" src="@Model.Profile.GetImageAvatarLink">
                 </a>
                 <div class="media-body">

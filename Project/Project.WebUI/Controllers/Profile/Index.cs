@@ -1,8 +1,7 @@
-﻿using System.Threading.Tasks;
-using System.Web.Mvc;
+﻿using System.Web.Mvc;
 using Business.DataAccess.Public.Directory;
 using Business.DataAccess.Public.Repository.Specific;
-using Project.BusinessLogic.Services.ProfileService;
+using Business.DataAccess.Public.Services.Profile;
 using Project.WebUI.Filters;
 using Project.WebUI.Infrastructure.ApplicationUser;
 using Project.WebUI.Models;
@@ -12,10 +11,10 @@ namespace Project.WebUI.Controllers.Profile
     [MyAuthorize]
     public partial class ProfileController : Controller
     {
-        private readonly IProfileRepository _profileRepository;
         private readonly IApplicationManager _applicationManager;
-        private readonly IProfileService _profileService;
         private readonly IDirectoryStorage _directoryStorage;
+        private readonly IProfileRepository _profileRepository;
+        private readonly IProfileService _profileService;
 
         public ProfileController(
             IProfileRepository profileRepository,
@@ -35,15 +34,15 @@ namespace Project.WebUI.Controllers.Profile
             var profileId = _applicationManager.CurrentUser.ProfileId;
             if ((id != null) && (profileId != id))
             {
-                result.Profile = _profileService.GetProfileWithDetails((long)id);
+                result.Profile = _profileService.GetProfileWithDetails((long) id);
                 result.MyProfile = false;
             }
             else
             {
-                result.Profile = _profileService.GetProfileWithDetails((long)profileId);
+                result.Profile = _profileService.GetProfileWithDetails((long) profileId);
                 result.MyProfile = true;
             }
-            result.Me = _profileService.GetShortProfile((long)profileId);
+            result.Me = _profileService.GetShortProfile((long) profileId);
 
             var contacts = _profileService.GetContacts(result.Profile.ProfileId, 10);
             result.Contacts = contacts.Profiles;
@@ -60,5 +59,11 @@ namespace Project.WebUI.Controllers.Profile
             TempData["toastrMessage"] = $"Профиль {_applicationManager.CurrentUser.UserName} изменен";
             TempData["toastrType"] = "success";
         }
-	}
+
+        private void AddCustomMessage(string message, string type)
+        {
+            TempData["toastrMessage"] = message;
+            TempData["toastrType"] = type;
+        }
+    }
 }

@@ -20,7 +20,7 @@ namespace Business.DataAccess.Public.Entities
         [ForeignKey("ProfileId")]
         public Profile ProfileWho { get; set; }
         [ForeignKey("ProfileActionId")]
-        public ICollection<ProfileActionComment> ProfileActionComments { get; set; }
+        public List<ProfileActionComment> ProfileActionComments { get; set; }
         public string Text { get; set; }
         public DateTime? Date { get; set; }
         #region Likes

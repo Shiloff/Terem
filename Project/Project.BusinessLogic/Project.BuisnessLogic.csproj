@@ -61,11 +61,6 @@
     <Folder Include="Modules\" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Services\ProfileService\GetContactsResult.cs" />
-    <Compile Include="Services\ProfileService\IProfileService.cs" />
-    <Compile Include="Services\ProfileService\ProfileService.cs" />
-  </ItemGroup>
-  <ItemGroup>
     <Reference Include="System" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
