@@ -70,6 +70,7 @@
     <Compile Include="Directory\SmokeDirectory.cs" />
     <Compile Include="Directory\SexDirectory.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Repository\ProfileActionLikeRepository.cs" />
     <Compile Include="Repository\ProfileActionRepository.cs" />
     <Compile Include="Repository\DirectoryRepository.cs" />
     <Compile Include="Repository\ProfileRepository.cs" />

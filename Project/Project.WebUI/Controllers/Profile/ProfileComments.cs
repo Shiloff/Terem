@@ -48,7 +48,7 @@ namespace Project.WebUI.Controllers.Profile
         [HttpPost]
         public ActionResult AddActionLike(ProfileActionLike value)
         {
-            _profileRepository.AddProfileActionLike((long) value.ProfileActionId,
+            _profileService.AddActionLike((long) value.ProfileActionId,
                 (long) _applicationManager.CurrentUser.ProfileId);
 
             var result = new LoadProfileActionHeadResult
@@ -62,7 +62,7 @@ namespace Project.WebUI.Controllers.Profile
         [HttpPost]
         public ActionResult RemoveActionLike(ProfileActionLike value)
         {
-            _profileRepository.RemoveProfileActionLike((long) value.ProfileActionId,
+            _profileService.RemoveActionLike((long) value.ProfileActionId,
                 (long) _applicationManager.CurrentUser.ProfileId);
 
             var result = new LoadProfileActionHeadResult

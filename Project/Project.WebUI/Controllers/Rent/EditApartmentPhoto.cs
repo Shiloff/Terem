@@ -14,15 +14,15 @@ namespace Project.WebUI.Controllers
         public ActionResult EditApartmentPhoto(long id = 0)
         {
             EditApartmentViewResult result = new EditApartmentViewResult();
-            result.Apartment = ApartmentRepository.GetApartment(id);
-            result.ApartmentOptions = ApartmentRepository.GetApartmentOptions();
+            result.Apartment = _apartmentRepository.GetApartment(id);
+            result.ApartmentOptions = _apartmentRepository.GetApartmentOptions();
             if (result.Apartment == null)
             {
                 result.Apartment = new Apartment();
                 result.Apartment.ApartmentOptions = new List<ApartmentOption>();
                 result.Apartment.ApartmentPhotos = new List<ApartmentPhoto>();
             }
-            result.ApartmentTypes = ApartmentRepository.ApartmentTypes.ToList();
+            result.ApartmentTypes = _apartmentRepository.ApartmentTypes.ToList();
             return View(result);
         }
        
@@ -34,8 +34,8 @@ namespace Project.WebUI.Controllers
             {
                 if (newApartment.InputImages != null)
                 { 
-                    Apartment apartment = ApartmentRepository.GetApartment(newApartment.ApartmentId);
-                    var Photos = ApartmentRepository.GetApartmentPhotos(apartment);
+                    Apartment apartment = _apartmentRepository.GetApartment(newApartment.ApartmentId);
+                    var Photos = _apartmentRepository.GetApartmentPhotos(apartment);
                     var HasDafaultPhoto = true;
                     if (Photos.Count==0)
                     {
@@ -71,10 +71,10 @@ namespace Project.WebUI.Controllers
                         Photo.Links.Add(new ApartmentPhotoLink { Link = PreviewCreator.SaveImageAndResize(photo.InputStream, (int)offsetx, (int)offsety, (int)max, (int)max, new System.Drawing.Size(550, 550)), TypeId = 2 });
                         Photo.Links.Add(new ApartmentPhotoLink { Link = PreviewCreator.SaveImageAndResize(photo.InputStream, (int)offsetx, (int)offsety, (int)max, (int)max, new System.Drawing.Size(100, 100)), TypeId = 3 });
                        
-                        ApartmentRepository.AddApartmentPhoto(apartment, Photo);
+                        _apartmentRepository.AddApartmentPhoto(apartment, Photo);
                         if (!HasDafaultPhoto)
                         {
-                            ApartmentRepository.SetApartmentDefaultPhoto(apartment, Photo);
+                            _apartmentRepository.SetApartmentDefaultPhoto(apartment, Photo);
                         }
                         HasDafaultPhoto = true;
                         TempData["toastrMessage"] = String.Format("Квартира изменена");
@@ -92,19 +92,19 @@ namespace Project.WebUI.Controllers
         [HttpPost]
         public ActionResult RemovePhotoApartment(RemovePhotoApartmentData value)
         {
-            var MyApartments = ApartmentRepository.GetMyApartments((int)user.ProfileId);
+            var MyApartments = _apartmentRepository.GetMyApartments((int)user.ProfileId);
             var MyPhotos = MyApartments.SelectMany(m => m.ApartmentPhotos).ToList();
             var Photo = MyPhotos.Where(m => m.ApartmentPhotoId == value.ApartmentPhotoId).FirstOrDefault();
             if ((value.ApartmentPhotoId != null) && (Photo != null))
             {
                 var a = MyApartments.Where(m => m.ApartmentPhotos.Where(k => k.ApartmentPhotoId == value.ApartmentPhotoId).Count() > 0).FirstOrDefault();
                 
-                ApartmentRepository.RemoveApartmentPhoto(value.ApartmentPhotoId);
-                var apartment = ApartmentRepository.GetApartment(a.ApartmentId);
-                var apartmentPhotos = ApartmentRepository.GetApartmentPhotos(apartment);
+                _apartmentRepository.RemoveApartmentPhoto(value.ApartmentPhotoId);
+                var apartment = _apartmentRepository.GetApartment(a.ApartmentId);
+                var apartmentPhotos = _apartmentRepository.GetApartmentPhotos(apartment);
                 if ((apartment.DefaultPhotoId == null)&&(apartmentPhotos.Count!=0))
                 {
-                    ApartmentRepository.SetApartmentDefaultPhoto(apartment, apartmentPhotos[0]);
+                    _apartmentRepository.SetApartmentDefaultPhoto(apartment, apartmentPhotos[0]);
                 }
             }
             return RedirectToAction("EditApartmentPhoto");
@@ -112,13 +112,13 @@ namespace Project.WebUI.Controllers
         [HttpPost]
         public void SetApartmentDefaultPhoto(SetApartmentDefaultPhotoData value)
         {
-            var MyApartments = ApartmentRepository.GetMyApartments((int)user.ProfileId);
+            var MyApartments = _apartmentRepository.GetMyApartments((int)user.ProfileId);
             var MyPhotos = MyApartments.SelectMany(m => m.ApartmentPhotos).ToList();
             if ((value.PhotoId != null) && (MyPhotos.Where(m => m.ApartmentPhotoId == value.PhotoId).FirstOrDefault() != null))
             {
                 var apartment = MyApartments.Where(m => m.ApartmentId == value.ApartmentId).FirstOrDefault();
                 var photo = apartment.ApartmentPhotos.Where(m => m.ApartmentPhotoId == value.PhotoId).FirstOrDefault();
-                ApartmentRepository.SetApartmentDefaultPhoto(apartment, photo);
+                _apartmentRepository.SetApartmentDefaultPhoto(apartment, photo);
             }
         }
 	}

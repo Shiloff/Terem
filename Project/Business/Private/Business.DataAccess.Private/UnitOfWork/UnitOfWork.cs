@@ -16,10 +16,12 @@ namespace Business.DataAccess.Private.UnitOfWork
 
             Profiles = new ProfileRepository(_context);
             ProfileActions = new ProfileActionRepository(_context);
+            ProfileActionLikes = new ProfileActionLikeRepository(_context);
         }
 
         public IProfileRepository Profiles { get; }
         public IProfileActionRepository ProfileActions { get; }
+        public IProfileActionLikeRepository ProfileActionLikes { get; }
 
         public void Dispose()
         {

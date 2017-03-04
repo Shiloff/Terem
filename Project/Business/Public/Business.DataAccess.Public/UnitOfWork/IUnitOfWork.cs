@@ -7,6 +7,8 @@ namespace Business.DataAccess.Public.UnitOfWork
     {
         IProfileRepository Profiles { get; }
         IProfileActionRepository ProfileActions { get; }
+        IProfileActionLikeRepository ProfileActionLikes { get; }
+
 
         void Complete();
     }

@@ -115,6 +115,7 @@
     <Compile Include="Repository\Specific\IApartmentRepository.cs" />
     <Compile Include="Repository\Specific\IChatRepository.cs" />
     <Compile Include="Repository\Specific\IMessageRepository.cs" />
+    <Compile Include="Repository\IProfileActionLikeRepository.cs" />
     <Compile Include="Repository\Specific\IProfileRepository.cs" />
     <Compile Include="Repository\Specific\ProfileHelpers\IProfileContactsHelper.cs" />
     <Compile Include="Repository\Specific\ProfileHelpers\IProfileFinderHelper.cs" />

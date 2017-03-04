@@ -109,65 +109,6 @@ namespace Business.DataAccess.Private.Repository.Specific
         {
             return FindProfilesQuery(profile, param).Count();
         }
-        #region ProfileActions
-        public IQueryable<ProfileAction> GetProfileActionsQuery(long profileId)
-        {
-            return context.ProfileActions.Where(m => m.ProfileId == profileId).AsQueryable();
-        }
-        public int GetProfileActionsCount(long profileId)
-        {
-            return GetProfileActionsQuery(profileId).Count();
-        }
-
-        public void AddProfileAction(ProfileAction addAction)
-        {
-            Profile profile = context.Profiles.Where(m => m.ProfileId == addAction.ProfileId).FirstOrDefault();
-            if (profile != null)
-            {
-                addAction.Date = addAction.Date != null ? addAction.Date : DateTime.Now;
-                context.ProfileActions.Add(addAction);
-                context.SaveChanges();
-            }
-        }
-
-        public void AddProfileActionLike(long profileActionId, long profileId)
-        {
-            bool profileExist = IsProfileExists(profileId);
-            ProfileAction profileAction = context
-                .ProfileActions
-                .Where(m => m.ProfileActionId == profileActionId)
-                .FirstOrDefault();
-            ProfileActionLike profileActionLike = context
-                .ProfileActionsLikes
-                .Where(m => m.ProfileActionId == profileActionId && m.ProfileId == profileId)
-                .FirstOrDefault();
-            if ((profileExist) && (profileAction != null) && (profileActionLike == null))
-            {
-                context.ProfileActionsLikes.Add(new ProfileActionLike
-                {
-                    Date = DateTime.Now,
-                    ProfileId = profileId,
-                    ProfileActionId = profileActionId
-                });
-                context.SaveChanges();
-            }
-        }
-        public void RemoveProfileActionLike(long profileActionId, long profileId)
-        {
-            bool profileExist = IsProfileExists(profileId);
-            ProfileAction profileAction = context
-                .ProfileActions
-                .Where(m => m.ProfileActionId == profileActionId)
-                .FirstOrDefault();
-            ProfileActionLike profileActionLike = context.ProfileActionsLikes
-               .Where(m => m.ProfileActionId == profileActionId && m.ProfileId == profileId).FirstOrDefault();
-            if((profileExist) && (profileAction != null) &&  (profileActionLike!=null))
-            {
-                context.ProfileActionsLikes.Remove(profileActionLike);
-                context.SaveChanges();
-            }
-        }
-        #endregion
         #region ProfileActionComments
         public List<ProfileActionComment> GetProfileActionsComments(long profileActionId)
         {
