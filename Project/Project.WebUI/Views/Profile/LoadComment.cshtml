@@ -1,0 +1,35 @@
+﻿@model LoadCommentResult
+           @if (Model.ProfileActionComment!=null)
+           { 
+<div class="social-comment" id="Comment_@Model.ProfileActionComment.ProfileActionCommentId">
+    <a href="@Url.Action("Index", "Profile", new { id =Model.ProfileActionComment.Profile.ProfileId})" class="pull-left">
+        <img alt="image" src="@Model.ProfileActionComment.Profile.GetImageAvatarLink">
+    </a>
+    <div class="media-body">
+        <a href="@Url.Action("Index", "Profile", new { id = Model.ProfileActionComment.Profile.ProfileId })">
+            @Model.ProfileActionComment.Profile.FirstName @Model.ProfileActionComment.Profile.LastName
+        </a>
+        @Model.ProfileActionComment.Text
+        <br />
+        @if (Model.ProfileActionComment.ProfileActionsCommentsLikes.Where(m => m.ProfileId == Model.Profile.ProfileId).FirstOrDefault() == null)
+        {
+            <span class="small btn-link span-link-inactive" onclick="AddActionCommentLike(@Model.ProfileActionComment.ProfileActionCommentId,'Comment_@Model.ProfileActionComment.ProfileActionCommentId')"><i class="fa fa-thumbs-up"></i> @Model.ProfileActionComment.ProfileActionsCommentsLikes.Count Like this!</span>
+        }
+        else
+        {
+            <span class="small btn-link span-link" onclick="RemoveActionCommentLike(@Model.ProfileActionComment.ProfileActionCommentId,'Comment_@Model.ProfileActionComment.ProfileActionCommentId')"><i class="fa fa-thumbs-up"></i> @Model.ProfileActionComment.ProfileActionsCommentsLikes.Count Like this!</span>
+        }
+        -
+        <small class="text-muted">@Model.ProfileActionComment.DateString</small>
+        @if ((Model.Profile.ProfileId == Model.ProfileActionComment.ProfileId) || (Model.Profile.ProfileId == Model.Action.ProfileId))
+        {
+            <button class="btn btn-danger btn-xs pull-right btn-outline" onclick="RemoveComment(@Model.ProfileActionComment.ProfileActionCommentId,'Comment_@Model.ProfileActionComment.ProfileActionCommentId')"><i class="fa fa-trash"></i></button>
+        }
+    </div>
+</div>
+           }
+           else
+           {
+               <input type="button" class="btn btn-block btn-white btn-outline" value="Удалено">
+           }
+

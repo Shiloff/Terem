@@ -1,0 +1,93 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title - My ASP.NET Application</title>
+
+    <link href="~/Content/Inspinia/Work/css/plugins/metisMenu/metisMenu.css" rel="stylesheet" />
+    @Styles.Render("~/Content/cssNew")
+    @Styles.Render("~/plugins/toastrStyles")
+    @Styles.Render("~/plugins/gritterStyles")
+    @Styles.Render("~/font-awesome/css")
+    @Styles.Render("~/plugins/iCheckStyles")
+    @Styles.Render("~/Content/site")
+
+    @if (IsSectionDefined("Styles"))
+    {
+        @RenderSection("Styles", required: false)
+    }
+</head>
+<body class="">
+    @if (TempData["toastrMessage"] != null)
+    {
+        <input type="hidden" id="toastrMessage" value="@TempData["toastrMessage"]" />
+        <input type="hidden" id="toastrType" value="@TempData["toastrType"]" />
+    }
+    <!-- Navigation -->
+    @Html.Partial("_Navigation")
+
+    <!-- Page wraper -->
+    <div id="page-wrapper" class="gray-bg @ViewBag.SpecialClass">
+
+        <!-- Top Navbar -->
+        @Html.Partial("_TopNavbar")
+
+        <!-- Main view  -->
+        @RenderBody()
+
+        <!-- Footer -->
+        @Html.Partial("_Footer")
+
+    </div>
+    <!-- End page wrapper-->
+    <!-- Right Sidebar -->
+    @*@Html.Partial("_RightSidebar")*@
+
+    @Scripts.Render("~/bundles/jqueryNew")
+    @Scripts.Render("~/bundles/bootstrapNew")
+    @Scripts.Render("~/bundles/inspinia")
+    @Scripts.Render("~/plugins/slimScroll")
+    @Scripts.Render("~/bundles/jqueryuiNew")
+    @*@Scripts.Render("~/plugins/gritter")*@
+    @Scripts.Render("~/plugins/toastr")
+    @Scripts.Render("~/plugins/iCheck")
+    <script src="~/Scripts/jquery.signalR-2.2.0.js"></script>
+    <script src="~/signalr/hubs"></script>
+    <script src="~/Scripts/app/chat.js"></script>
+
+    @RenderSection("scripts", required: false)
+    <script src="~/Scripts/app/app.js"></script>
+    <script>
+        $(document).ready(function () {
+            var toastrMessage = $("#toastrMessage").val();
+            var toastrType = $("#toastrType").val();
+            if (toastrMessage != null) {
+                toastr.options = {
+                    closeButton: true,
+                    progressBar: true,
+                    showMethod: 'slideDown',
+                    extendedTimeOut: 10000,
+                    timeOut: 4000
+                };
+                switch (toastrType) {
+                    case "warning": toastr.warning(toastrMessage); break;
+                    case "success": toastr.success(toastrMessage); break;
+                    case "info": toastr.info(toastrMessage); break;
+                    case "error": toastr.error(toastrMessage); break;
+                    default: toastr.error(toastrMessage); break;
+                }
+            };
+            $('.i-checks').iCheck({
+                checkboxClass: 'icheckbox_square-green',
+                radioClass: 'iradio_square-green',
+            });
+        });
+
+    </script>
+
+
+
+</body>
+</html>
+

@@ -1,0 +1,30 @@
+﻿@model Business.DataAccess.Public.Entities.Apartment
+
+<div class="carousel slide " id="carousel1">
+    <div class="carousel-inner">
+
+        @{int j = 0;}
+        @foreach (var photo in Model.PhotoList)
+        {
+            if (j > 0)
+            {
+                <div class="item ">                   
+                    <img alt="image" class="" src="@photo">
+                </div>
+            }
+            else
+            {
+                <div class="item active">
+                    <img alt="image" class="" src="@photo">
+                </div>
+            }
+            j++;
+        }
+    </div>
+    <a data-slide="prev" href="#carousel1" class="left carousel-control">
+        <span class="icon-prev"></span>
+    </a>
+    <a data-slide="next" href="#carousel1" class="right carousel-control">
+        <span class="icon-next"></span>
+    </a>
+</div>

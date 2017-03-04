@@ -1,0 +1,12 @@
+﻿@model Business.DataAccess.Public.Entities.Apartment
+
+<div class="well">
+   @Model.GetAdress, @Model.Type.Name
+    <br />
+    @foreach(var link in Model.ApartmentPhotos
+        .SelectMany(m=>m.Links).Where(m=>m.TypeId==2).Select(k=>k.Link)
+        .ToList())
+    {
+        <img src="@link" width="100" height="100"/>        
+    }   
+</div>

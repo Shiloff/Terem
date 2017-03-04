@@ -1,0 +1,10 @@
+﻿<nav class="navbar-default navbar-static-side" role="navigation">
+    <div class="sidebar-collapse">
+        <ul class="nav" id="side-menu" style="display:none;">
+            <li class="nav-header">
+                @Html.Partial("_LoginPartialInspinia")
+            </li>
+            @Html.MvcSiteMap().Menu("InspiniaMenuHelperModel")
+        </ul>
+    </div>
+</nav>

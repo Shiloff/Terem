@@ -1,0 +1,57 @@
+﻿@model Business.DataAccess.Public.Entities.Profile
+Объявление разместил:
+<div class="social-feed-box">
+    <div class="social-avatar">
+        <a href="@Url.Action("Index", "Profile", new { id = Model.ProfileId })" class="pull-left">
+            <img alt="image" src="@Model.GetImageAvatarLink">
+        </a>
+        <div class="media-body">
+            <a href="@Url.Action("Index", "Profile", new { id = Model.ProfileId })" style="display:inline-block">
+                Александр Шилов
+            </a>
+            <small class="text-muted" style="display:block;">Вчера в 21:06</small>
+        </div>
+    </div>
+    <div class="social-body">
+        <p>
+            @Model.AboutMe
+        </p>
+        <div class="btn-group">
+            <a href="@Url.Action("Index", "Profile", new { id = Model.ProfileId })" class="btn btn-xs btn-outline btn-primary"><i class="fa fa-user"></i> Профиль</a>
+            <a href="@Url.Action("Index", "Messages", new { openedChat = Model.ProfileId })" class="btn btn-xs btn-outline btn-info"><i class="fa fa-comment"></i> Чат</a>
+        </div>
+    </div>
+</div>
+@*<div class="social-avatar">
+    <a href="@Url.Action("Index", "Messages", new { openedChat = Model.ProfileId })" class="pull-left">
+        <img alt="image" src="@Model.GetImageAvatarLink">
+        @Model.FirstName @Model.LastName
+    </a>
+    <div class="media-body">
+       
+    </div>
+   
+</div>
+<div class="social-body">
+    <p>
+        @Model.AboutMe
+    </p>
+    <div class="btn-group">
+        <a href="@Url.Action("Index", "Profile", new { id = Model.ProfileId })" class="btn btn-xs btn-outline btn-primary"><i class="fa fa-user"></i> Профиль</a>
+        <a href="@Url.Action("Index", "Messages", new { openedChat = Model.ProfileId })" class="btn btn-xs btn-outline btn-info"><i class="fa fa-comment"></i> Чат</a>
+    </div>
+</div>*@
+
+
+    @*<div class="social-avatar">
+        <a href="@Url.Action("Index", "Profile", new { id =Model.ProfileAction.ProfileWho.ProfileId })" class="pull-left">
+            <img alt="image" src="@Model.ProfileAction.ProfileWho.GetImageAvatarLink">
+        </a>
+        <div class="media-body">
+            <a href="@Url.Action("Index", "Profile", new { id = Model.ProfileAction.ProfileWho.ProfileId })" style="display:inline-block">
+                @Model.ProfileAction.ProfileWho.FirstName @Model.ProfileAction.ProfileWho.LastName
+            </a>
+
+            <small class="text-muted" style="display:block;">@Model.ProfileAction.DateString</small>
+        </div>
+    </div>*@

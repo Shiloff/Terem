@@ -1,0 +1,27 @@
+﻿@model MvcSiteMapProvider.Web.Html.Models.SiteMapNodeModelList
+@using System.Web.Mvc.Html
+@using MvcSiteMapProvider.Web.Html.Models
+@{
+    bool visibleAll = Model.Where(m => m.Attributes.ContainsKey("visibility") && m.Attributes["visibility"].ToString() == "false").Count() == Model.Count ? false : true;
+}
+@if (visibleAll)
+{
+   <ul class="nav nav-second-level collapse">
+    @foreach (var node in Model)
+{
+    string image = node.Attributes.ContainsKey("type") ? node.Attributes["type"].ToString() : "";
+    bool visible = node.Attributes.ContainsKey("visibility") && node.Attributes["visibility"].ToString() == "false" ? false : true;
+    if (visible)
+    {
+        string active = (node.IsCurrentNode || node.Children.Any(n => n.IsCurrentNode)) ? "active" : "";
+        <li class="@active">
+            @Html.DisplayFor(m => node)
+            @if (node.Children.Any())
+            {
+                @Html.DisplayFor(m => node.Children)
+            }
+        </li>
+    }
+}
+</ul>
+}

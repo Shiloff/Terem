@@ -1,0 +1,26 @@
+﻿@model IndexApartmentsViewResult
+@using Project.WebUI.HtmlHelpers
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_LayoutInspinia.cshtml";
+}
+<div class="row wrapper border-bottom white-bg page-heading">
+    <div class="col-lg-10">
+        <h2>Поиск квартир</h2>
+        @Html.MvcSiteMap().SiteMapPath()
+    </div>
+</div>
+<div class="wrapper wrapper-content">
+    @Html.PageLinks(Model.PagingInfo, k => Url.Action("Index", new { page = k }))
+    <div class="row">
+        
+        @foreach (var apartment in Model.Apartments)
+        {
+            @Html.Partial("_IndexApartments", apartment)
+        }
+        
+        
+    </div>
+   @Html.PageLinks(Model.PagingInfo, k => Url.Action("Index", new { page = k }))
+</div>
+

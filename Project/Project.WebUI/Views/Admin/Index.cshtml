@@ -1,0 +1,14 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_LayoutInspinia.cshtml";
+}
+<div class="row wrapper border-bottom white-bg page-heading">
+    <div class="col-lg-10">
+        <h2>Администрирование</h2>
+        @Html.MvcSiteMap().SiteMapPath()
+    </div>
+</div>
+@Html.ActionLink("Пользователи", "Users", "Admin", null, new { @class="btn btn-default"})
+
+

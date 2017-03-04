@@ -1,0 +1,33 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_LayoutInspinia.cshtml";
+}
+<form action="https://rbkmoney.ru/acceptpurchase.aspx" class="rbkm-payment-form" method="post" target="_blank">
+    <label class="bankcard active">
+        <input name="preference" type="radio" value="bankcard" />Банковская карта Visa/MasterCard
+    </label> 
+    <label class="sberbank">
+        <input name="preference" type="radio" value="sberbank" />Банковский платеж</label> 
+    <label class="ibank">
+        <input name="preference" type="radio" value="ibank" />Интернет банкинг</label> 
+    <label class="terminals">
+        <input name="preference" type="radio" value="terminals" />Платежные терминалы</label> 
+    <label class="mobilestores">
+        <input name="preference" type="radio" value="mobilestores" />Салоны связи</label> 
+    <label class="postrus">
+        <input name="preference" type="radio" value="postrus" />Почта России</label> 
+    <label class="transfers">
+        <input name="preference" type="radio" value="transfers" />Системы денежных переводов</label> 
+    <label class="wallet">
+        <input name="preference" type="radio" value="inner" />Кошелек RBK Money</label> 
+    <input class="bttn bttn-218" name="button" type="submit" value="Купить" />
+    <input name="eshopId" type="hidden" value="2000005" />
+    <input name="orderId" type="hidden" value="order ID 333777" />
+    <input name="successUrl" type="hidden" value="http://rbkmoney.ru" /> 
+    <input name="failUrl" type="hidden" value="http://rbkmoney.ru" /> 
+    <input name="serviceName" type="hidden" value="Оплата премиума" />
+    <input name="recipientAmount" type="hidden" value="500" /> 
+    <input name="recipientCurrency" type="hidden" value="RUR" />
+    <input name="user_email" type="hidden" value="example@example.com" />
+</form>

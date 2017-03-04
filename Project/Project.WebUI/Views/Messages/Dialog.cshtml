@@ -1,0 +1,32 @@
+﻿@model DialogMessagesViewResult
+           @Html.Hidden("ToProfileId", Model.ToProfileId)
+@foreach (var message in Model.Dialog.OrderBy(m => m.DT))
+{
+    if (message.ProfileIdFrom == Model.MyProfileId)
+    {
+        <div class="chat-message left @(!message.Read.HasValue || message.Read==false?"chat-message-unread":"")" id="messageid_@message.MessageId">
+            <img class="message-avatar" src="@message.ProfileFrom.GetImageAvatarLink" alt="">
+            <div class="message">
+                <a class="message-author" href="@Url.Action("Index", "Profile", new { id = message.ProfileFrom.ProfileId })">@message.ProfileFrom.FirstName @message.ProfileFrom.LastName </a>
+                <span class="message-date"> @message.DT </span>
+                <span class="message-content">
+                    @message.MessageText
+                </span>
+            </div>
+        </div>
+    }
+    else
+    {
+        <div class="chat-message left @(!message.Read.HasValue || message.Read==false?"chat-message-unread":"")" id="messageid_@message.MessageId">
+            <img class="message-avatar" src="@message.ProfileFrom.GetImageAvatarLink" alt="">
+            <div class="message">
+                <a class="message-author" href="@Url.Action("Index", "Profile", new { id = message.ProfileFrom.ProfileId })">@message.ProfileFrom.FirstName @message.ProfileFrom.LastName </a>
+                <span class="message-date"> @message.DT </span>
+                <span class="message-content">
+                    @message.MessageText
+                </span>
+            </div>
+        </div>
+    }
+}
+

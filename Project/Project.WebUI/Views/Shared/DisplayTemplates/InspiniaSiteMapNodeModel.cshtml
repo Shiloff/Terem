@@ -1,0 +1,26 @@
+﻿@model MvcSiteMapProvider.Web.Html.Models.SiteMapNodeModel
+@using System.Web.Mvc.Html
+@using MvcSiteMapProvider.Web.Html.Models
+@{
+    string image = Model.Attributes.ContainsKey("type") ? Model.Attributes["type"].ToString() : "";
+    string arrow = Model.Children.Count > 0 ? "fa arrow" : "";
+    string active = Model.IsCurrentNode ? "active" : "";
+}
+@if (Model.IsCurrentNode && Model.SourceMetadata["HtmlHelper"].ToString() != "MvcSiteMapProvider.Web.Html.MenuHelper")  { 
+    <text>@Model.Title</text>
+} else if (Model.IsClickable) { 
+    if (string.IsNullOrEmpty(Model.Description))
+    {
+        <a href="@(Model.Children.Count==0?Model.Url:"#")">
+            <i class="@image"></i> <span class="nav-label">@Model.Title</span> <span class="@arrow"></span>
+        </a>
+    }
+    else
+    { 
+        <a href="@(Model.Children.Count==0?Model.Url:"#")" title="@Model.Description">
+          <i class="@image"></i> <span class="nav-label">@Model.Title</span> <span class="@arrow"></span>
+        </a>      
+    }
+} else { 
+    <text>@Model.Title</text>
+}

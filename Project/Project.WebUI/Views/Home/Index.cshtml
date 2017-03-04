@@ -1,0 +1,56 @@
+﻿@model IndexHomeViewResult
+@{
+    ViewBag.Title = "Home Page";
+    Layout = "~/Views/Shared/_LayoutInspinia.cshtml";
+}
+
+
+<div class="col-lg-4">
+    <a href="@Url.Action("Index","Profile")">
+        <div class="widget navy-bg p-lg text-center">
+            <div class="m-b-md">
+                <h2 class="font-bold no-margins">
+                    @Model.Profile.FirstName @Model.Profile.LastName
+                </h2>
+                @if (Model.Profile.Activity!=null)
+                { 
+                <small>@Model.Profile.Activity.Name</small>
+                }
+            </div>
+            <img src="@Model.Profile.GetImageAvatarBigLink" class="img-circle circle-border m-b-md" alt="profile" height="200">
+            <div>
+                <span>100 Tweets</span> |
+                <span>350 Following</span> |
+                <span>610 Followers</span>
+            </div>
+        </div>       
+    </a>
+</div>
+<div class="col-lg-4">
+    <a href="@Url.Action("Index","Rent")">
+        <div class="widget navy-bg p-lg text-center">
+            <div class="m-b-md">
+                <h2 class="font-bold no-margins">
+                    Мои квартиры
+                </h2>
+            </div>
+            @foreach (var apart in Model.MyApartments)
+            {
+               <img src="@apart.GetDefaultPhotoLink" class=" m-b-md" alt="profile" height="100">
+            }
+        </div>
+    </a>
+</div>
+
+<div class="col-lg-4">
+    <a href="@Url.Action("Index","Apartments")">
+        <div class="widget navy-bg p-lg text-center">
+            <div class="m-b-md">
+                <h2 class="font-bold no-margins">
+                  Поиск квартир
+                </h2>
+                
+            </div>
+        </div>
+    </a>
+</div>

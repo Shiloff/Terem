@@ -1,0 +1,9 @@
+packages
+TestResults
+Images
+/Project/Project.WebUI/Content/files
+/Project/Project.UnitTests/obj
+/Project/Project.v12.suo
+obj
+bin
+/Project/.vs/Project/v14/.suo

@@ -1,0 +1,9 @@
+﻿@model Business.DataAccess.Public.Entities.ApartmentPhoto
+
+    <a href="@Model.Links.Where(m=>m.TypeId==1).FirstOrDefault().Link" title="1" data-gallery>
+        <img src="@Model.Links.Where(m => m.TypeId == 3).FirstOrDefault().Link">
+    </a>
+    <input type="button" class="btn btn-danger" value="удалить" onclick="removeImage(@Model.ApartmentPhotoId,this)" />
+    <input type="button" class="btn btn-info" value="Стартовая" onclick="setApartmentDefaultPhoto(@Model.ApartmentPhotoId,@Model.ApartmentId,this)" />
+
+

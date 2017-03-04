@@ -1,0 +1,86 @@
+﻿@model Business.DataAccess.Public.Entities.Profile
+<div>
+    <div class="ibox-content no-padding border-left-right">
+
+    <img src="@Model.GetImageAvatarBigLink" class="img-responsive" style="width:100%" />
+
+    </div>
+    <div class="ibox-content profile-content">
+        <h4>
+            <strong>@Model.FirstName @Model.LastName</strong>
+            <br />
+            <small>@Model.Sex.Name</small>
+        </h4>
+        <p><i class="fa fa-map-marker"></i> @Model.Town</p>
+
+        <h5>
+            Интересы
+        </h5>
+        <p>
+            <div class="col-md-12">
+                @foreach (var interes in Model.Intereses)
+                {
+                    <span class="label label-info">@interes.Name</span>
+                }
+            </div>
+        </p>
+        <div class="clearfix"></div>
+        <div class="hr-line-dashed"></div>
+        <h5>
+            Предпочтения
+        </h5>
+        <div class="col-md-12  form-horizontal">
+            <div class="row">
+                <div class="col-lg-6 form-group">
+                    <div class="col-xs-8">Курение</div>
+                    <div class="col-xs-4">
+                        @Html.Raw(Model.Smoking!=null?Model.Smoking.Icon:"")
+                    </div>
+
+                </div>
+                <div class="col-lg-6 form-group">
+                    <div class="col-xs-8">Алкоголь</div>
+                    <div class="col-xs-4">
+                        @Html.Raw(Model.Alcohol != null ? Model.Alcohol.Icon : "")
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-lg-6 form-group">
+                    <div class="col-xs-8">Животные</div>
+                    <div class="col-xs-4">
+                        @Html.Raw(Model.Animals != null ? Model.Animals.Icon : "")
+                    </div>
+                </div>
+                <div class="col-lg-6 form-group">
+                    <div class="col-xs-8">Cосед</div>
+                    <div class="col-xs-4">
+                        @Html.Raw(Model.SexWho != null ? Model.SexWho.Icon : "")
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="clearfix"></div>
+        <div class="hr-line-dashed"></div>
+        <div class="row col-md-12">
+            <h5>
+                Обо мне
+            </h5>
+            <p>
+                <div class="col-md-12">
+                    @Html.Raw(Model.AboutMe)
+                </div>
+            </p>
+        </div>
+        <div class="clearfix"></div>
+        <div class="hr-line-dashed"></div>
+        <div class="user-button">
+            <div class="row">
+                <div class="col-md-12">
+                    <a class="btn btn-primary btn-sm btn-block btn-outline" href="@Url.Action("Index", "Messages", new { openedChat = Model.ProfileId})"><i class="fa fa-envelope"></i> Оправить сообщение</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

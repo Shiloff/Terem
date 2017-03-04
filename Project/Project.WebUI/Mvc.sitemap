@@ -1,0 +1,27 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<mvcSiteMap xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xmlns="http://mvcsitemap.codeplex.com/schemas/MvcSiteMap-File-4.0"
+            xsi:schemaLocation="http://mvcsitemap.codeplex.com/schemas/MvcSiteMap-File-4.0 MvcSiteMapSchema.xsd">
+
+  <mvcSiteMapNode title="Профиль" controller="Profile" action="Index" type="fa fa-user">    
+    <mvcSiteMapNode title="Контакты" controller="Contacts" action="Index2" type="fa fa-group">
+      <mvcSiteMapNode title="Список" controller="Contacts" action="Index" type="fa fa-group"/>
+      <mvcSiteMapNode title="Поиск" controller="Contacts" action="Find" type="fa fa-group"/>
+      <mvcSiteMapNode title="Сообщения" controller="Messages" action="Index" type="fa fa-group"/>
+    </mvcSiteMapNode>
+    <mvcSiteMapNode title="Снять" controller="Apartments" action="Index"  type="fa fa-building"/>
+    <mvcSiteMapNode title="Сдать" controller="Rent" action="Index"  type="fa fa-suitcase"/>
+    <mvcSiteMapNode title="О нас" controller="Home" action="About"  type="fa fa-smile-o"/>
+    <mvcSiteMapNode title="Admin" controller="Admin" action="Index" type="fa fa-cogs">
+      <mvcSiteMapNode title="Users" controller="Admin" action="Users" >        
+      </mvcSiteMapNode>          
+    </mvcSiteMapNode>
+    <mvcSiteMapNode title="Test" controller="Test" action="Index" type="fa fa-smile-o">
+      <mvcSiteMapNode title="404" controller="Error" action="NotFound" />
+      <mvcSiteMapNode title="403" controller="Error" action="BadRequest" />
+      <mvcSiteMapNode title="500" controller="Error" action="InternalServerError" />
+      <mvcSiteMapNode title="Landing" controller="Landing" action="Index" />
+      <mvcSiteMapNode title="Payment" controller="Payment" action="Index" />
+    </mvcSiteMapNode>
+  </mvcSiteMapNode>  
+</mvcSiteMap>

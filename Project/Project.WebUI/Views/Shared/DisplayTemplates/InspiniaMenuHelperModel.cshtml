@@ -1,0 +1,16 @@
+﻿@model MvcSiteMapProvider.Web.Html.Models.MenuHelperModel
+@using System.Web.Mvc.Html
+@using MvcSiteMapProvider.Web.Html.Models
+
+
+    @foreach (var node in Model.Nodes)
+{
+    string active = (node.IsCurrentNode || node.Children.Any(n => n.IsCurrentNode)) ? "active" : "";
+    <li class="@active">
+        @Html.DisplayFor(m => node, "InspiniaSiteMapNodeModel")
+        @if (node.Children.Any())
+        {
+            @Html.DisplayFor(m => node.Children, "InspiniaChildSiteMapNodeModelList")
+        }
+    </li>
+}

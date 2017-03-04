@@ -1,0 +1,7 @@
+﻿@model Business.DataAccess.Public.Entities.ApartmentPhoto
+
+    <a href="@Model.Links.Where(m=>m.TypeId==1).FirstOrDefault().Link" title="" data-gallery >
+        <img src="@Model.Links.Where(m => m.TypeId == 3).FirstOrDefault().Link"height="25" width="25">
+    </a>
+
+

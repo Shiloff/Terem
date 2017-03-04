@@ -1,0 +1,189 @@
+﻿@model InfoApartmentsViewResult
+@{
+    ViewBag.Title = "Info";
+    Layout = "~/Views/Shared/_LayoutInspinia.cshtml";
+}
+<style>
+    .apart-options ul li {
+        float: left;
+        width: 160px;
+        margin: 0;
+        list-style-type: none;
+    }
+</style>
+@*<div class="row wrapper border-bottom white-bg page-heading">
+        <div class="col-lg-10">
+            <h2>Шапка</h2>
+            @Html.MvcSiteMap().SiteMapPath()
+        </div>
+    </div>*@
+<div class="wrapper wrapper-content">
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="ibox float-e-margins">
+                <div class="ibox-title">
+                    <h5>
+                        @Model.Apartment.GetAdress, @Model.Apartment.Type.Name
+                        @if (Model.Apartment.Published == false)
+                        {
+                            <small> Cнято с публикации: </small>
+                        }
+                        <small>
+                            (@Model.Apartment.GetDateString)
+                        </small>
+                        <small class="">
+                            Уникальных просмотров: @Model.Apartment.ApartmentVisitors.Count
+                        </small>
+                    </h5>
+                </div>
+
+                <div class="ibox-content">
+                    <div class="row">
+                        <div class="col-sm-8 b-r">
+                            <div class="col-lg-5">
+                                @Html.Partial("_InfoApartmentPhotos", Model.Apartment)
+
+                                <div class="lightBoxGallery">
+                                    @foreach (var photo in Model.Apartment.ApartmentPhotos)
+                                    {
+                                        @Html.Partial("_photos", photo)
+                                    }
+                                    <div id="blueimp-gallery" class="blueimp-gallery blueimp-gallery-controls" style="display: none;">
+                                        <div class="slides" style="width: 138240px;"></div>
+                                        <h3 class="title"></h3>
+                                        <a class="prev">‹</a>
+                                        <a class="next">›</a>
+                                        <a class="close">×</a>
+                                        <ol class="indicator"></ol>
+                                    </div>
+                                </div>
+                                <div class="">
+                                    @Html.Partial("_InfoProfile", Model.Apartment.Profile)
+
+                                </div>
+
+                            </div>
+                            <div class="hr-line-dashed hidden-lg"></div>
+                            <div class="col-lg-7">
+                                @Html.Partial("_InfoApartment", Model.Apartment)
+
+                                @*@if (Model.MyApartment)
+                                {
+                                    <div class="hr-line-dashed"></div>
+                                    <div>Посетители:</div>
+                                    <div class="social-footer">
+                                        @foreach (var Visitor in Model.Apartment.ApartmentVisitors)
+                                        {
+                                            @Html.Partial("_InfoVisitor", Visitor)
+                                        }
+                                    </div>
+                                }*@
+                            </div>
+
+                            <div class="hr-line-dashed hidden-sm hidden-md hidden-lg"></div>
+                        </div>
+                        <div class="col-sm-4">
+
+
+                            <div class="social-feed-box2" >
+                                <div class="social-avatar" id="NewApartmentCommentBox">
+                                    <a href="@Url.Action("Index", "Profile", new { id = Model.Me.ProfileId })" class="pull-left">
+                                        <img alt="image" src="@Model.Me.GetImageAvatarLink">
+                                    </a>
+                                    <div class="media-body">
+                                        <textarea class="form-control" placeholder="Введите комментарий..." id="NewApartmentCommentText"></textarea>
+
+                                    </div>
+
+                                </div>
+                                <div class="social-body">
+                                    <div class="btn-group">
+                                        <button class="btn btn-white btn-xs" onclick="AddApartmentComment(@Model.Apartment.ApartmentId, @Model.Me.ProfileId)"><i class="fa fa-thumbs-up"></i> Добавить</button>
+                                    </div>
+                                </div>
+                                <div id="ApartmentComments" class="scroll_content">
+                                    @foreach (var comment in Model.Apartment.ApartmentComments)
+                                    {
+
+                                        @Html.Partial("_InfoComment", new InfoApartmentCommentResult
+                                               {
+                                                   Comment = comment,
+                                                   Apartment = Model.Apartment,
+                                                   Me = Model.Me
+                                               })
+
+
+                                    }
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="hr-line-dashed"></div>
+                    <div class="row">
+                        @Html.Partial("_InfoApartmentMap", Model.Apartment)
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+@section Styles{
+    @Styles.Render("~/Content/plugins/blueimp/css/")
+}
+@section Scripts{
+    @Scripts.Render("~/plugins/lightboxGallery")
+    <script>
+        function AddApartmentComment(apartmentId, profileId) {
+            $.ajaxSetup({
+                cache: false
+            });
+            var value = {
+                ProfileId: profileId,
+                ApartmentId: apartmentId,
+                Text: $("#NewApartmentCommentText").val()
+            }
+            ShowLoading('NewApartmentCommentBox', '#ajax_loader', 0);
+            $.post("@Url.Action("AddComment", "Apartments")", value, function (data) {            
+                HideLoading('#ajax_loader');
+                $("#NewApartmentCommentText").val("");
+                $("#ApartmentComments").prepend(data);
+            })
+        }
+        function RemoveAction(apartmentCommentId,div) {
+            $.ajaxSetup({
+                cache: false
+            });
+            var value = {
+                id: apartmentCommentId
+            }
+            $.post("@Url.Action("RemoveComment", "Apartments")", value, function (res) {
+                $("#" + div).remove();
+                @*$("#ActionsList").load("@Url.Action("Actions", "Profile", new { id = Model.Profile.ProfileId })", function () {                    
+                })*@
+                })
+        }
+        function AddApartmentCommentLike(apartmentCommentId, div) {
+            $.ajaxSetup({
+                cache: false
+            });
+            var value = {
+                ApartmentCommentId: apartmentCommentId
+            }
+            $.post("@Url.Action("AddCommentLike", "Apartments")", value, function (data) {              
+                $("#" + div).replaceWith(data);
+            })
+        }
+        function RemoveApartmentCommentLike(apartmentCommentId, div) {
+            $.ajaxSetup({
+                cache: false
+            });
+            var value = {
+                ApartmentCommentId: apartmentCommentId
+            }
+            $.post("@Url.Action("RemoveCommentLike", "Apartments")", value, function (data) {               
+                $("#" + div).replaceWith(data);
+            })
+        }
+    </script>
+}

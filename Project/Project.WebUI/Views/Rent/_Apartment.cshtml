@@ -1,0 +1,33 @@
+﻿@model Business.DataAccess.Public.Entities.Apartment
+@{
+    Layout = null;
+}
+<tr>
+    <td>
+        @Model.Type.Name
+    </td>
+    <td>
+        @Model.Adress
+    </td>
+    <td>
+        @Html.ActionLink("Редактировать", "EditApartment", new { id = Model.ApartmentId }, new { @class = "btn btn-info btn-xs btn-block btn-outline" })
+    </td>
+    @switch (Model.Published)
+    {
+        case true:
+            <td>
+                @Html.ActionLink("Снять с публикации", "EditApartmentRemovePublished", new { id = Model.ApartmentId }, new { @class = "btn btn-danger btn-xs btn-block btn-outline" })
+            </td>
+            break;
+        case false:
+        <td>
+            @Html.ActionLink("Опубликовать", "EditApartmentSetPublished", new { id = Model.ApartmentId }, new { @class = "btn btn-info btn-xs btn-block btn-outline" })
+        </td>break;
+        default:
+        <td>
+            @Html.ActionLink("Опубликовать", "EditApartmentSetPublished", new { id = Model.ApartmentId }, new { @class = "btn btn-info btn-xs btn-block btn-outline" })
+        </td>
+        break;
+    }
+
+</tr>

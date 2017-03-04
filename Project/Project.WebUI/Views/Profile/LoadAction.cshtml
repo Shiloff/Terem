@@ -1,0 +1,45 @@
+﻿@model LoadProfileActionResult
+<div id="Action_@Model.ProfileAction.ProfileActionId">
+    <div class="social-feed-box">
+        
+            @Html.Partial("LoadActionHead", new LoadProfileActionHeadResult
+       {
+           Profile = Model.Profile,
+           ProfileAction = Model.ProfileAction
+       })
+
+        <div class="social-footer">
+            <div id="Comments_@Model.ProfileAction.ProfileActionId">
+                @if (Model.CommentsCount < Model.ProfileAction.CommentsCount)
+                {
+                    <div class="social-comment">
+                        <div class="media-body">
+                            <input type="button" class="btn btn-block btn-white btn-xs pull-left" value="Показать еще @(Model.ProfileAction.CommentsCount - Model.CommentsCount) комментариев." onclick="LoadComments(@Model.ProfileAction.ProfileActionId,'Comments_@Model.ProfileAction.ProfileActionId')" />
+
+                        </div>
+                    </div>
+                }
+
+                @Html.Partial("LoadComments", new LoadCommentsResult
+                       {
+                           ProfileActionComments = Model.ProfileAction.ProfileActionComments.ToList(),
+                           Profile = Model.Profile,
+                           Action = Model.ProfileAction
+                       })
+            </div>
+            <div class="social-comment" style="display:none;" id="ProfileActionComment_@Model.ProfileAction.ProfileActionId">
+                <a href=" " class=" pull-left">
+                    <img alt="image" src="@Model.Profile.GetImageAvatarLink">
+                </a>
+                <div class="media-body">
+                    <textarea class="form-control" placeholder="Введите комментарий..." id="ProfileActionTextArea_@Model.ProfileAction.ProfileActionId"></textarea>
+                    <div class="btn-group" style="margin-top:10px;">
+                        <button class="btn btn-white btn-xs" onclick="AddComment(@Model.ProfileAction.ProfileActionId,@Model.Profile.ProfileId,'ProfileActionTextArea_@Model.ProfileAction.ProfileActionId','Comments_@Model.ProfileAction.ProfileActionId')"><i class="fa fa-comments"></i> Добавить</button>
+                        @*<button class="btn btn-white btn-xs"><i class="fa fa-share"></i> Share</button>*@
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
