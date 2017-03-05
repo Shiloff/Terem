@@ -95,7 +95,7 @@ namespace Project.WebUI.Controllers.Account
                     await _applicationManager.UserManager.AddToRoleAsync(user.Id, "user");
                     await SignInAsync(user, isPersistent: false);
                     var newProfile = new Business.DataAccess.Public.Entities.Profile { UserId = user.Id, New = true };
-                    _profileRepository.NewProfile(newProfile);
+                    _profileService.AddProfile(newProfile);
                     user.ProfileId = newProfile.ProfileId;
                     _profileService.AddProfileAction(new ProfileAction
                     {

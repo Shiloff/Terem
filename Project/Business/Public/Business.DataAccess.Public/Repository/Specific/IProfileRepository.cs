@@ -18,22 +18,10 @@ namespace Business.DataAccess.Public.Repository.Specific
     }
     public interface IProfileRepository
     {
-        IQueryable<Profile> Profiles { get; }
-        void NewProfile(Profile profile);
-        void RemoveInteres(Profile profile, ProfileInteres profileInteres);
         Profile GetProfile(long? profileId);
         bool IsProfileExists(long? profileId);
         List<Profile> FindProfiles(Profile profile, FindProfilesParams param);
         long GetFindProfilesCount(Profile profile, FindProfilesParams param);
         List<Profile> GetContacts(long profileId, int count = 0);
-
-        #region ProfileActionsComments
-        List<ProfileActionComment> GetProfileActionsComments(long profileActionId);
-        ProfileActionComment GetProfileActionsComment(long profileActionCommentId);
-        long AddProfileActionComment(ProfileActionComment addComment);
-        void RemoveProfileActionComment(long id);
-        void AddProfileActionCommentLike(long profileActionCommentId, long profileId);
-        void RemoveProfileActionCommentLike(long profileActionCommentId, long profileId);
-        #endregion
     }
 }

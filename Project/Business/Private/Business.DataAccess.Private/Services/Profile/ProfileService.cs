@@ -17,6 +17,15 @@ namespace Business.DataAccess.Private.Services.Profile
             _unitOfWorkFactory = unitOfWorkFactory;
         }
 
+        public void AddProfile(Public.Entities.Profile profile)
+        {
+            using (var uow = _unitOfWorkFactory.Create())
+            {
+                uow.Profiles.Add(profile);
+                uow.Complete();
+            }
+        }
+
         public Public.Entities.Profile GetProfileWithDetails(long id)
         {
             using (var uow = _unitOfWorkFactory.Create())
