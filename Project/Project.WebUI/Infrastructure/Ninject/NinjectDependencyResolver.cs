@@ -54,7 +54,6 @@ namespace Project.WebUI.Infrastructure.Ninject
 
             kernel.Bind<IChatRepository>().To<EFChatRepository>();
 
-            kernel.Bind<IProfileFinderHelper>().To<EFProfileFinder>();
             kernel.Bind<IProfileContactsHelper>().To<EFProfileContacts>();
 
             kernel.Bind<IApplicationManager>().To<OwinApplicationManager>();

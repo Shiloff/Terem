@@ -120,7 +120,6 @@
     <Compile Include="Repository\IProfileActionLikeRepository.cs" />
     <Compile Include="Repository\Specific\IProfileRepository.cs" />
     <Compile Include="Repository\Specific\ProfileHelpers\IProfileContactsHelper.cs" />
-    <Compile Include="Repository\Specific\ProfileHelpers\IProfileFinderHelper.cs" />
     <Compile Include="Entities\Apartment.cs" />
     <Compile Include="Entities\ApartmentComment.cs" />
     <Compile Include="Entities\ApartmentCommentLike.cs" />

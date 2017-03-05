@@ -6,6 +6,7 @@ namespace Business.DataAccess.Public.Services.Profile
 {
     public interface IProfileService
     {
+        void AddProfile(Entities.Profile profile);
         Entities.Profile GetProfileWithDetails(long id);
         Entities.Profile GetShortProfile(long id);
         GetContactsResult GetContacts(long profileId, int count = 0);
