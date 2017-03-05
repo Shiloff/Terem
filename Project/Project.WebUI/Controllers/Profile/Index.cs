@@ -1,6 +1,5 @@
 ﻿using System.Web.Mvc;
 using Business.DataAccess.Public.Directory;
-using Business.DataAccess.Public.Repository.Specific;
 using Business.DataAccess.Public.Services.Profile;
 using Project.WebUI.Filters;
 using Project.WebUI.Infrastructure.ApplicationUser;
@@ -13,18 +12,15 @@ namespace Project.WebUI.Controllers.Profile
     {
         private readonly IApplicationManager _applicationManager;
         private readonly IDirectoryStorage _directoryStorage;
-        private readonly IProfileRepository _profileRepository;
         private readonly IProfileService _profileService;
 
         public ProfileController(
-            IProfileRepository profileRepository,
             IApplicationManager applicationManager,
             IProfileService profileService,
             IDirectoryStorage directoryStorage)
         {
             _applicationManager = applicationManager;
             _profileService = profileService;
-            _profileRepository = profileRepository;
             _directoryStorage = directoryStorage;
         }
 

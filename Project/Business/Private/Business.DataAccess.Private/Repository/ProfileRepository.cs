@@ -9,7 +9,7 @@ using IProfileRepository = Business.DataAccess.Public.Repository.IProfileReposit
 
 namespace Business.DataAccess.Private.Repository
 {
-    internal class ProfileRepository : Repository<Profile, long>, IProfileRepository
+    internal class ProfileRepository : RepositoryBase<Profile, long>, IProfileRepository
     {
         public ProfileRepository(DbContext context) : base(context)
         {

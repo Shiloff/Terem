@@ -6,9 +6,9 @@ using DataAccess.Private.Repository;
 
 namespace Business.DataAccess.Private.Repository
 {
-    internal class ProfileActionLikeRepository : RepositoryBase<ProfileActionLike, long>, IProfileActionLikeRepository
+    internal class ProfileActionCommentLikeRepository : RepositoryBase<ProfileActionCommentLike, long>, IProfileActionCommentLikeRepository
     {
-        public ProfileActionLikeRepository(DbContext context) : base(context)
+        public ProfileActionCommentLikeRepository(DbContext context) : base(context)
         {
         }
 
