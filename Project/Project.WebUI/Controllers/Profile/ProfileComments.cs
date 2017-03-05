@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Web.Mvc;
 using Business.DataAccess.Public.Entities;
 using Project.WebUI.Models;
@@ -78,45 +77,42 @@ namespace Project.WebUI.Controllers.Profile
         [HttpPost]
         public ActionResult AddComment(ProfileActionComment value)
         {
+            if (_applicationManager.CurrentUser.ProfileId != value.ProfileId)
+            {
+                throw new AccessViolationException(nameof(value.ProfileId));
+            }
+            value.Date = DateTime.Now;
+            var actionCommentId = _profileService.AddProfileActionComment(value);
+
             var result = new LoadCommentResult
             {
                 Profile = _profileService.GetShortProfile((long) _applicationManager.CurrentUser.ProfileId),
-                Action = _profileService.GetProfileAction((long) value.ProfileActionId)
+                Action = _profileService.GetProfileAction((long) value.ProfileActionId),
+                ProfileActionComment = _profileService.GetProfileActionsComment(actionCommentId)
             };
 
-            if (_applicationManager.CurrentUser.ProfileId == value.ProfileId)
-            {
-                value.Date = DateTime.Now;
-                var id = _profileRepository.AddProfileActionComment(value);
-                result.ProfileActionComment = _profileRepository.GetProfileActionsComment(id);
-            }
+
             return PartialView("LoadComment", result);
         }
 
         [HttpPost]
         public void RemoveComment(ProfileActionComment value)
         {
-            var check = _profileRepository.GetProfileActionsComment(value.ProfileActionCommentId);
-            if (check != null)
-            {
-                var check2 = _profileService.GetProfileAction((long) check.ProfileActionId);
-                if ((_applicationManager.CurrentUser.ProfileId == check.ProfileId) ||
-                    (_applicationManager.CurrentUser.ProfileId == check2.ProfileId))
-                {
-                    _profileRepository.RemoveProfileActionComment(value.ProfileActionCommentId);
-                }
-            }
+            _profileService.RemoveProfileActionsComment(value.ProfileActionCommentId,
+                (long) _applicationManager.CurrentUser.ProfileId);
         }
 
         [HttpPost]
         public ActionResult AddActionCommentLike(ProfileActionCommentLike value)
         {
-            _profileRepository.AddProfileActionCommentLike((long) value.ProfileActionCommentId,
-                (long) _applicationManager.CurrentUser.ProfileId);
+            value.ProfileId = _applicationManager.CurrentUser.ProfileId;
+            value.Date = DateTime.Now;
+            _profileService.AddProfileActionCommentLike(value);
+
             var result = new LoadCommentResult
             {
                 Profile = _profileService.GetShortProfile((long) _applicationManager.CurrentUser.ProfileId),
-                ProfileActionComment = _profileRepository.GetProfileActionsComment((long) value.ProfileActionCommentId)
+                ProfileActionComment = _profileService.GetProfileActionsComment((long) value.ProfileActionCommentId)
             };
             if (result.ProfileActionComment != null)
             {
@@ -129,12 +125,12 @@ namespace Project.WebUI.Controllers.Profile
         [HttpPost]
         public ActionResult RemoveActionCommentLike(ProfileActionCommentLike value)
         {
-            _profileRepository.RemoveProfileActionCommentLike((long) value.ProfileActionCommentId,
+            _profileService.RemoveProfileActionCommentLike((long) value.ProfileActionCommentId,
                 (long) _applicationManager.CurrentUser.ProfileId);
             var result = new LoadCommentResult
             {
                 Profile = _profileService.GetShortProfile((long) _applicationManager.CurrentUser.ProfileId),
-                ProfileActionComment = _profileRepository.GetProfileActionsComment((long) value.ProfileActionCommentId)
+                ProfileActionComment = _profileService.GetProfileActionsComment((long) value.ProfileActionCommentId)
             };
             if (result.ProfileActionComment != null)
             {
@@ -146,21 +142,23 @@ namespace Project.WebUI.Controllers.Profile
 
         public ActionResult LoadComments(long? id)
         {
-            var result = new LoadCommentsResult
-            {
-                ProfileActionComments = _profileRepository.GetProfileActionsComments((long) id),
-                Profile = _profileService.GetShortProfile((long) _applicationManager.CurrentUser.ProfileId)
-            };
-            if (result.ProfileActionComments.Count > 0)
-            {
-                result.Action = _profileService.GetProfileAction(
-                        (long) result.ProfileActionComments.FirstOrDefault().ProfileActionId);
-            }
-            else
-            {
-                result.Action = new ProfileAction();
-            }
-            return PartialView(result);
+            //var result = new LoadCommentsResult
+            //{
+            //    ProfileActionComments = _profileService.GetProfileActionsComments((long) id),
+            //    Profile = _profileService.GetShortProfile((long) _applicationManager.CurrentUser.ProfileId)
+            //};
+            //if (result.ProfileActionComments.Count > 0)
+            //{
+            //    result.Action = _profileService.GetProfileAction(
+            //            (long) result.ProfileActionComments.FirstOrDefault().ProfileActionId);
+            //}
+            //else
+            //{
+            //    result.Action = new ProfileAction();
+            //}
+            //return PartialView(result);
+
+            throw new NotImplementedException();
         }
 
         #endregion

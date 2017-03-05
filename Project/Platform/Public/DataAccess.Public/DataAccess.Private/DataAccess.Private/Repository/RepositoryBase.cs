@@ -8,11 +8,11 @@ using DataAccess.Public.Repository;
 
 namespace DataAccess.Private.Repository
 {
-    public class Repository<TEntity, TKey>: IRepository<TEntity, TKey> where TEntity: class
+    public class RepositoryBase<TEntity, TKey>: IRepository<TEntity, TKey> where TEntity: class
     {
         protected DbContext Context;
 
-        public Repository(DbContext context)
+        public RepositoryBase(DbContext context)
         {
             Context = context;
         }

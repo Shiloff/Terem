@@ -11,7 +11,7 @@
         </a>
         @Model.ProfileActionComment.Text
         <br />
-        @if (Model.ProfileActionComment.ProfileActionsCommentsLikes.Where(m => m.ProfileId == Model.Profile.ProfileId).FirstOrDefault() == null)
+        @if (Model.ProfileActionComment.ProfileActionsCommentsLikes.FirstOrDefault(m => m.ProfileId == Model.Profile.ProfileId) == null)
         {
             <span class="small btn-link span-link-inactive" onclick="AddActionCommentLike(@Model.ProfileActionComment.ProfileActionCommentId,'Comment_@Model.ProfileActionComment.ProfileActionCommentId')"><i class="fa fa-thumbs-up"></i> @Model.ProfileActionComment.ProfileActionsCommentsLikes.Count Like this!</span>
         }

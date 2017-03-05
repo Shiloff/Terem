@@ -109,6 +109,7 @@ namespace Business.DataAccess.Private.Repository.Specific
         {
             return FindProfilesQuery(profile, param).Count();
         }
+
         #region ProfileActionComments
         public List<ProfileActionComment> GetProfileActionsComments(long profileActionId)
         {
@@ -150,23 +151,21 @@ namespace Business.DataAccess.Private.Repository.Specific
         }
         public void AddProfileActionCommentLike(long profileActionCommentId, long profileId)
         {
-            bool profileExist = IsProfileExists(profileId);
-            ProfileActionComment profileAction = context
+            var profileExist = IsProfileExists(profileId);
+            var profileAction = context
                 .ProfileActionsComments
-                .Where(m => m.ProfileActionCommentId == profileActionCommentId)
-                .FirstOrDefault();
-            ProfileActionCommentLike profileActionCommentLike = context.ProfileActionsCommentsLikes
-               .Where(m => m.ProfileActionCommentId == profileActionCommentId && m.ProfileId == profileId).FirstOrDefault();
-            if ((profileExist) && (profileAction != null) && (profileActionCommentLike == null))
+                .FirstOrDefault(m => m.ProfileActionCommentId == profileActionCommentId);
+            var profileActionCommentLike = context.ProfileActionsCommentsLikes.FirstOrDefault(m => m.ProfileActionCommentId == profileActionCommentId && m.ProfileId == profileId);
+
+            if ((!profileExist) || (profileAction == null) || (profileActionCommentLike != null)) return;
+
+            context.ProfileActionsCommentsLikes.Add(new ProfileActionCommentLike
             {
-                context.ProfileActionsCommentsLikes.Add(new ProfileActionCommentLike
-                {
-                    Date = DateTime.Now,
-                    ProfileId = profileId,
-                    ProfileActionCommentId = profileActionCommentId
-                });
-                context.SaveChanges();
-            }
+                Date = DateTime.Now,
+                ProfileId = profileId,
+                ProfileActionCommentId = profileActionCommentId
+            });
+            context.SaveChanges();
         }
         public void RemoveProfileActionCommentLike(long profileActionCommentId, long profileId)
         {

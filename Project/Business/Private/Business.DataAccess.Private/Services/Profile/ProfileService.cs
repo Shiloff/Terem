@@ -157,5 +157,80 @@ namespace Business.DataAccess.Private.Services.Profile
                 uow.Complete();
             }
         }
+
+        public long AddProfileActionComment(ProfileActionComment comment)
+        {
+            using (var uow = _unitOfWorkFactory.Create())
+            {
+                uow.ProfileActionComments.Add(comment);
+                uow.Complete();
+
+                return comment.ProfileActionCommentId;
+            }
+        }
+
+        public ProfileActionComment GetProfileActionsComment(long id)
+        {
+            using (var uow = _unitOfWorkFactory.Create())
+            {
+                return uow.ProfileActionComments.GetCommentWithData(id);
+            }
+        }
+
+        public void RemoveProfileActionsComment(long id, long profileId)
+        {
+            using (var uow = _unitOfWorkFactory.Create())
+            {
+                var actionComment = uow.ProfileActionComments
+                    .Find(m => m.ProfileId == profileId && m.ProfileActionCommentId == id)
+                    .FirstOrDefault();
+
+                if (actionComment == null)
+                {
+                    return;
+                }
+                uow.ProfileActionComments.Remove(actionComment);
+
+                uow.Complete();
+            }
+        }
+
+        public void AddProfileActionCommentLike(ProfileActionCommentLike comment)
+        {
+            using (var uow = _unitOfWorkFactory.Create())
+            {
+                var actionCommentLike = uow.ProfileActionCommentLikes
+                    .Find(m =>
+                        m.ProfileId == comment.ProfileId &&
+                        m.ProfileActionCommentId == comment.ProfileActionCommentId)
+                    .FirstOrDefault();
+
+                if (actionCommentLike != null)
+                {
+                    return;
+                }
+
+                uow.ProfileActionCommentLikes.Add(comment);
+                uow.Complete();
+            }
+        }
+
+        public void RemoveProfileActionCommentLike(long id, long profileId)
+        {
+            using (var uow = _unitOfWorkFactory.Create())
+            {
+                var actionCommentLike = uow.ProfileActionCommentLikes
+                    .Find(m => m.ProfileId == profileId && m.ProfileActionCommentId == id)
+                    .FirstOrDefault();
+
+                if (actionCommentLike == null)
+                {
+                    return;
+                }
+                uow.ProfileActionCommentLikes.Remove(actionCommentLike);
+
+                uow.Complete();
+            }
+        }
     }
 }

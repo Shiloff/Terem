@@ -109,6 +109,8 @@
     <Compile Include="Directory\IInteresDirectory.cs" />
     <Compile Include="Directory\ISmokeDirectory.cs" />
     <Compile Include="Directory\ISexDirectory.cs" />
+    <Compile Include="Repository\IProfileActionCommentLikeRepository.cs" />
+    <Compile Include="Repository\IProfileActionCommentRepository.cs" />
     <Compile Include="Repository\IProfileActionRepository.cs" />
     <Compile Include="Repository\IDirectoryRepository.cs" />
     <Compile Include="Repository\IProfileRepository.cs" />

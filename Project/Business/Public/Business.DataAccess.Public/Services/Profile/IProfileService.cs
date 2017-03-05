@@ -16,5 +16,10 @@ namespace Business.DataAccess.Public.Services.Profile
         void RemoveProfileAction(long id, long profileId);
         void AddActionLike(long id, long profileId);
         void RemoveActionLike(long id, long profileId);
+        long AddProfileActionComment(ProfileActionComment comment);
+        ProfileActionComment GetProfileActionsComment(long id);
+        void RemoveProfileActionsComment(long id, long profileId);
+        void AddProfileActionCommentLike(ProfileActionCommentLike comment);
+        void RemoveProfileActionCommentLike(long id, long profileId);
     }
 }

@@ -8,7 +8,7 @@ using DataAccess.Private.Repository;
 
 namespace Business.DataAccess.Private.Repository
 {
-    internal class ProfileActionRepository : Repository<ProfileAction, long>, IProfileActionRepository
+    internal class ProfileActionRepository : RepositoryBase<ProfileAction, long>, IProfileActionRepository
     {
         public ProfileActionRepository(DbContext context) : base(context)
         {

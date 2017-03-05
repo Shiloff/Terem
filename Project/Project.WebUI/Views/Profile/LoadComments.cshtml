@@ -1,35 +1,10 @@
 ﻿@model LoadCommentsResult
 @foreach (var comment in Model.ProfileActionComments)
 {
-    @Html.Partial("LoadComment", new LoadCommentResult { 
-     ProfileActionComment=comment,
-     Action=Model.Action,
-     Profile=Model.Profile
-})
-    @*<div class="social-comment">
-        <a href="@Url.Action("Index", "Profile", new { id = @comment.Profile.ProfileId})" class="pull-left">
-            <img alt="image" src="@comment.Profile.GetImageAvatarLink">
-        </a>
-        <div class="media-body">
-            <a href="@Url.Action("Index", "Profile", new { id = @comment.Profile.ProfileId})">
-                @comment.Profile.FirstName @comment.Profile.LastName
-            </a>
-            @comment.Text
-            <br />
-            @if (comment.ProfileActionsCommentsLikes.Where(m => m.ProfileId == Model.Profile.ProfileId).FirstOrDefault() == null)
-            {
-                <span class="small btn-link span-link-inactive" onclick="AddActionCommentLike(@comment.ProfileActionCommentId)"><i class="fa fa-thumbs-up"></i> @comment.ProfileActionsCommentsLikes.Count Like this!</span>
-            }
-            else
-            {
-                <span class="small btn-link span-link" onclick="RemoveActionCommentLike(@comment.ProfileActionCommentId)"><i class="fa fa-thumbs-up"></i> @comment.ProfileActionsCommentsLikes.Count Like this!</span>
-            }
-            -
-            <small class="text-muted">@comment.DateString</small>
-            @if ((Model.Profile.ProfileId == comment.ProfileId) || (Model.Profile.ProfileId == Model.Action.ProfileId))
-            {
-                <button class="btn btn-danger btn-xs pull-right btn-outline" onclick="RemoveComment(@comment.ProfileActionCommentId)"><i class="fa fa-trash"></i></button>
-            }
-        </div>
-    </div>*@
+    @Html.Partial("LoadComment", new LoadCommentResult
+    {
+        ProfileActionComment = comment,
+        Action = Model.Action,
+        Profile = Model.Profile
+    })
 }
