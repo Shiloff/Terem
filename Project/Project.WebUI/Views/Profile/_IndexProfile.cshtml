@@ -9,7 +9,7 @@
         <h4>
             <strong>@Model.FirstName @Model.LastName</strong>
             <br />
-            <small>@Model.Sex.Name</small>
+            <small>@(Model.Sex != null ? Model.Sex.Name: string.Empty)</small>
         </h4>
         <p><i class="fa fa-map-marker"></i> @Model.Town</p>
 
