@@ -1,30 +1,41 @@
-﻿using System.Web.Mvc;
+﻿using System;
+using System.Web.Mvc;
 using Business.DataAccess.Public.Repository.Specific;
+using Business.DataAccess.Public.Services.Contact;
 using Project.WebUI.Models;
 
 namespace Project.WebUI.Controllers.Contacts
 {
     public partial class ContactsController : Controller
     {
-
         public ActionResult Find(int page = 1)
         {
-            int PageSize = 9;
-            FindContactsViewResult result = new FindContactsViewResult();
-            var profile = ProfileRepository.GetProfile(user.ProfileId);
-            PagingInfo PagingInfo = new PagingInfo();
-            PagingInfo.CurrentPage = page;
-            PagingInfo.ItemsPerPage = PageSize;
-            PagingInfo.TotalItems = (int)ProfileRepository.GetFindProfilesCount(profile, new FindProfilesParams());
-
-            result.PagingInfo = PagingInfo;
-            result.Profiles = ProfileRepository.FindProfiles(profile,
-                new FindProfilesParams
+            if (_applicationManager.CurrentUser.ProfileId == null)
             {
-                Take = PageSize,
-                Skip = (page - 1) * PageSize
-            });
+                throw new ArgumentNullException();
+            }
+
+            var findContactsResult = _contactService
+                .FindContacts((long) _applicationManager.CurrentUser.ProfileId,
+                    new ContactFilter()
+                    {
+                        Page = page,
+                        PageSize = GetPageSize()
+                    });
+
+            var pagingInfo = new PagingInfo
+            {
+                CurrentPage = page,
+                ItemsPerPage = GetPageSize(),
+                TotalItems = findContactsResult.Item2
+            };
+
+            var result = new FindContactsResult
+            {
+                PagingInfo = pagingInfo,
+                Profiles = findContactsResult.Item1
+            };
             return View(result);
         }
-	}
+    }
 }

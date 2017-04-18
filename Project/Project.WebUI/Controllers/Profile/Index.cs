@@ -40,7 +40,7 @@ namespace Project.WebUI.Controllers.Profile
             }
             result.Me = _profileService.GetShortProfile((long) profileId);
 
-            var contacts = _profileService.GetContacts(result.Profile.ProfileId, 10);
+            var contacts = _profileService.GetShortContacts(result.Profile.ProfileId, 10);
             result.Contacts = contacts.Profiles;
             result.ContactsCount = contacts.Count;
             if (result.Profile?.New != null && (result.Profile.New.Value != true))

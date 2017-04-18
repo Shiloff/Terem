@@ -20,8 +20,6 @@ namespace Business.DataAccess.Public.Repository.Specific
     {
         Profile GetProfile(long? profileId);
         bool IsProfileExists(long? profileId);
-        List<Profile> FindProfiles(Profile profile, FindProfilesParams param);
-        long GetFindProfilesCount(Profile profile, FindProfilesParams param);
-        List<Profile> GetContacts(long profileId, int count = 0);
+
     }
 }

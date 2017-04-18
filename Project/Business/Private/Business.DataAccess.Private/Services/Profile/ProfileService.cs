@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Business.DataAccess.Public.Entities;
 using Business.DataAccess.Public.Repository.Specific;
+using Business.DataAccess.Public.Services.Contact;
 using Business.DataAccess.Public.Services.Profile;
 using Business.DataAccess.Public.UnitOfWork.Factory;
 
@@ -43,16 +44,16 @@ namespace Business.DataAccess.Private.Services.Profile
             }
         }
 
-        public GetContactsResult GetContacts(long profileId, int count = 0)
+        public GetContactsResult GetShortContacts(long profileId, int count = 0)
         {
             using (var uow = _unitOfWorkFactory.Create())
             {
                 //TODO оптимизировать это
-                var contacts = uow.Profiles.GetContacts(profileId);
+                var contacts = uow.Profiles.GetContacts(profileId, new ContactFilter());
                 var result = new GetContactsResult
                 {
-                    Profiles = contacts.Take(count).ToList(),
-                    Count = contacts.Count
+                    Profiles = contacts.Item1.Take(count).ToList(),
+                    Count = contacts.Item2
                 };
                 return result;
             }

@@ -339,8 +339,8 @@
     <Compile Include="Models\Apartments\SetApartmentDefaultPhotoData.cs" />
     <Compile Include="Models\Apartments\InfoApartmentsViewResult.cs" />
     <Compile Include="Models\Apartments\IndexApartmentsViewResult.cs" />
-    <Compile Include="Models\Contacts\FindContactsViewResult.cs" />
-    <Compile Include="Models\Contacts\IndexContactsViewResult.cs" />
+    <Compile Include="Models\Contacts\FindContactsResult.cs" />
+    <Compile Include="Models\Contacts\GetContactsResult.cs" />
     <Compile Include="Models\Home\IndexHomeViewResult.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\Messages\DialogMessagesViewResult.cs" />

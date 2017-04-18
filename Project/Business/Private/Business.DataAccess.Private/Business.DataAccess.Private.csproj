@@ -81,6 +81,7 @@
     <Compile Include="Repository\Specific\EFMessageRepository.cs" />
     <Compile Include="Repository\Specific\EFProfileRepository.cs" />
     <Compile Include="Repository\Specific\Helpers\EFProfileContacts.cs" />
+    <Compile Include="Services\Contact\ContactService.cs" />
     <Compile Include="Services\Profile\ProfileService.cs" />
     <Compile Include="UnitOfWork\UnitOfWork.cs" />
     <Compile Include="UnitOfWork\UnitOfWorkFactory.cs" />

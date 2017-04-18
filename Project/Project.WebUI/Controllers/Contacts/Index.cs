@@ -1,36 +1,57 @@
-﻿using System.Web;
+﻿using System;
 using System.Web.Mvc;
-using Business.DataAccess.Public.Entities.Identity;
 using Business.DataAccess.Public.Repository.Specific;
-using Microsoft.AspNet.Identity;
+using Business.DataAccess.Public.Services.Contact;
+using Project.WebUI.Infrastructure.ApplicationUser;
 using Project.WebUI.Models;
-using Microsoft.AspNet.Identity.Owin;
 
 namespace Project.WebUI.Controllers.Contacts
 {
     public partial class ContactsController : Controller
     {
-        IProfileRepository ProfileRepository;
+        private readonly IApplicationManager _applicationManager;
 
-        ApplicationUserEntity user
+        private readonly IContactService _contactService;
+
+        public ContactsController(IApplicationManager applicationManager, IContactService contactService)
         {
-            get
+            _applicationManager = applicationManager;
+            _contactService = contactService;
+        }
+
+        public ActionResult Index(int page = 1)
+        {
+            if (_applicationManager.CurrentUser.ProfileId == null)
             {
-                return HttpContext.GetOwinContext().GetUserManager<ApplicationManager>().FindById(HttpContext.User.Identity.GetUserId());
+                throw new ArgumentNullException();
             }
-        }
-        public ContactsController(IProfileRepository profileRepository)
-        {
-            ProfileRepository = profileRepository;
-        }
 
-        public ActionResult Index()
-        {
-            var result = new IndexContactsViewResult
+            var getContactsResult = _contactService
+                .GetContacts((long) _applicationManager.CurrentUser.ProfileId,
+                    new ContactFilter()
+                    {
+                        Page = page,
+                        PageSize = GetPageSize()
+                    });
+
+            var pagingInfo = new PagingInfo
             {
-                Profiles = ProfileRepository.GetContacts((long) user.ProfileId)
+                CurrentPage = page,
+                ItemsPerPage = GetPageSize(),
+                TotalItems = getContactsResult.Item2
+            };
+
+            var result = new GetContactsResult
+            {
+                PagingInfo = pagingInfo,
+                Profiles = getContactsResult.Item1
             };
             return View(result);
+        }
+
+        private int GetPageSize()
+        {
+            return 9;
         }
     }
 }

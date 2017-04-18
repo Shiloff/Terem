@@ -50,49 +50,5 @@ namespace Business.DataAccess.Private.Repository.Specific
             }
             return result;
         }
-        public List<Profile> GetContacts(long profileId, int count = 0)
-        {
-            var query = this.Profiles
-               .Where(m => m.New == false)
-               .Where(m => m.ProfileId != profileId)
-               .Where(m => m.MyMessage.Where(k => k.ProfileIdTo == profileId).Count() > 0
-                   || m.MessageForMe.Where(k => k.ProfileIdFrom == profileId).Count() > 0)
-               .OrderBy(m => m.LastName)
-               .ThenBy(m => m.ProfileId)
-               .AsQueryable();
-
-            if (count > 0)
-                query = query.Take(count);
-            var result = query
-                .ToList();
-            return result;
-        }
-
-        private IQueryable<Profile> FindProfilesQuery(Profile profile, FindProfilesParams param)
-        {
-            return this.Profiles
-                .Where(m => m.New == false)
-                .Where(m => m.ProfileId != profile.ProfileId)
-                .Include(m=>m.Intereses)
-                .OrderByDescending(m => m.LastName)
-                .AsQueryable();
-        }
-        public List<Profile> FindProfiles(Profile profile, FindProfilesParams param)
-        {
-            List<Profile> result;
-            var query = FindProfilesQuery(profile, param);
-            if (param.Take != 0)
-            {
-                query = query.Skip(param.Skip).Take(param.Take);
-            }
-            result = query.ToList();
-            return result;
-        }
-        public long GetFindProfilesCount(Profile profile, FindProfilesParams param)
-        {
-            return FindProfilesQuery(profile, param).Count();
-        }
-
-
     }
 }
