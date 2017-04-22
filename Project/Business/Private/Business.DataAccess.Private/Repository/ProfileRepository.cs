@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Data.Entity;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Runtime.InteropServices;
 using Business.DataAccess.Private.DatabaseContext;
 using Business.DataAccess.Public.Entities;
@@ -46,7 +48,7 @@ namespace Business.DataAccess.Private.Repository
             return Get(id);
         }
 
-        public Tuple<List<Profile>, int> GetContacts(long profileId, ContactFilter filter)
+        public Tuple<List<Profile>, int> GetContacts(long profileId, Pagination pagination, ContactFilter filter)
         {
             var query = DbContext.Profiles
                 .Where(m => m.New == false)
@@ -55,25 +57,78 @@ namespace Business.DataAccess.Private.Repository
                             || m.MessageForMe.Any(k => k.ProfileIdFrom == profileId))
                 .Include(m => m.Intereses)
                 .AsQueryable();
-            ApplyFilters(query, filter);
-            return new Tuple<List<Profile>, int>(ApplyPagination(query, filter).ToList(), query.Count());
+            query = ApplyFilters(query, filter);
+            return new Tuple<List<Profile>, int>(ApplyPagination(query, pagination).ToList(), query.Count());
         }
 
-        public Tuple<List<Profile>, int> FindContacts(long myProfileId, ContactFilter filter)
+        public Tuple<List<Profile>, int> FindContacts(long myProfileId, Pagination pagination, ContactFilter filter)
         {
             var query = DetailedProfiles
                 .Where(m => m.ProfileId != myProfileId);
             query = ApplyFilters(query, filter);
-            return new Tuple<List<Profile>, int>(ApplyPagination(query, filter).ToList(), query.Count());
+            return new Tuple<List<Profile>, int>(ApplyPagination(query, pagination).ToList(), query.Count());
         }
 
         private static IQueryable<Profile> ApplyFilters(IQueryable<Profile> profiles, ContactFilter filter)
         {
-            //profiles = profiles.Skip((filter.Page - 1)*filter.PageSize).Take(filter.PageSize);
-            return profiles;
+            var customWhere = new CustomWhere<Profile>();
+            if (filter.AlcoholId != null)
+            {
+                customWhere.AddWhereClause(n => n.ProfileAlcoholId == filter.AlcoholId);
+            }
+            if (filter.SexId != null)
+            {
+                customWhere.AddWhereClause(m => m.ProfileSexId == filter.SexId);
+            }
+            if (filter.ActivityId != null)
+            {
+                customWhere.AddWhereClause(m => m.ProfileActivityId == filter.ActivityId);
+            }
+            if (filter.AnimalId != null)
+            {
+                customWhere.AddWhereClause(m => m.ProfileAnimalsId == filter.AnimalId);
+            }
+            if (filter.SmokeId != null)
+            {
+                customWhere.AddWhereClause(m => m.ProfileSmokingId == filter.SmokeId);
+            }
+
+            return customWhere.Result != null ? profiles.Where(customWhere.Result) : profiles;
         }
 
-        private static IQueryable<Profile> ApplyPagination(IQueryable<Profile> profiles, ContactFilter filter)
+        public class CustomWhere<T>
+        {
+            private ParameterExpression _param;
+            private BinaryExpression _body;
+            public CustomWhere()
+            {
+                _param = Expression.Parameter(typeof(T), "a");
+                _body = null;
+            }
+
+            public void AddWhereClause(/*int? value, string propName,*/ Expression<Func<T, bool>> expr)
+            {
+                var binaryExpression = expr.Body as BinaryExpression;
+
+                if (binaryExpression == null)
+                {
+                    throw new NotSupportedException($"{expr.Body.GetType()} not supported");
+                }
+
+                var visitor = new ParameterUpdateVisitor(expr.Parameters.First(), _param);
+                // replace the parameter in the expression just created
+                expr = visitor.Visit(expr) as Expression<Func<T, bool>>;
+
+                _body = _body == null
+                    ? expr.Body as BinaryExpression
+                    : Expression.AndAlso(expr.Body, _body);
+            }
+
+            public Expression<Func<Profile, bool>> Result
+                => _body == null ? null : Expression.Lambda<Func<Profile, bool>>(_body, _param);
+        }
+
+        private static IQueryable<Profile> ApplyPagination(IQueryable<Profile> profiles, Pagination filter)
         {
             profiles = profiles
                 .OrderBy(m => m.LastName)
@@ -144,11 +199,34 @@ namespace Business.DataAccess.Private.Repository
                 profile.Intereses.Remove(interes);
             }
 
-            var newIntereses = DbContext.ProfileInteres.Where(m => interesesId.Contains(m.ProfileInteresId));
-            foreach (var interes in newIntereses)
+            if (interesesId != null)
             {
-                profile.Intereses.Add(interes);
+                var newIntereses = DbContext.ProfileInteres.Where(m => interesesId.Contains(m.ProfileInteresId));
+                foreach (var interes in newIntereses)
+                {
+                    profile.Intereses.Add(interes);
+                }
             }
+        }
+    }
+
+    class ParameterUpdateVisitor : ExpressionVisitor
+    {
+        private ParameterExpression _oldParameter;
+        private ParameterExpression _newParameter;
+
+        public ParameterUpdateVisitor(ParameterExpression oldParameter, ParameterExpression newParameter)
+        {
+            _oldParameter = oldParameter;
+            _newParameter = newParameter;
+        }
+
+        protected override Expression VisitParameter(ParameterExpression node)
+        {
+            if (object.ReferenceEquals(node, _oldParameter))
+                return _newParameter;
+
+            return base.VisitParameter(node);
         }
     }
 }

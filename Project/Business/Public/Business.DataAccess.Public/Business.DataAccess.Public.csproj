@@ -149,6 +149,7 @@
     <Compile Include="Entities\RegionState.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\Contact\ContactFilter.cs" />
+    <Compile Include="Services\Contact\Pagination.cs" />
     <Compile Include="Services\Contact\IContactService.cs" />
     <Compile Include="Services\Profile\GetContactsResult.cs" />
     <Compile Include="Services\Profile\IProfileService.cs" />

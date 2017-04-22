@@ -11,8 +11,8 @@ namespace Business.DataAccess.Public.Repository
     {
         Profile GetProfileWithDetails(long id);
         Profile GetShortProfile(long id);
-        Tuple<List<Profile>, int> GetContacts(long profileId, ContactFilter filter);
-        Tuple<List<Profile>, int> FindContacts(long myProfileId, ContactFilter filter);
+        Tuple<List<Profile>, int> GetContacts(long profileId, Pagination pagination, ContactFilter filter);
+        Tuple<List<Profile>, int> FindContacts(long myProfileId, Pagination pagination, ContactFilter filter);
         void Update(Profile profile, ProfileUpdateMode mode = ProfileUpdateMode.None);
         void UpdateIntereses(long profileId, int[] interesesId);
     }

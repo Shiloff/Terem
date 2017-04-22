@@ -49,7 +49,7 @@ namespace Business.DataAccess.Private.Services.Profile
             using (var uow = _unitOfWorkFactory.Create())
             {
                 //TODO оптимизировать это
-                var contacts = uow.Profiles.GetContacts(profileId, new ContactFilter());
+                var contacts = uow.Profiles.GetContacts(profileId, new Pagination(), new ContactFilter());
                 var result = new GetContactsResult
                 {
                     Profiles = contacts.Item1.Take(count).ToList(),

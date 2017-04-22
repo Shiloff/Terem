@@ -16,11 +16,11 @@ namespace Project.WebUI.Controllers.Contacts
 
             var findContactsResult = _contactService
                 .FindContacts((long) _applicationManager.CurrentUser.ProfileId,
-                    new ContactFilter()
+                    new Pagination()
                     {
                         Page = page,
                         PageSize = GetPageSize()
-                    });
+                    }, new ContactFilter());
 
             var pagingInfo = new PagingInfo
             {

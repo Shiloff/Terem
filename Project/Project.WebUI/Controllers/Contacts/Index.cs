@@ -27,14 +27,15 @@ namespace Project.WebUI.Controllers.Contacts
             {
                 throw new ArgumentNullException();
             }
-
-            var getContactsResult = _contactService
-                .GetContacts((long) _applicationManager.CurrentUser.ProfileId,
-                    new ContactFilter()
-                    {
-                        Page = page,
-                        PageSize = GetPageSize()
-                    });
+            
+            var filter = new ContactFilter(sexId, alcoholId, animalId, smokeId, activityId);
+            var getContactsResult = _contactService.GetContacts(
+                (long) _applicationManager.CurrentUser.ProfileId,
+                new Pagination()
+                {
+                    Page = page,
+                    PageSize = GetPageSize()
+                }, filter);
 
             var pagingInfo = new PagingInfo
             {
@@ -48,7 +49,7 @@ namespace Project.WebUI.Controllers.Contacts
                 PagingInfo = pagingInfo,
                 Profiles = getContactsResult.Item1,
                 AvalibleFilters = GetAvalibleFilters(),
-                SelectedFilters = new SelectedFilters(sexId, alcoholId, animalId, smokeId, activityId)
+                SelectedFilters = filter
             };
             return View(result);
         }
@@ -68,7 +69,7 @@ namespace Project.WebUI.Controllers.Contacts
 
         private int GetPageSize()
         {
-            return 1;
+            return 9;
         }
     }
 }

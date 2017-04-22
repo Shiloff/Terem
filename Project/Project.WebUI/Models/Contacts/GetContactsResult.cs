@@ -2,6 +2,7 @@
 using System.ComponentModel;
 using Business.DataAccess.Public.Directory.DirectoryItems;
 using Business.DataAccess.Public.Entities;
+using Business.DataAccess.Public.Services.Contact;
 
 namespace Project.WebUI.Models
 
@@ -13,7 +14,7 @@ namespace Project.WebUI.Models
         public PagingInfo PagingInfo { get; set; }
 
         public AvalibleFilters AvalibleFilters { get; set; }
-        public SelectedFilters SelectedFilters { get; set; }
+        public ContactFilter SelectedFilters { get; set; }
     }
 
     public class AvalibleFilters

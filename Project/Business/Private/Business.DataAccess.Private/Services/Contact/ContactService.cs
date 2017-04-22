@@ -13,19 +13,19 @@ namespace Business.DataAccess.Private.Services.Contact
             _unitOfWorkFactory = unitOfWorkFactory;
         }
 
-        public Tuple<List<Public.Entities.Profile>, int> GetContacts(long profileId, ContactFilter filter)
+        public Tuple<List<Public.Entities.Profile>, int> GetContacts(long profileId, Pagination pagination, ContactFilter filter)
         {
             using (var uow = _unitOfWorkFactory.Create())
             {
-                return uow.Profiles.GetContacts(profileId, filter);
+                return uow.Profiles.GetContacts(profileId, pagination, filter);
             }
         }
 
-        public Tuple<List<Public.Entities.Profile>, int> FindContacts(long myProfileId, ContactFilter filter)
+        public Tuple<List<Public.Entities.Profile>, int> FindContacts(long myProfileId, Pagination pagination, ContactFilter filter)
         {
             using (var uow = _unitOfWorkFactory.Create())
             {
-                return uow.Profiles.FindContacts(myProfileId, filter);
+                return uow.Profiles.FindContacts(myProfileId, pagination, filter);
             }
         }
     }

@@ -5,7 +5,7 @@ namespace Business.DataAccess.Public.Services.Contact
 {
     public interface IContactService
     {
-        Tuple<List<Entities.Profile>, int> GetContacts(long profileId, ContactFilter filter);
-        Tuple<List<Entities.Profile>, int> FindContacts(long myProfileId, ContactFilter filter);
+        Tuple<List<Entities.Profile>, int> GetContacts(long profileId, Pagination pagination, ContactFilter filter);
+        Tuple<List<Entities.Profile>, int> FindContacts(long myProfileId, Pagination pagination, ContactFilter filter);
     }
 }
