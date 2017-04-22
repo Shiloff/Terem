@@ -1,9 +1,11 @@
-﻿namespace Business.DataAccess.Public.Services.Contact
+﻿using System.Collections.Generic;
+
+namespace Business.DataAccess.Public.Services.Contact
 {
     public class ContactFilter
     {
         public ContactFilter(int? sexId = null, int? sexWhoId = null, int? alcoholId = null, int? animalId = null, int? smokeId = null,
-            int? activityId = null)
+            int? activityId = null, IEnumerable<int> interests = null)
         {
             ActivityId = activityId;
             AnimalId = animalId;
@@ -11,6 +13,8 @@
             SexId = sexId;
             SexWhoId = sexWhoId;
             AlcoholId = alcoholId;
+
+            Interests = interests ?? new List<int>();
         }
 
         public int? SexId { get; }
@@ -19,5 +23,7 @@
         public int? AnimalId { get; }
         public int? SmokeId { get; }
         public int? ActivityId { get; }
+
+        public IEnumerable<int> Interests { get; }
     }
 }

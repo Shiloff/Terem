@@ -98,35 +98,40 @@ namespace Business.DataAccess.Private.Repository
             {
                 customWhere.AddWhereClause(m => m.ProfileSmokingId == filter.SmokeId);
             }
+            if (filter.Interests != null && filter.Interests.Any())
+            {
+                customWhere.AddWhereClause(
+                    m => filter.Interests.Intersect(m.Intereses.Select(k => k.ProfileInteresId)).Any());
+            }
 
-            return customWhere.Result != null ? profiles.Where(customWhere.Result) : profiles;
+                return customWhere.Result != null ? profiles.Where(customWhere.Result) : profiles;
         }
 
         public class CustomWhere<T>
         {
             private ParameterExpression _param;
-            private BinaryExpression _body;
+            private Expression _body;
             public CustomWhere()
             {
                 _param = Expression.Parameter(typeof(T), "a");
                 _body = null;
             }
 
-            public void AddWhereClause(/*int? value, string propName,*/ Expression<Func<T, bool>> expr)
+            public void AddWhereClause(Expression<Func<T, bool>> expr)
             {
-                var binaryExpression = expr.Body as BinaryExpression;
+                //var binaryExpression = expr.Body as BinaryExpression;
 
-                if (binaryExpression == null)
-                {
-                    throw new NotSupportedException($"{expr.Body.GetType()} not supported");
-                }
+                //if (binaryExpression == null)
+                //{
+                //    throw new NotSupportedException($"{expr.Body.GetType()} not supported");
+                //}
 
                 var visitor = new ParameterUpdateVisitor(expr.Parameters.First(), _param);
                 // replace the parameter in the expression just created
                 expr = visitor.Visit(expr) as Expression<Func<T, bool>>;
 
                 _body = _body == null
-                    ? expr.Body as BinaryExpression
+                    ? expr.Body
                     : Expression.AndAlso(expr.Body, _body);
             }
 

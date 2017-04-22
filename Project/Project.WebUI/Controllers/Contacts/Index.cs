@@ -21,14 +21,14 @@ namespace Project.WebUI.Controllers.Contacts
             _directoryStorage = directoryStorage;
         }
 
-        public ActionResult Index(int? sexId, int? sexWhoId, int? alcoholId, int? animalId, int? smokeId, int? activityId, int page = 1 )
+        public ActionResult Index(int? sexId, int? sexWhoId, int? alcoholId, int? animalId, int? smokeId, int? activityId, IEnumerable<int> interests, int page = 1 )
         {
             if (_applicationManager.CurrentUser.ProfileId == null)
             {
                 throw new ArgumentNullException();
             }
             var result = Reuqest(_contactService.GetContacts, "Index", (long) _applicationManager.CurrentUser.ProfileId,
-                sexId, sexWhoId, alcoholId, animalId, smokeId, activityId, page);
+                sexId, sexWhoId, alcoholId, animalId, smokeId, activityId, page, interests);
             return View(result);
         }
 
@@ -49,9 +49,9 @@ namespace Project.WebUI.Controllers.Contacts
         private GetContactsResult Reuqest(
             Func<long, Pagination, ContactFilter, Tuple<List<Business.DataAccess.Public.Entities.Profile>, int>> reuqest,
             string name, long currentId, int? sexId, int? sexWhoId, int? alcoholId, int? animalId, int? smokeId, int? activityId,
-            int page)
+            int page, IEnumerable<int> interests)
         {
-            var filter = new ContactFilter(sexId, sexWhoId, alcoholId, animalId, smokeId, activityId);
+            var filter = new ContactFilter(sexId, sexWhoId, alcoholId, animalId, smokeId, activityId, interests);
             var getContactsResult = reuqest(
                 currentId,
                 new Pagination()

@@ -63,11 +63,32 @@
         }
         var elems2 = pForm.getElementsByTagName('select');
         for (var i = 0; i < elems2.length; i++) {
-            if (elems2[i].value !== "") {
-                filters.push(encodeURIComponent(elems2[i].name) + "=" + encodeURIComponent(elems2[i].value));
+            if (!elems2[i].multiple) {
+                if (elems2[i].value !== "") {
+                    filters.push(encodeURIComponent(elems2[i].name) + "=" + encodeURIComponent(elems2[i].value));
+                }
+            } else {
+                for (var j = 0; j < elems2[i].selectedOptions.length; j++) {
+                    if (elems2[i].selectedOptions[j].value !== "" && elems2[i].selectedOptions[j].selected) {
+                        filters.push(encodeURIComponent(elems2[i].name) + "=" + encodeURIComponent(elems2[i].selectedOptions[j].value));
+                    }
+                }
             }
         }
         window.location = pForm.action + "?" + filters.join("&");
         return false;
     }
 </script>
+
+
+@section Styles{
+    @Styles.Render("~/Content/plugins/chosen/chosenStyles")
+}
+@section Scripts{
+    @Scripts.Render("~/plugins/chosen")
+    <script>
+        $(document).ready(function() {
+            $(".chosen-select").chosen({ width: "100%" });
+        });
+    </script>
+}

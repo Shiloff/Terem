@@ -10,7 +10,12 @@
                 </button>
                 <h4 class="modal-title" id="myModalLabel">Фильтры</h4>
             </div>
-            @using (@Html.BeginForm(Model.Action, "Contacts", FormMethod.Get, new { onsubmit = "return SubmitForm(this);" }))
+
+            <form method="get">
+
+
+            </form>
+            @using (@Html.BeginForm(Model.Action, "Contacts", FormMethod.Get, new {onsubmit = "return SubmitForm(this);"}))
             {
                 @Html.Hidden("page", Model.PagingInfo.CurrentPage)
                 <div class="modal-body form-horizontal">
@@ -20,6 +25,13 @@
                     @Html.DropDownFilter("animalId", m => m.AvalibleFilters.Animals, Model.SelectedFilters.AnimalId)
                     @Html.DropDownFilter("activityId", m => m.AvalibleFilters.Activity, Model.SelectedFilters.ActivityId)
                     @Html.DropDownFilter("smokeId", m => m.AvalibleFilters.Smokes, Model.SelectedFilters.SmokeId)
+
+                    <div class="form-group ">
+                        @Html.LabelFor(m => m.AvalibleFilters.Intereses, new {@class = "col-md-2 control-label"})
+                        <div class="col-md-10">
+                            @Html.ListBox("interests", new MultiSelectList(Model.AvalibleFilters.Intereses, "Id", "Name", Model.SelectedFilters.Interests), new {data_placeholder = "Выберите интерес", multiple = "multiple", @class = "chosen-select"})
+                        </div>
+                    </div>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default" data-dismiss="modal">Закрыть</button>
