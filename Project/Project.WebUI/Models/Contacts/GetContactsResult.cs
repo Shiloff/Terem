@@ -34,8 +34,10 @@ namespace Project.WebUI.Models
 
     public class SelectedFilters
     {
-        public SelectedFilters(int? sexId = null, int? alcoholId = null, int? animalId = null, int? smokeId = null)
+        public SelectedFilters(int? sexId = null, int? alcoholId = null, int? animalId = null, int? smokeId = null,
+            int? activityId = null)
         {
+            ActivityId = activityId;
             AnimalId = animalId;
             SmokeId = smokeId;
             SexId = sexId;
@@ -46,6 +48,7 @@ namespace Project.WebUI.Models
         public int? AlcoholId { get; }
         public int? AnimalId { get; }
         public int? SmokeId { get; }
+        public int? ActivityId { get; }
     }
 
 }

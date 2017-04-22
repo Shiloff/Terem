@@ -1,9 +1,19 @@
-﻿@using System.Collections
-@using Project.WebUI.HtmlHelpers
+﻿@using Project.WebUI.HtmlHelpers
 @model GetContactsResult
 @{
     ViewBag.Title = "Index";
     Layout = "~/Views/Shared/_LayoutInspinia.cshtml";
+
+    Func<MvcHtmlString> pageLinks = () => Html.PageLinks(Model.PagingInfo,
+        k => Url.Action("Index", new
+        {
+            page = k,
+            sexId = Model.SelectedFilters.SexId,
+            alcoholId = Model.SelectedFilters.AlcoholId,
+            animalId = Model.SelectedFilters.AnimalId,
+            activityId = Model.SelectedFilters.ActivityId,
+            smokeId = Model.SelectedFilters.SmokeId
+        }));
 }
 
 <div class="row wrapper border-bottom white-bg page-heading">
@@ -15,14 +25,14 @@
 
 <div class="wrapper wrapper-content animated fadeInRight">
     <input type="button" class="btn btn-primary btn-block" value="Фильтры" style="margin-bottom: 20px;" data-toggle="modal" data-target="#profileFilterModal"/>
-    @Html.PageLinks(Model.PagingInfo, k => Url.Action("Index", new {page = k}))
+    @pageLinks()
     <div class="row">
         @foreach (var profile in Model.Profiles)
         {
             @Html.Partial("_IndexProfile", profile)
         }
     </div>
-    @Html.PageLinks(Model.PagingInfo, k => Url.Action("Index", new {page = k}))
+    @pageLinks()
 </div>
 
 
@@ -39,11 +49,11 @@
             {
                 @Html.Hidden("page", Model.PagingInfo.CurrentPage)
                 <div class="modal-body form-horizontal">
-                    @Html.DropDownFilter("sexId", m => m.AvalibleFilters.Sex, Model.SelectedFilters.AlcoholId)
+                    @Html.DropDownFilter("sexId", m => m.AvalibleFilters.Sex, Model.SelectedFilters.SexId)
                     @Html.DropDownFilter("alcoholId", m => m.AvalibleFilters.Alcohols, Model.SelectedFilters.AlcoholId)
-                    @Html.DropDownFilter("animalId", m => m.AvalibleFilters.Animals, Model.SelectedFilters.AlcoholId)
-                    @Html.DropDownFilter("activityId", m => m.AvalibleFilters.Activity, Model.SelectedFilters.AlcoholId)
-                    @Html.DropDownFilter("smokeId", m => m.AvalibleFilters.Smokes, Model.SelectedFilters.AlcoholId)
+                    @Html.DropDownFilter("animalId", m => m.AvalibleFilters.Animals, Model.SelectedFilters.AnimalId)
+                    @Html.DropDownFilter("activityId", m => m.AvalibleFilters.Activity, Model.SelectedFilters.ActivityId)
+                    @Html.DropDownFilter("smokeId", m => m.AvalibleFilters.Smokes, Model.SelectedFilters.SmokeId)
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default" data-dismiss="modal">Закрыть</button>

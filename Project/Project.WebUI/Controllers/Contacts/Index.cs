@@ -21,7 +21,7 @@ namespace Project.WebUI.Controllers.Contacts
             _directoryStorage = directoryStorage;
         }
 
-        public ActionResult Index(int? sexId, int? alcoholId, int? animalId, int? smokeId, int page = 1 )
+        public ActionResult Index(int? sexId, int? alcoholId, int? animalId, int? smokeId, int? activityId, int page = 1 )
         {
             if (_applicationManager.CurrentUser.ProfileId == null)
             {
@@ -48,7 +48,7 @@ namespace Project.WebUI.Controllers.Contacts
                 PagingInfo = pagingInfo,
                 Profiles = getContactsResult.Item1,
                 AvalibleFilters = GetAvalibleFilters(),
-                SelectedFilters = new SelectedFilters(sexId, alcoholId, animalId, smokeId)
+                SelectedFilters = new SelectedFilters(sexId, alcoholId, animalId, smokeId, activityId)
             };
             return View(result);
         }
