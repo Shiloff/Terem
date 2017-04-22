@@ -72,14 +72,20 @@ namespace Business.DataAccess.Private.Repository
         private static IQueryable<Profile> ApplyFilters(IQueryable<Profile> profiles, ContactFilter filter)
         {
             var customWhere = new CustomWhere<Profile>();
-            if (filter.AlcoholId != null)
-            {
-                customWhere.AddWhereClause(n => n.ProfileAlcoholId == filter.AlcoholId);
-            }
+
             if (filter.SexId != null)
             {
                 customWhere.AddWhereClause(m => m.ProfileSexId == filter.SexId);
             }
+            if (filter.SexWhoId != null)
+            {
+                customWhere.AddWhereClause(m => m.ProfileSexWhoId == filter.SexWhoId);
+            }
+            if (filter.AlcoholId != null)
+            {
+                customWhere.AddWhereClause(n => n.ProfileAlcoholId == filter.AlcoholId);
+            }
+
             if (filter.ActivityId != null)
             {
                 customWhere.AddWhereClause(m => m.ProfileActivityId == filter.ActivityId);

@@ -14,13 +14,17 @@ namespace Project.WebUI.Models
         public PagingInfo PagingInfo { get; set; }
 
         public AvalibleFilters AvalibleFilters { get; set; }
+
         public ContactFilter SelectedFilters { get; set; }
+        public string Action { get; set; }
     }
 
     public class AvalibleFilters
     {
         [DisplayName("Пол")]
         public IReadOnlyCollection<SexItem> Sex { get; set; }
+        [DisplayName("Пол соседа")]
+        public IReadOnlyCollection<SexItem> SexWho { get; set; }
         [DisplayName("Алкоголь")]
         public IReadOnlyCollection<AlcoholItem> Alcohols { get; set; }
         [DisplayName("Курение")]

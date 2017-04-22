@@ -1839,7 +1839,6 @@
     <Content Include="Views\Rent\EditApartmentMap.cshtml" />
     <Content Include="Views\Messages\_UnreadMessages.cshtml" />
     <Content Include="Views\Messages\UnreadMessagesShort.cshtml" />
-    <Content Include="Views\Contacts\Find.cshtml" />
     <Content Include="Views\Contacts\_FindProfile.cshtml" />
     <Content Include="Views\Profile\ProfileEditAvatar.cshtml" />
     <Content Include="Views\Profile\ProfileEditDop.cshtml" />
@@ -1908,6 +1907,7 @@
     <Content Include="Views\Account\ResetPasswordError.cshtml" />
     <Content Include="Views\Account\ChangePasswordOk.cshtml" />
     <Content Include="Views\Account\ChangeEmail.cshtml" />
+    <Content Include="Views\Contacts\_ModalFilter.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

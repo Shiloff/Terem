@@ -1,5 +1,5 @@
 ﻿using System;
-using System.Linq;
+using System.Collections.Generic;
 using System.Web.Mvc;
 using Business.DataAccess.Public.Directory;
 using Business.DataAccess.Public.Services.Contact;
@@ -21,16 +21,39 @@ namespace Project.WebUI.Controllers.Contacts
             _directoryStorage = directoryStorage;
         }
 
-        public ActionResult Index(int? sexId, int? alcoholId, int? animalId, int? smokeId, int? activityId, int page = 1 )
+        public ActionResult Index(int? sexId, int? sexWhoId, int? alcoholId, int? animalId, int? smokeId, int? activityId, int page = 1 )
         {
             if (_applicationManager.CurrentUser.ProfileId == null)
             {
                 throw new ArgumentNullException();
             }
-            
-            var filter = new ContactFilter(sexId, alcoholId, animalId, smokeId, activityId);
-            var getContactsResult = _contactService.GetContacts(
-                (long) _applicationManager.CurrentUser.ProfileId,
+            var result = Reuqest(_contactService.GetContacts, "Index", (long) _applicationManager.CurrentUser.ProfileId,
+                sexId, sexWhoId, alcoholId, animalId, smokeId, activityId, page);
+            return View(result);
+        }
+
+        private AvalibleFilters GetAvalibleFilters()
+        {
+            return new AvalibleFilters()
+            {
+                Sex = _directoryStorage.Sex.All(),
+                SexWho = _directoryStorage.Sex.All(),
+                Alcohols = _directoryStorage.Alcohol.All(),
+                Activity = _directoryStorage.Activity.All(),
+                Intereses = _directoryStorage.Interes.All(),
+                Animals = _directoryStorage.Animal.All(),
+                Smokes = _directoryStorage.Smoke.All()
+            };
+        }
+
+        private GetContactsResult Reuqest(
+            Func<long, Pagination, ContactFilter, Tuple<List<Business.DataAccess.Public.Entities.Profile>, int>> reuqest,
+            string name, long currentId, int? sexId, int? sexWhoId, int? alcoholId, int? animalId, int? smokeId, int? activityId,
+            int page)
+        {
+            var filter = new ContactFilter(sexId, sexWhoId, alcoholId, animalId, smokeId, activityId);
+            var getContactsResult = reuqest(
+                currentId,
                 new Pagination()
                 {
                     Page = page,
@@ -44,26 +67,13 @@ namespace Project.WebUI.Controllers.Contacts
                 TotalItems = getContactsResult.Item2
             };
 
-            var result = new GetContactsResult
+            return new GetContactsResult
             {
                 PagingInfo = pagingInfo,
                 Profiles = getContactsResult.Item1,
                 AvalibleFilters = GetAvalibleFilters(),
-                SelectedFilters = filter
-            };
-            return View(result);
-        }
-
-        private AvalibleFilters GetAvalibleFilters()
-        {
-            return new AvalibleFilters()
-            {
-                Sex = _directoryStorage.Sex.All(),
-                Alcohols = _directoryStorage.Alcohol.All(),
-                Activity = _directoryStorage.Activity.All(),
-                Intereses = _directoryStorage.Interes.All(),
-                Animals = _directoryStorage.Animal.All(),
-                Smokes = _directoryStorage.Smoke.All()
+                SelectedFilters = filter,
+                Action = name
             };
         }
 
