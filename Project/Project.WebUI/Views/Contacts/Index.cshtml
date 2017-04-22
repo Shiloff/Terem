@@ -1,4 +1,5 @@
-﻿@using Project.WebUI.HtmlHelpers
+﻿@using System.Collections
+@using Project.WebUI.HtmlHelpers
 @model GetContactsResult
 @{
     ViewBag.Title = "Index";
@@ -9,16 +10,68 @@
     <div class="col-lg-10">
         <h2>Контакты</h2>
         @Html.MvcSiteMap().SiteMapPath()
-    </div>    
+    </div>
 </div>
 
 <div class="wrapper wrapper-content animated fadeInRight">
-    @Html.PageLinks(Model.PagingInfo, k => Url.Action("Index", new { page = k }))
+    <input type="button" class="btn btn-primary btn-block" value="Фильтры" style="margin-bottom: 20px;" data-toggle="modal" data-target="#profileFilterModal"/>
+    @Html.PageLinks(Model.PagingInfo, k => Url.Action("Index", new {page = k}))
     <div class="row">
         @foreach (var profile in Model.Profiles)
         {
             @Html.Partial("_IndexProfile", profile)
         }
     </div>
-    @Html.PageLinks(Model.PagingInfo, k => Url.Action("Index", new { page = k }))
+    @Html.PageLinks(Model.PagingInfo, k => Url.Action("Index", new {page = k}))
 </div>
+
+
+<!-- Modal -->
+<div class="modal fade" id="profileFilterModal" tabindex="-1" role="dialog" aria-labelledby="profileFilterModalLabel">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="myModalLabel">Фильтры</h4>
+            </div>
+            @using (@Html.BeginForm("Index", "Contacts", FormMethod.Get, new {onsubmit = "return SubmitForm(this);" }))
+            {
+                @Html.Hidden("page", Model.PagingInfo.CurrentPage)
+                <div class="modal-body form-horizontal">
+                    @Html.DropDownFilter("sexId", m => m.AvalibleFilters.Sex, Model.SelectedFilters.AlcoholId)
+                    @Html.DropDownFilter("alcoholId", m => m.AvalibleFilters.Alcohols, Model.SelectedFilters.AlcoholId)
+                    @Html.DropDownFilter("animalId", m => m.AvalibleFilters.Animals, Model.SelectedFilters.AlcoholId)
+                    @Html.DropDownFilter("activityId", m => m.AvalibleFilters.Activity, Model.SelectedFilters.AlcoholId)
+                    @Html.DropDownFilter("smokeId", m => m.AvalibleFilters.Smokes, Model.SelectedFilters.AlcoholId)
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Закрыть</button>
+                    <button type="submit" class="btn btn-primary">Применить</button>
+                </div>
+            }
+        </div>
+    </div>
+</div>
+<script>
+    function SubmitForm(pForm) {
+        var filters = [];
+        var elems = pForm.getElementsByTagName('input');
+        for (var i = 0; i < elems.length; i++) {
+            if (elems[i].type === "submit") {
+                continue;
+            }
+            if (elems[i].value !== "") {
+                filters.push(encodeURIComponent(elems[i].name) + "=" + encodeURIComponent(elems[i].value));
+            }
+        }
+        var elems2 = pForm.getElementsByTagName('select');
+        for (var i = 0; i < elems2.length; i++) {
+            if (elems2[i].value !== "") {
+                filters.push(encodeURIComponent(elems2[i].name) + "=" + encodeURIComponent(elems2[i].value));
+            }
+        }
+        window.location = pForm.action + "?" + filters.join("&");
+        return false;
+    }
+</script>
