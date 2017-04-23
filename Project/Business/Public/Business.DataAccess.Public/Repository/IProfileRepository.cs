@@ -1,6 +1,8 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using Business.DataAccess.Public.Entities;
 using Business.DataAccess.Public.Repository.Specific;
+using Business.DataAccess.Public.Services.Contact;
 using DataAccess.Public.Repository;
 
 namespace Business.DataAccess.Public.Repository
@@ -9,7 +11,8 @@ namespace Business.DataAccess.Public.Repository
     {
         Profile GetProfileWithDetails(long id);
         Profile GetShortProfile(long id);
-        List<Profile> GetContacts(long profileId);
+        Tuple<List<Profile>, int> GetContacts(long profileId, Pagination pagination, ContactFilter filter);
+        Tuple<List<Profile>, int> FindContacts(long myProfileId, Pagination pagination, ContactFilter filter);
         void Update(Profile profile, ProfileUpdateMode mode = ProfileUpdateMode.None);
         void UpdateIntereses(long profileId, int[] interesesId);
     }

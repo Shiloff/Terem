@@ -7,6 +7,7 @@ using Business.DataAccess.Private.Directory;
 using Business.DataAccess.Private.Repository;
 using Business.DataAccess.Private.Repository.Specific;
 using Business.DataAccess.Private.Repository.Specific.Helpers;
+using Business.DataAccess.Private.Services.Contact;
 using Business.DataAccess.Private.Services.Profile;
 using Business.DataAccess.Private.UnitOfWork;
 using Business.DataAccess.Public.DatabaseContext.Factory;
@@ -15,6 +16,7 @@ using Business.DataAccess.Public.Entities;
 using Business.DataAccess.Public.Repository;
 using Business.DataAccess.Public.Repository.Specific;
 using Business.DataAccess.Public.Repository.Specific.ProfileHelpers;
+using Business.DataAccess.Public.Services.Contact;
 using Business.DataAccess.Public.Services.Profile;
 using Business.DataAccess.Public.UnitOfWork.Factory;
 using DataAccess.Private.Repository;
@@ -27,51 +29,53 @@ namespace Project.WebUI.Infrastructure.Ninject
 {
     public class NinjectDependencyResolver : IDependencyResolver
     {
-        private IKernel kernel;
+        private readonly IKernel _kernel;
 
         public NinjectDependencyResolver(IKernel kernelParam)
         {
-            kernel = kernelParam;
+            _kernel = kernelParam;
             AddBindings();
         }
 
         public object GetService(Type serviceType)
         {
-            return kernel.TryGet(serviceType);
+            return _kernel.TryGet(serviceType);
         }
 
         public IEnumerable<object> GetServices(Type serviceType)
         {
-            return kernel.GetAll(serviceType);
+            return _kernel.GetAll(serviceType);
         }
 
         private void AddBindings()
         {
-            kernel.Bind<IApartmentRepository>().To<EFApartmentsRepository>();
+            _kernel.Bind<IApartmentRepository>().To<EFApartmentsRepository>();
 
-            kernel.Bind<IProfileRepository>().To<EFProfileRepository>();
-            kernel.Bind<IMessageRepository>().To<EFMessageRepository>();
+            _kernel.Bind<IProfileRepository>().To<EFProfileRepository>();
+            _kernel.Bind<IMessageRepository>().To<EFMessageRepository>();
 
-            kernel.Bind<IChatRepository>().To<EFChatRepository>();
+            _kernel.Bind<IChatRepository>().To<EFChatRepository>();
 
-            kernel.Bind<IProfileContactsHelper>().To<EFProfileContacts>();
+            _kernel.Bind<IProfileContactsHelper>().To<EFProfileContacts>();
 
-            kernel.Bind<IApplicationManager>().To<OwinApplicationManager>();
-            kernel.Bind<IDbContextFactory<EFDBContext>>().To<EfDbContextFactory>();
-            kernel.Bind<IUnitOfWorkFactory>().To<UnitOfWorkFactory>();
+            _kernel.Bind<IApplicationManager>().To<OwinApplicationManager>();
+            _kernel.Bind<IDbContextFactory<EFDBContext>>().To<EfDbContextFactory>();
+            _kernel.Bind<IUnitOfWorkFactory>().To<UnitOfWorkFactory>();
 
-            kernel.Bind<IProfileService>().To<ProfileService>();
-
+            //Services
+            _kernel.Bind<IProfileService>().To<ProfileService>();
+            _kernel.Bind<IContactService>().To<ContactService>();
 
             //Directory
-            kernel.Bind<IDirectoryRepository>().To<DirectoryRepository>();
-            kernel.Bind<IDirectoryStorage>().To<DirectoryStorage>();
-            kernel.Bind<ISexDirectory>().To<SexDirectory>().InSingletonScope();
-            kernel.Bind<IAlcoholDirectory>().To<AlcoholDirectory>().InSingletonScope();
-            kernel.Bind<ISmokeDirectory>().To<SmokeDirectory>().InSingletonScope();
-            kernel.Bind<IAnimalDirectory>().To<AnimalDirectory>().InSingletonScope();
-            kernel.Bind<IInteresDirectory>().To<InteresDirectory>().InSingletonScope();
-            kernel.Bind<IActivityDirectory>().To<ActivityDirectory>().InSingletonScope();
+            _kernel.Bind<IDirectoryRepository>().To<DirectoryRepository>();
+            _kernel.Bind<IDirectoryStorage>().To<DirectoryStorage>();
+            _kernel.Bind<ISexDirectory>().To<SexDirectory>().InSingletonScope();
+            _kernel.Bind<IAlcoholDirectory>().To<AlcoholDirectory>().InSingletonScope();
+            _kernel.Bind<ISmokeDirectory>().To<SmokeDirectory>().InSingletonScope();
+            _kernel.Bind<IAnimalDirectory>().To<AnimalDirectory>().InSingletonScope();
+            _kernel.Bind<IInteresDirectory>().To<InteresDirectory>().InSingletonScope();
+            _kernel.Bind<IActivityDirectory>().To<ActivityDirectory>().InSingletonScope();
+            _kernel.Bind<ICityDirectory>().To<CityDirectory>().InSingletonScope();
         }
     }
 }

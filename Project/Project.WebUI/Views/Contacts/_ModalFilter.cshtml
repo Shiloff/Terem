@@ -1,0 +1,44 @@
+﻿@using Project.WebUI.HtmlHelpers
+@model GetContactsResult
+<!-- Modal -->
+<div class="modal fade" id="profileFilterModal" tabindex="-1" role="dialog" aria-labelledby="profileFilterModalLabel">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                <h4 class="modal-title" id="myModalLabel">Фильтры</h4>
+            </div>
+
+            <form method="get">
+
+
+            </form>
+            @using (@Html.BeginForm(Model.Action, "Contacts", FormMethod.Get, new {onsubmit = "return SubmitForm(this);"}))
+            {
+                @Html.Hidden("page", Model.PagingInfo.CurrentPage)
+                <div class="modal-body form-horizontal">
+                    @Html.DropDownFilter("cityId", m => m.AvalibleFilters.City, Model.SelectedFilters.CityId)
+                    @Html.DropDownFilter("sexId", m => m.AvalibleFilters.Sex, Model.SelectedFilters.SexId)
+                    @Html.DropDownFilter("sexWhoId", m => m.AvalibleFilters.SexWho, Model.SelectedFilters.SexWhoId)
+                    @Html.DropDownFilter("alcoholId", m => m.AvalibleFilters.Alcohols, Model.SelectedFilters.AlcoholId)
+                    @Html.DropDownFilter("animalId", m => m.AvalibleFilters.Animals, Model.SelectedFilters.AnimalId)
+                    @Html.DropDownFilter("activityId", m => m.AvalibleFilters.Activity, Model.SelectedFilters.ActivityId)
+                    @Html.DropDownFilter("smokeId", m => m.AvalibleFilters.Smokes, Model.SelectedFilters.SmokeId)
+
+                    <div class="form-group ">
+                        @Html.LabelFor(m => m.AvalibleFilters.Intereses, new {@class = "col-md-2 control-label"})
+                        <div class="col-md-10">
+                            @Html.ListBox("interests", new MultiSelectList(Model.AvalibleFilters.Intereses, "Id", "Name", Model.SelectedFilters.Interests), new {data_placeholder = "Выберите интерес", multiple = "multiple", @class = "chosen-select"})
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Закрыть</button>
+                    <button type="submit" class="btn btn-primary">Применить</button>
+                </div>
+            }
+        </div>
+    </div>
+</div>

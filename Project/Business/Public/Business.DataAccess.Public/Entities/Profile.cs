@@ -17,8 +17,6 @@ namespace Business.DataAccess.Public.Entities
         public string FirstName { get; set; }
         [Display(Name = "Фамилия")]
         public string LastName { get; set; }
-        [Display(Name = "Город")]
-        public string Town { get; set; }
         [Display(Name = "День рождения")]
         public DateTime? Birfday { get; set; }
         [MaxLength(8000)]
@@ -79,6 +77,21 @@ namespace Business.DataAccess.Public.Entities
         public ICollection<ApartmentComment> ApartmentComments { get; set; }
         [ForeignKey("ProfileId")]
         public ICollection<ApartmentCommentLike> ApartmentCommentsLikes { get; set; }
+
+        [ForeignKey("State")]
+        public int? StateId { get; set; }
+        [ForeignKey("StateId")]
+        public RegionState State { get; set; }
+
+        [ForeignKey("Country")]
+        public int? CountryId { get; set; }
+        [ForeignKey("CountryId")]
+        public RegionCountry Country { get; set; }
+
+        [ForeignKey("City")]
+        public int? CityId { get; set; }
+        [ForeignKey("CityId")]
+        public RegionCity City { get; set; }
 
         public byte[] ImageData { get; set; }
         public string ImageMimeType { get; set; }

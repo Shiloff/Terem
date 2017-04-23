@@ -8,5 +8,7 @@
         IAnimalDirectory Animal { get; }
         IInteresDirectory Interes { get; }
         IActivityDirectory Activity { get; }
+
+        ICityDirectory City { get; }
     }
 }

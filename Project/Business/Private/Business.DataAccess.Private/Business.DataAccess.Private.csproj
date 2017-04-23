@@ -61,6 +61,7 @@
   <ItemGroup>
     <Compile Include="DatabaseContext\EFDBContext.cs" />
     <Compile Include="DatabaseContext\Factory\EfDbContextFactory.cs" />
+    <Compile Include="Directory\CityDirectory.cs" />
     <Compile Include="Directory\Directory.cs" />
     <Compile Include="Directory\DirectoryStorage.cs" />
     <Compile Include="Directory\AlcoholDirectory.cs" />
@@ -81,6 +82,7 @@
     <Compile Include="Repository\Specific\EFMessageRepository.cs" />
     <Compile Include="Repository\Specific\EFProfileRepository.cs" />
     <Compile Include="Repository\Specific\Helpers\EFProfileContacts.cs" />
+    <Compile Include="Services\Contact\ContactService.cs" />
     <Compile Include="Services\Profile\ProfileService.cs" />
     <Compile Include="UnitOfWork\UnitOfWork.cs" />
     <Compile Include="UnitOfWork\UnitOfWorkFactory.cs" />

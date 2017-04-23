@@ -58,12 +58,14 @@
                                         @Html.TextBox("Profile.LastName", Model.Profile.LastName, new { @class = "form-control" })
                                     </div>
                                 </div>
+
                                 <div class="form-group">
-                                    @Html.LabelFor(m => m.Profile.Town, new { @class = "col-md-2 control-label" })
+                                    @Html.LabelFor(m => m.Cities, new { @class = "col-md-2 control-label" })
                                     <div class="col-md-10">
-                                        @Html.TextBox("Profile.Town", Model.Profile.Town, new { @class = "form-control" })
+                                        @Html.DropDownList("Profile.CityId", new SelectList(Model.Cities.OrderBy(m=>m.Sort), "Id", "Name", Model.Profile.CityId), "Не выбрано", new { @class = "form-control" })
                                     </div>
                                 </div>
+
                                 <div class="form-group">
                                     @Html.LabelFor(m => m.ProfileSex, new { @class = "col-md-2 control-label" })
                                     <div class="col-md-10">

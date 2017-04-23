@@ -11,7 +11,6 @@ namespace Project.WebUI.HtmlHelpers
         public static MvcHtmlString PageLinks(this HtmlHelper html, PagingInfo pagingInfo, Func<int, string> pageUrl,string classes=null)
         {
             int offset = 2;
-            StringBuilder result = new StringBuilder();
             StringBuilder resultul = new StringBuilder();
             //<ul class="pagination pull-right">
             TagBuilder tagUl = new TagBuilder("ul");

@@ -99,9 +99,11 @@
     <Compile Include="Directory\DirectoryItems\AnimalItem.cs" />
     <Compile Include="Directory\DirectoryItems\InteresItem.cs" />
     <Compile Include="Directory\DirectoryItems\ActivityItem.cs" />
+    <Compile Include="Directory\DirectoryItems\CityItem.cs" />
     <Compile Include="Directory\DirectoryItems\SmokeItem.cs" />
     <Compile Include="Directory\DirectoryItems\SexItem.cs" />
     <Compile Include="Directory\IActivityDirectory.cs" />
+    <Compile Include="Directory\ICityDirectory.cs" />
     <Compile Include="Directory\IDirectory.cs" />
     <Compile Include="Directory\IDirectoryStorage.cs" />
     <Compile Include="Directory\IAlcoholDirectory.cs" />
@@ -148,6 +150,9 @@
     <Compile Include="Entities\RegionCountry.cs" />
     <Compile Include="Entities\RegionState.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Services\Contact\ContactFilter.cs" />
+    <Compile Include="Services\Contact\Pagination.cs" />
+    <Compile Include="Services\Contact\IContactService.cs" />
     <Compile Include="Services\Profile\GetContactsResult.cs" />
     <Compile Include="Services\Profile\IProfileService.cs" />
     <Compile Include="UnitOfWork\Factory\IUnitOfWorkFactory.cs" />

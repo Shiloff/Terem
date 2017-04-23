@@ -10,7 +10,7 @@
         </div>
         <div class="col-sm-8">
             <h3><strong>@Model.FirstName @Model.LastName</strong></h3>
-            <p><i class="fa fa-map-marker"></i> @Model.Town</p>
+            <p><i class="fa fa-map-marker"></i> @(Model.City != null ? Model.City.Value : "")</p>
             @foreach (var interes in Model.Intereses)
             {
                 <span class="label label-info">@interes.Name</span>

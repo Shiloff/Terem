@@ -323,6 +323,7 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="HtmlHelpers\FilterHelper.cs" />
     <Compile Include="HtmlHelpers\PagingHelpers.cs" />
     <Compile Include="HtmlHelpers\SortedHelper.cs" />
     <Compile Include="Hubs\ChatHub.cs" />
@@ -339,8 +340,8 @@
     <Compile Include="Models\Apartments\SetApartmentDefaultPhotoData.cs" />
     <Compile Include="Models\Apartments\InfoApartmentsViewResult.cs" />
     <Compile Include="Models\Apartments\IndexApartmentsViewResult.cs" />
-    <Compile Include="Models\Contacts\FindContactsViewResult.cs" />
-    <Compile Include="Models\Contacts\IndexContactsViewResult.cs" />
+    <Compile Include="Models\Contacts\FindContactsResult.cs" />
+    <Compile Include="Models\Contacts\GetContactsResult.cs" />
     <Compile Include="Models\Home\IndexHomeViewResult.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\Messages\DialogMessagesViewResult.cs" />
@@ -1838,7 +1839,6 @@
     <Content Include="Views\Rent\EditApartmentMap.cshtml" />
     <Content Include="Views\Messages\_UnreadMessages.cshtml" />
     <Content Include="Views\Messages\UnreadMessagesShort.cshtml" />
-    <Content Include="Views\Contacts\Find.cshtml" />
     <Content Include="Views\Contacts\_FindProfile.cshtml" />
     <Content Include="Views\Profile\ProfileEditAvatar.cshtml" />
     <Content Include="Views\Profile\ProfileEditDop.cshtml" />
@@ -1907,6 +1907,7 @@
     <Content Include="Views\Account\ResetPasswordError.cshtml" />
     <Content Include="Views\Account\ChangePasswordOk.cshtml" />
     <Content Include="Views\Account\ChangeEmail.cshtml" />
+    <Content Include="Views\Contacts\_ModalFilter.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
