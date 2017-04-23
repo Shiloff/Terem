@@ -10,7 +10,8 @@ namespace Business.DataAccess.Private.Directory
             ISmokeDirectory smoke,
             IAnimalDirectory animal,
             IInteresDirectory interes,
-            IActivityDirectory activity)
+            IActivityDirectory activity, 
+            ICityDirectory city)
         {
             Sex = sexDirectory;
             Alcohol = alcohol;
@@ -18,6 +19,7 @@ namespace Business.DataAccess.Private.Directory
             Animal = animal;
             Interes = interes;
             Activity = activity;
+            City = city;
         }
 
         public ISexDirectory Sex { get; }
@@ -26,5 +28,7 @@ namespace Business.DataAccess.Private.Directory
         public IAnimalDirectory Animal { get; }
         public IInteresDirectory Interes { get; }
         public IActivityDirectory Activity { get; }
+
+        public ICityDirectory City { get; }
     }
 }

@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using Newtonsoft.Json;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Business.DataAccess.Public.Entities
 {
@@ -12,10 +12,12 @@ namespace Business.DataAccess.Public.Entities
         public string Value { get; set; }
         public int Sort { get; set; }
 
-        [JsonIgnore]
+        public ICollection<Profile> Profiles { get; set; }
+
         public ICollection<RegionCity> Cities { get; set; }
 
-        [JsonIgnore]
+        public int? CountryId { get; set; }
+        [ForeignKey("CountryId")]
         public RegionCountry Country { get; set; }
     }
 }

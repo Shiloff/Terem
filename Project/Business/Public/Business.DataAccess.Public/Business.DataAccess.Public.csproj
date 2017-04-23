@@ -99,9 +99,11 @@
     <Compile Include="Directory\DirectoryItems\AnimalItem.cs" />
     <Compile Include="Directory\DirectoryItems\InteresItem.cs" />
     <Compile Include="Directory\DirectoryItems\ActivityItem.cs" />
+    <Compile Include="Directory\DirectoryItems\CityItem.cs" />
     <Compile Include="Directory\DirectoryItems\SmokeItem.cs" />
     <Compile Include="Directory\DirectoryItems\SexItem.cs" />
     <Compile Include="Directory\IActivityDirectory.cs" />
+    <Compile Include="Directory\ICityDirectory.cs" />
     <Compile Include="Directory\IDirectory.cs" />
     <Compile Include="Directory\IDirectoryStorage.cs" />
     <Compile Include="Directory\IAlcoholDirectory.cs" />

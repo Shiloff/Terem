@@ -21,6 +21,8 @@ namespace Project.WebUI.Models
 
     public class AvalibleFilters
     {
+        [DisplayName("Город")]
+        public IReadOnlyCollection<CityItem> City { get; set; }
         [DisplayName("Пол")]
         public IReadOnlyCollection<SexItem> Sex { get; set; }
         [DisplayName("Пол соседа")]

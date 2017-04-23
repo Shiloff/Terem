@@ -36,6 +36,20 @@ namespace Business.DataAccess.Private.Repository
             }
         }
 
+        public ICollection<CityItem> GetCities()
+        {
+            using (var ctx = new EFDBContext())
+            {
+                return ctx.Cities
+                    .Select(m => new CityItem
+                    {
+                        Id = m.Id,
+                        Name = m.Value,
+                        Sort = m.Sort
+                    }).ToList();
+            }
+        }
+
         public ICollection<SexItem> GetSex()
         {
             using (var ctx = new EFDBContext())

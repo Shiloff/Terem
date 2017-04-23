@@ -19,6 +19,7 @@
             {
                 @Html.Hidden("page", Model.PagingInfo.CurrentPage)
                 <div class="modal-body form-horizontal">
+                    @Html.DropDownFilter("cityId", m => m.AvalibleFilters.City, Model.SelectedFilters.CityId)
                     @Html.DropDownFilter("sexId", m => m.AvalibleFilters.Sex, Model.SelectedFilters.SexId)
                     @Html.DropDownFilter("sexWhoId", m => m.AvalibleFilters.SexWho, Model.SelectedFilters.SexWhoId)
                     @Html.DropDownFilter("alcoholId", m => m.AvalibleFilters.Alcohols, Model.SelectedFilters.AlcoholId)

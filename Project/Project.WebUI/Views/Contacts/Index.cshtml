@@ -57,19 +57,19 @@
             if (elems[i].type === "submit") {
                 continue;
             }
-            if (elems[i].value !== "") {
+            if (elems[i].value !== "" && elems[i].name !== "") {
                 filters.push(encodeURIComponent(elems[i].name) + "=" + encodeURIComponent(elems[i].value));
             }
         }
         var elems2 = pForm.getElementsByTagName('select');
         for (var i = 0; i < elems2.length; i++) {
             if (!elems2[i].multiple) {
-                if (elems2[i].value !== "") {
+                if (elems2[i].name !== "" && elems2[i].value !== "") {
                     filters.push(encodeURIComponent(elems2[i].name) + "=" + encodeURIComponent(elems2[i].value));
                 }
             } else {
                 for (var j = 0; j < elems2[i].selectedOptions.length; j++) {
-                    if (elems2[i].selectedOptions[j].value !== "" && elems2[i].selectedOptions[j].selected) {
+                    if (elems2[i].name !== "" && elems2[i].selectedOptions[j].value !== "" && elems2[i].selectedOptions[j].selected) {
                         filters.push(encodeURIComponent(elems2[i].name) + "=" + encodeURIComponent(elems2[i].selectedOptions[j].value));
                     }
                 }

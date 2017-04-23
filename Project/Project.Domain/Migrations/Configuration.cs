@@ -123,7 +123,7 @@ namespace Project.Domain.Migrations
                     UserId = "a9b13910-e866-416a-b17c-422c3b6ba8b4",
                     FirstName = "Александр",
                     LastName = "Шилов",
-                    Town = "Москва",
+                    CityId = 1,
                     Birfday = new DateTime(1987, 10, 3),
                     ProfileSexId = 1,
                     ProfileActivityId = 1,
@@ -147,6 +147,7 @@ namespace Project.Domain.Migrations
                 });
 
             //SeedRegions(context);
+            SeedCities(context);
             SeedAdmin(context);
         }
     }

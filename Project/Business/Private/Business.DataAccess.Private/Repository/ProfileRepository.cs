@@ -33,7 +33,8 @@ namespace Business.DataAccess.Private.Repository
                     .Include(m => m.Smoking)
                     .Include(m => m.Animals)
                     .Include(m => m.Intereses)
-                    .Include(m => m.Activity);
+                    .Include(m => m.Activity)
+                    .Include(m => m.City);
             }
         }
 
@@ -56,6 +57,7 @@ namespace Business.DataAccess.Private.Repository
                 .Where(m => m.MyMessage.Any(k => k.ProfileIdTo == profileId)
                             || m.MessageForMe.Any(k => k.ProfileIdFrom == profileId))
                 .Include(m => m.Intereses)
+                .Include(m => m.City)
                 .AsQueryable();
             query = ApplyFilters(query, filter);
             return new Tuple<List<Profile>, int>(ApplyPagination(query, pagination).ToList(), query.Count());
@@ -97,6 +99,11 @@ namespace Business.DataAccess.Private.Repository
             if (filter.SmokeId != null)
             {
                 customWhere.AddWhereClause(m => m.ProfileSmokingId == filter.SmokeId);
+            }
+
+            if (filter.CityId != null)
+            {
+                customWhere.AddWhereClause(m => m.CityId == filter.CityId);
             }
             if (filter.Interests != null && filter.Interests.Any())
             {
@@ -160,11 +167,11 @@ namespace Business.DataAccess.Private.Repository
                             New = profile.New,
                             FirstName = profile.FirstName,
                             LastName = profile.LastName,
-                            Town = profile.Town,
                             ProfileSexId = profile.ProfileSexId,
                             ProfileActivityId = profile.ProfileActivityId,
                             Birfday = profile.Birfday,
-                            ContactPhone = profile.ContactPhone
+                            ContactPhone = profile.ContactPhone,
+                            CityId = profile.CityId
                         });
                     break;
 

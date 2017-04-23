@@ -12,7 +12,8 @@ namespace Project.WebUI.Controllers.Profile
             {
                 Profile = _profileService.GetShortProfile((long) _applicationManager.CurrentUser.ProfileId),
                 ProfileSex = _directoryStorage.Sex.All(),
-                ProfileActivity = _directoryStorage.Activity.All()
+                ProfileActivity = _directoryStorage.Activity.All(),
+                Cities = _directoryStorage.City.All()
             };
             return View(result);
         }
@@ -23,6 +24,8 @@ namespace Project.WebUI.Controllers.Profile
         {
             newProfile.ProfileSex = _directoryStorage.Sex.All();
             newProfile.ProfileActivity = _directoryStorage.Activity.All();
+            newProfile.Cities = _directoryStorage.City.All();
+
             if (ModelState.IsValid)
             {
                 newProfile.Profile.New = false;

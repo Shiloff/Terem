@@ -61,6 +61,7 @@
   <ItemGroup>
     <Compile Include="DatabaseContext\EFDBContext.cs" />
     <Compile Include="DatabaseContext\Factory\EfDbContextFactory.cs" />
+    <Compile Include="Directory\CityDirectory.cs" />
     <Compile Include="Directory\Directory.cs" />
     <Compile Include="Directory\DirectoryStorage.cs" />
     <Compile Include="Directory\AlcoholDirectory.cs" />

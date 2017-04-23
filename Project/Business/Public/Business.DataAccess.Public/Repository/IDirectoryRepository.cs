@@ -11,5 +11,7 @@ namespace Business.DataAccess.Public.Repository
         ICollection<AnimalItem> GetAnimal();
         ICollection<InteresItem> GetInteres();
         ICollection<ActivityItem> GetActivity();
+
+        ICollection<CityItem> GetCities();
     }
 }

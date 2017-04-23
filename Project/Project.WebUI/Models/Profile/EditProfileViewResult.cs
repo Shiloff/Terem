@@ -17,6 +17,8 @@ namespace Project.WebUI.Models
         public IReadOnlyCollection<InteresItem> Interests { get; set; }
         [Display(Name = "Деятельность")]
         public IReadOnlyCollection<ActivityItem> ProfileActivity { get; set; }
+        [Display(Name = "Город")]
+        public IReadOnlyCollection<CityItem> Cities { get; set; }
         public int[] SelectedInterests { get; set; }
         public HttpPostedFileBase inputImage { get; set; } 
     }

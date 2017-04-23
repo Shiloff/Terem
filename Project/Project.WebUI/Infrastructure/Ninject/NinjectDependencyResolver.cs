@@ -75,6 +75,7 @@ namespace Project.WebUI.Infrastructure.Ninject
             _kernel.Bind<IAnimalDirectory>().To<AnimalDirectory>().InSingletonScope();
             _kernel.Bind<IInteresDirectory>().To<InteresDirectory>().InSingletonScope();
             _kernel.Bind<IActivityDirectory>().To<ActivityDirectory>().InSingletonScope();
+            _kernel.Bind<ICityDirectory>().To<CityDirectory>().InSingletonScope();
         }
     }
 }

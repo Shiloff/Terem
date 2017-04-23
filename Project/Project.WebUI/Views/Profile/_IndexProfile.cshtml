@@ -11,7 +11,7 @@
             <br />
             <small>@(Model.Sex != null ? Model.Sex.Name: string.Empty)</small>
         </h4>
-        <p><i class="fa fa-map-marker"></i> @Model.Town</p>
+        <p><i class="fa fa-map-marker"></i> @(Model.City!=null?Model.City.Value : "")</p>
 
         <h5>
             Интересы
